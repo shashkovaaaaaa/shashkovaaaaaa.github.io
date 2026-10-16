@@ -1,0 +1,20 @@
+{
+  "Metadata": {
+    "title": "Anastasiia Shashkova — Product Designer",
+    "description": "Portfolio of Anastasiia Shashkova, product designer based in Saint Petersburg."
+  },
+  "HomePage": {
+    "title": "Home page"
+  },
+  "ThemeToggle": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "LocaleSwitch": {
+    "label": "Language",
+    "en": "English",
+    "ru": "Русский"
+  }
+}

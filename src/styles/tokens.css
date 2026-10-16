@@ -1,0 +1,64 @@
+:root {
+  color-scheme: light;
+
+  /* Цвета (design/tokens.md) */
+  --text-primary: #20232c;
+  --text-secondary: #20232cb2; /* 70% */
+  --text-tertiary: #20232c99; /* 60% */
+  --text-tertiary-muted: #20232c66; /* 40% */
+  --bg-page: #fff;
+  --bg-badge: #fafafc;
+  --bg-badge-case: #3434340f;
+  --bg-hover: #f9f9fb;
+  --border-strong: #000;
+  --border-divider: #00000033;
+  --border-avatar: #0000001a;
+
+  /* Типографика: размеры */
+  --font-family-base: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-head-1: 80px;
+  --fs-head-2: 60px;
+  --fs-head-3: 40px;
+  --fs-head-3-mobile: 30px;
+  --fs-head-4: 24px;
+  --fs-subtitle: 26px;
+  --fs-text-l: 20px;
+  --fs-text-m: 16px;
+  --fs-text-s: 14px;
+
+  /* Типографика: межбуквенные интервалы */
+  --ls-head: -0.03em;
+  --ls-head-4: -0.02em;
+  --ls-text: -0.01em;
+
+  /* Начертания */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  /* Сетка и радиусы */
+  --content-max-width: 1240px;
+  --page-gutter: 20px;
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 10px;
+
+  --transition-fast: 150ms ease;
+}
+
+/* TODO: согласовать с дизайнером — в макете тёмной палитры нет, это черновик. */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --text-primary: #ececf0;
+  --text-secondary: #ececf0b2;
+  --text-tertiary: #ececf099;
+  --text-tertiary-muted: #ececf066;
+  --bg-page: #121316;
+  --bg-badge: #1c1d21;
+  --bg-badge-case: #ffffff0f;
+  --bg-hover: #1f2025;
+  --border-strong: #ececf0;
+  --border-divider: #ffffff33;
+  --border-avatar: #ffffff1a;
+}

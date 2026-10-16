@@ -1,0 +1,10 @@
+.next/
+out/
+node_modules/
+pnpm-lock.yaml
+next-env.d.ts
+public/images/nextImageExportOptimizer/
+design/
+CLAUDE.md
+AGENTS.md
+*.zip
