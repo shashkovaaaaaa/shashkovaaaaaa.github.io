@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ThemeProvider } from 'next-themes';
 
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { routing } from '@/i18n/routing';
 
 import { inter } from '../fonts';
@@ -36,14 +36,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   setRequestLocale(locale);
 
   return (
+    // suppressHydrationWarning: data-theme на <html> ставит скрипт темы до гидратации.
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           <NextIntlClientProvider>
             <div className={styles.page}>
               <Header />

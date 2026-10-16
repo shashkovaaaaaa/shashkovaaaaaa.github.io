@@ -17,15 +17,16 @@ pnpm install
 
 ## Команды
 
-| Команда                             | Что делает                                                                         |
-| ----------------------------------- | ---------------------------------------------------------------------------------- |
-| `pnpm dev`                          | Дев-сервер на http://localhost:3000 (корень `/` редиректит на `/en/` или `/ru/`)   |
-| `pnpm build`                        | Статическая сборка в `out/` + оптимизация картинок (`next-image-export-optimizer`) |
-| `pnpm start`                        | Раздать собранный `out/` локально (http://localhost:3000)                          |
-| `pnpm lint`                         | ESLint, предупреждения считаются ошибками                                          |
-| `pnpm typecheck`                    | Генерация типов маршрутов (`next typegen`) + `tsc --noEmit`                        |
-| `pnpm format` / `pnpm format:check` | Prettier: отформатировать / проверить                                              |
-| `pnpm test:e2e`                     | Playwright-тесты по собранному `out/` на 390/768/1280 (сначала `pnpm build`)       |
+| Команда                             | Что делает                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                          | Дев-сервер на http://localhost:3000 (корень `/` редиректит на `/en/` или `/ru/`)                        |
+| `pnpm build`                        | Статическая сборка в `out/` + оптимизация картинок (`next-image-export-optimizer`)                      |
+| `pnpm start`                        | Раздать собранный `out/` локально (http://localhost:3000)                                               |
+| `pnpm lint`                         | ESLint, предупреждения считаются ошибками                                                               |
+| `pnpm typecheck`                    | Генерация типов маршрутов (`next typegen`) + `tsc --noEmit`                                             |
+| `pnpm format` / `pnpm format:check` | Prettier: отформатировать / проверить                                                                   |
+| `pnpm test:e2e`                     | Playwright-тесты по собранному `out/` на 390/768/1280 (сначала `pnpm build`)                            |
+| `pnpm test:e2e:dev`                 | Проверка консоли в `next dev` (dev-предупреждения React); переиспользует запущенный `pnpm dev` на :3000 |
 
 E2E-тесты используют системный Chromium (`/usr/bin/chromium-browser`, путь можно переопределить через `PLAYWRIGHT_CHROMIUM_EXECUTABLE`), браузеры Playwright не скачиваются.
 
@@ -38,7 +39,7 @@ src/
   app/
     layout.tsx            # подключает глобальные стили
     page.tsx              # "/" → клиентский редирект на /en/ или /ru/ по navigator.language
-    [locale]/layout.tsx   # <html lang>, шрифт Inter, ThemeProvider, NextIntlClientProvider
+    [locale]/layout.tsx   # <html lang>, шрифт Inter, ThemeProvider (своя реализация, `components/theme/`), NextIntlClientProvider
     [locale]/page.tsx     # главная
   components/             # ThemeToggle, LocaleSwitch, ...; case/ — секции кейсов
   config/contacts.ts      # ссылки на контакты (пока TODO)

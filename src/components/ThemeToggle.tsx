@@ -1,29 +1,11 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
-import { useSyncExternalStore } from 'react';
 
 import buttonStyles from './Button.module.css';
 import styles from './Switcher.module.css';
-
-const THEMES = ['light', 'dark', 'system'] as const;
-type ThemeName = (typeof THEMES)[number];
-
-const noopSubscribe = () => () => {};
-
-// true только на клиенте: до гидратации тема неизвестна, активное состояние не показываем.
-function useIsClient() {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => true,
-    () => false,
-  );
-}
-
-function isThemeName(value: string | undefined): value is ThemeName {
-  return THEMES.some((t) => t === value);
-}
+import { useTheme } from './theme/ThemeProvider';
+import { THEMES, type Theme as ThemeName } from './theme/themeStore';
 
 type ThemeToggleProps = {
   // icon — одна кнопка, перебирает темы по кругу (десктопный хедер);
@@ -33,13 +15,13 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ variant = 'segmented' }: ThemeToggleProps) {
   const t = useTranslations('ThemeToggle');
+  // theme === undefined до гидратации: активное состояние ещё не показываем.
   const { theme, setTheme } = useTheme();
-  const isClient = useIsClient();
-  const current: ThemeName = isClient && isThemeName(theme) ? theme : 'system';
+  const current: ThemeName = theme ?? 'system';
 
   if (variant === 'icon') {
     const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
-    const label = isClient ? t('switchTo', { current: t(current) }) : t('label');
+    const label = theme ? t('switchTo', { current: t(current) }) : t('label');
 
     return (
       <button
@@ -61,7 +43,7 @@ export function ThemeToggle({ variant = 'segmented' }: ThemeToggleProps) {
           key={value}
           type="button"
           className={styles.item}
-          aria-pressed={isClient && theme === value}
+          aria-pressed={theme === value}
           onClick={() => setTheme(value)}
         >
           {t(value)}

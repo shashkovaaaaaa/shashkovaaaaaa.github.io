@@ -7,6 +7,8 @@ const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ?? '/usr/bin/c
 
 export default defineConfig({
   testDir: './e2e',
+  // e2e/dev — только для `pnpm test:e2e:dev` (playwright.dev.config.ts).
+  testIgnore: ['dev/**'],
   outputDir: './e2e/.results',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
