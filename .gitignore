@@ -41,8 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 # next-image-export-optimizer (генерируется при сборке)
-/public/images/nextImageExportOptimizer/
-/public/nextImageExportOptimizer/
+# варианты кладутся рядом с исходником на любой глубине: public/images/**/nextImageExportOptimizer/
+/public/**/nextImageExportOptimizer/
 next-image-export-optimizer-hashes.json
 /remoteOptimizedImagesCache/
 

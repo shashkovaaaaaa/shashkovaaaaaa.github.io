@@ -11,9 +11,9 @@
   white-space: nowrap;
 }
 
-/* На mobile бейдж выше: 28 (текст 20), на desktop/tablet — 25 (текст 17). */
+/* Бейдж карточки на главной на mobile выше: 28 (текст 20), в остальных случаях — 25 (текст 17). */
 @media (max-width: 767px) {
-  .badge {
+  .card {
     line-height: var(--lh-control);
   }
 }

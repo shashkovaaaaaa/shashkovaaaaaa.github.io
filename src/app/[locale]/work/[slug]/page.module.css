@@ -1,0 +1,15 @@
+/* case content body: col gap 60 (desktop/tablet), на mobile секции через 40. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .body {
+    gap: 60px;
+  }
+}

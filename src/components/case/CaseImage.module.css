@@ -1,0 +1,10 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background-color: var(--bg-badge);
+}
+
+.image {
+  object-fit: cover;
+}

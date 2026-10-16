@@ -1,0 +1,31 @@
+/* images group: desktop 3 × 389 (gap 16), tablet 3 × 232, mobile — лента 320 × 320. */
+.row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: var(--radius-m);
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  flex: none;
+  width: 320px;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .row {
+    display: grid;
+    grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .item {
+    width: auto;
+  }
+}

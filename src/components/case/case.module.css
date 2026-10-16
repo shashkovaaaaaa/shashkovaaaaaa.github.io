@@ -1,0 +1,43 @@
+/* Общая типографика секций кейса (design/pages/work-*.md). */
+
+/* Заголовок секции: head-3 40 на desktop/tablet, head-4-mobile 24 на mobile. 24 → 40 между 390 и 768. */
+.sectionTitle {
+  font-size: clamp(var(--fs-head-4), calc(4.233vw + 7.49px), var(--fs-head-3));
+  line-height: var(--lh-head-4);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+/* Текст: text-M-regular 16/22, ls -1%; абзацы через 10. */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+  color: var(--text-primary);
+}
+
+/* Списки в тексте (например, «Key UX Problems»): без маркеров, пункты через 10 (desktop/tablet — 20). */
+.prose ul,
+.prose ol {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prose strong {
+  font-weight: var(--fw-semibold);
+}
+
+@media (min-width: 768px) {
+  .sectionTitle {
+    line-height: var(--lh-head-3);
+  }
+
+  .prose ul,
+  .prose ol {
+    gap: 20px;
+  }
+}

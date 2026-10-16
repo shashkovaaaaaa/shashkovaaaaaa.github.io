@@ -1,66 +1,11 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+
+import { collectErrors, isMobileHeader, menuToggle, setTheme, switchLocale } from './helpers';
 
 declare global {
   interface Window {
     __themeLog: { theme: string | null; contentInDom: boolean }[];
   }
-}
-
-type ThemeName = 'light' | 'dark' | 'system';
-
-// TODO: убрать, когда появятся страницы кейсов. Сейчас Next prefetch-ит ссылки карточек
-// на /work/<slug>/ и получает 404 — это ожидаемо.
-const PENDING_ROUTES = /\/work\//;
-
-function collectErrors(page: Page) {
-  const errors: string[] = [];
-  page.on('console', (m) => {
-    if (m.type() !== 'error' || PENDING_ROUTES.test(m.location().url)) return;
-    errors.push(m.text());
-  });
-  page.on('pageerror', (e) => errors.push(e.message));
-  page.on('response', (r) => {
-    if (r.status() >= 400 && !PENDING_ROUTES.test(r.url())) errors.push(`${r.status()} ${r.url()}`);
-  });
-  return errors;
-}
-
-const menuToggle = (page: Page) => page.getByRole('button', { name: /^(Open|Close) menu$|меню$/ });
-
-// На 390/768 тема и язык — в мобильном меню, на 1280 — прямо в хедере.
-async function isMobileHeader(page: Page) {
-  return menuToggle(page).isVisible();
-}
-
-async function openMenuIfMobile(page: Page) {
-  if (!(await isMobileHeader(page))) return;
-  const toggle = menuToggle(page);
-  if ((await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-}
-
-async function setTheme(page: Page, theme: ThemeName) {
-  if (await isMobileHeader(page)) {
-    await openMenuIfMobile(page);
-    const name = {
-      light: /^(Light|Светлая)$/,
-      dark: /^(Dark|Тёмная)$/,
-      system: /^(System|Системная)$/,
-    };
-    await page.getByRole('button', { name: name[theme] }).click();
-    return;
-  }
-  // Десктоп: одна кнопка перебирает темы по кругу.
-  for (let i = 0; i < 3; i++) {
-    if ((await page.evaluate(() => localStorage.getItem('theme'))) === theme) return;
-    await page.getByRole('button', { name: /theme|тему/i }).click();
-  }
-  expect(await page.evaluate(() => localStorage.getItem('theme'))).toBe(theme);
-}
-
-async function switchLocale(page: Page, name: 'English' | 'Русский') {
-  await openMenuIfMobile(page);
-  await page.getByRole('link', { name }).click();
 }
 
 test.describe('редирект с /', () => {
@@ -154,13 +99,17 @@ test.describe('главная', () => {
 
   test('клик по карточке ведёт на страницу кейса', async ({ page }) => {
     await page.goto('/en/');
-    const card = page.locator('#works article').first();
+    // Supply Leader — пока единственный опубликованный кейс.
+    const card = page.locator('#works article').nth(2);
     await card.scrollIntoViewIfNeeded();
     // Кликаем мышью по центру превью: ссылка заголовка растянута на всю карточку через ::after.
     const box = await card.locator('img:visible').boundingBox();
     if (!box) throw new Error('нет обложки');
     await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-    await expect(page).toHaveURL('/en/work/prokladovki/');
+    await expect(page).toHaveURL('/en/work/supply-leader/');
+    await expect(page.locator('h1')).toHaveText(
+      'Marketplace for suppliers from Amazon and Walmart',
+    );
   });
 });
 

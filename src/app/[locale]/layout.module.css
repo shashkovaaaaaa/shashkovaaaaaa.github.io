@@ -44,3 +44,21 @@
     --header-gap: 40px;
   }
 }
+
+/*
+ * Страницы кейсов (design/pages/work-*.md): хедер выше — pad 20 сверху на tablet/desktop,
+ * хедер → кейс → CTA → футер через 80 (mobile — через 40).
+ */
+.page:has(main[data-layout='case']) {
+  --section-gap: 40px;
+  --header-gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .page:has(main[data-layout='case']) {
+    --section-gap: 80px;
+    --header-gap: 80px;
+
+    padding-top: 20px;
+  }
+}

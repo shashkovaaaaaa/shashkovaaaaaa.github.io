@@ -1,0 +1,145 @@
+{/* Тексты — из design/pages/work-supply-leader-desktop.md. Картинки — public/images/cases/supply-leader (pnpm images). */}
+
+<CaseHero
+  title="Marketplace for suppliers from Amazon and Walmart"
+  badges={['Web service', 'SaaS', 'B2B', 'Redesign']}
+  image="supply-leader/hero.webp"
+  alt="Supply Leader product catalog: product cards with sales volume and price history charts"
+/>
+
+<TextSection title="About Project">
+
+The company runs a B2B platform that helps online sellers source wholesale suppliers for resale on marketplaces like Amazon and Walmart.
+
+I was initially brought on to refresh the visual layer — make it feel more modern and «European». But as I explored the product, it became clear the outdated UI was hiding much deeper UX issues: core actions were fragmented across multiple flows, system states were unclear, and users kept losing track of their own progress. A simple redesign turned into a much bigger product challenge.
+
+</TextSection>
+
+<TextSection title="Expectation vs Reality" spacing="loose">
+  <Table
+    head={['Initial request', 'What I found']}
+    rows={[
+      [
+        'Modernize the UI, make it feel "European"',
+        'Visual inconsistency was only the surface problem',
+      ],
+      ['Refresh homepage and key pages', 'Users couldn’t tell where they were in the system'],
+      [
+        'Keep existing functionality unchanged',
+        'Core flows were fragmented across pages and states',
+      ],
+      [
+        'Focus on aesthetics, not UX',
+        'Many actions worked as requests, not direct interactions — breaking users’ e-commerce expectations',
+      ],
+    ]}
+  />
+</TextSection>
+
+<ImageRow
+  images={[
+    { src: 'supply-leader/screens-1.webp', alt: 'Original product page before the redesign' },
+    { src: 'supply-leader/screens-2.webp', alt: 'Original manufacturer page before the redesign' },
+    { src: 'supply-leader/screens-3.webp', alt: 'Original request flow before the redesign' },
+  ]}
+/>
+
+<TextSection title="Key UX Problems">
+
+- Non-linear journeys — users acted on one page, got feedback on another, and often couldn’t tell if their action even worked.
+- Unpredictable outcomes — even after finishing the full request flow, users sometimes got results that didn’t match what they asked for.
+- Interaction patterns that broke e-commerce expectations — instead of adding to cart, users had to submit a request and wait for a manager, then come back.
+- Product vs manufacturer ambiguity — product and manufacturer pages looked nearly identical, so it wasn’t clear what users were actually selecting
+
+</TextSection>
+
+<ImageRow
+  images={[
+    {
+      src: 'supply-leader/problems-1.webp',
+      alt: 'Screen illustrating the non-linear user journey',
+    },
+    {
+      src: 'supply-leader/problems-2.webp',
+      alt: 'Screen illustrating the request-based interaction',
+    },
+    { src: 'supply-leader/problems-3.webp', alt: 'Product and manufacturer pages side by side' },
+  ]}
+/>
+
+<Decision
+  index={1}
+  title="Product page as the core entry point"
+  image="supply-leader/decision-1.webp"
+  alt="Redesigned product page with grouped metrics and a visible primary action"
+>
+
+Before: no clear hierarchy, metrics without context, unclear primary action.
+
+Implemented: modernized layout, clearer grouping, more visible CTAs — within the agreed scope.
+
+Ideal scenario: one clear action, metrics tied to decision-making, the page explicitly positioned within the user’s flow.
+
+</Decision>
+
+<Decision
+  index={2}
+  title="Non-linear user journeys"
+  image="supply-leader/decision-2.webp"
+  alt="Redesigned request flow screens"
+>
+
+Before: actions and feedback disconnected across pages; users lost context.
+
+Implemented: improved visual clarity and grouping, but the underlying journey stayed non-linear
+
+Ideal scenario: one continuous flow — product → request → status → next step — with immediate feedback at every stage.
+
+</Decision>
+
+<Decision
+  index={3}
+  title="Product vs manufacturer ambiguity"
+  image="supply-leader/decision-3.webp"
+  alt="Manufacturer page in the updated visual style"
+>
+
+Before: nearly identical layouts made it unclear what users were choosing.
+
+Implemented: documented and flagged for future structural work.
+
+Ideal scenario: distinct visual language for products vs. manufacturers, so users always know what — and who — they’re selecting.
+
+</Decision>
+
+<TextSection title="Conclusion and Results">
+
+This project was scoped as a visual update, not a full product redesign — core flows and the request-based model were out of scope. That meant several UX issues could be identified and documented, but not fully resolved within this engagement.
+
+What it taught me: visual polish can’t fix a broken journey. Users need immediate, contextual feedback after every action. And product clarity matters more than aesthetic consistency.
+
+</TextSection>
+
+<TextSection title="Constraints & Learnings">
+
+Although the project started as a visual redesign request, it quickly became clear that many of the core UX issues were rooted in product logic and business processes rather than UI alone. The scope of the project was limited, which shaped both the decisions made and the level of impact that could realistically be achieved.
+
+<Columns>
+<Column title="Constraints">
+
+- The project scope focused on visual updates, not a full product redesign
+- Core user flows and business logic were considered out of scope
+- The request-based model and manager-led communication could not be reworked
+- Technical limitations restricted structural UX changes
+
+</Column>
+<Column title="Learnings">
+
+- Visual improvements cannot compensate for unclear or broken user journeys
+- Users need immediate and contextual feedback after every action
+- Product clarity matters more than aesthetic consistency
+
+</Column>
+</Columns>
+
+</TextSection>

@@ -1,0 +1,40 @@
+/*
+ * first screen: desktop 1200 (заголовок head-2 60, 2 строки = 132), tablet 728 (40), mobile 370 (30);
+ * col gap 30 (mobile 16); картинка 2:1, radius 8.
+ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 30px на 390 → 40px на 768 */
+.title {
+  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
+  line-height: var(--lh-head-3);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    gap: 30px;
+  }
+
+  /* 40px на 768 → 60px на 1280 */
+  .title {
+    font-size: clamp(var(--fs-head-3), calc(3.906vw + 10px), var(--fs-head-2));
+  }
+}
+
+@media (min-width: 1200px) {
+  .title {
+    line-height: 1.1;
+  }
+}

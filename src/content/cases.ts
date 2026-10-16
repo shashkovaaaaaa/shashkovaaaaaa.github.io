@@ -12,6 +12,10 @@ type Localized<T> = Record<Locale, T>;
 
 export type CaseMeta = {
   slug: string;
+  // Есть страница кейса (content/cases/<slug>/<locale>.mdx). Остальные карточки пока ведут на 404.
+  published?: boolean;
+  // Open Graph: public/og/<slug>.jpg, 1200×630 (scripts/prepare-images.mjs).
+  ogImage?: string;
   // desktop/tablet — 5:4, mobile — 1:1 (в макете разные кропы).
   cover: StaticImageData;
   coverMobile: StaticImageData;
@@ -67,6 +71,8 @@ export const cases: CaseMeta[] = [
   },
   {
     slug: 'supply-leader',
+    published: true,
+    ogImage: '/og/supply-leader.jpg',
     cover: supplyLeaderCover,
     coverMobile: supplyLeaderCoverMobile,
     coverAlt: {
@@ -84,3 +90,9 @@ export const cases: CaseMeta[] = [
     },
   },
 ];
+
+export const publishedCases = cases.filter((c) => c.published);
+
+export function getCase(slug: string) {
+  return cases.find((c) => c.slug === slug);
+}

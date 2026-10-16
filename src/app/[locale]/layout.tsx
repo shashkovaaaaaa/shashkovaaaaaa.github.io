@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { siteUrl } from '@/config/site';
 import { routing } from '@/i18n/routing';
 
 import { inter } from '../fonts';
@@ -25,7 +26,8 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return {
-    title: t('title'),
+    metadataBase: new URL(siteUrl),
+    title: { default: t('title'), template: `%s — ${t('siteName')}` },
     description: t('description'),
   };
 }

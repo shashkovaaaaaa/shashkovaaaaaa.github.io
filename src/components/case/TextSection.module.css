@@ -1,0 +1,30 @@
+/* about project / key problems / conclusions / learnings: col gap 30 (mobile 20), текст 800 на desktop */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Текст ограничен 800, а вложенные блоки на всю ширину (Columns в «learnings» — 1200). */
+.body > :where(p, ul, ol) {
+  max-width: 800px;
+}
+
+.body {
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .section {
+    gap: 30px;
+  }
+
+  .loose {
+    gap: 40px;
+  }
+
+  /* Между абзацем и вложенным блоком (Columns) — как gap секции. */
+  .body > * + :not(p, ul, ol) {
+    margin-top: 20px;
+  }
+}

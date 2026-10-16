@@ -1,0 +1,66 @@
+/*
+ * mobile:  col gap 20, pad 40 0; подпись 24 Semi Bold (lh 34), заголовок 24; картинка 370×370
+ * tablet:  col gap 40; текст col gap 30; заголовок 40; картинка 728×728
+ * desktop: row gap 40, текст 570 + картинка 590×590
+ */
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 0;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: var(--fs-head-4);
+  font-weight: var(--fw-semibold);
+  line-height: 34px;
+  letter-spacing: var(--ls-head-4);
+  color: var(--text-tertiary-muted);
+}
+
+.title {
+  font-size: clamp(var(--fs-head-4), calc(4.233vw + 7.49px), var(--fs-head-3));
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-head-4);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .decision {
+    gap: 40px;
+    padding: 0;
+  }
+
+  .text {
+    gap: 30px;
+  }
+
+  .label {
+    line-height: var(--lh-head-4);
+  }
+
+  .title {
+    line-height: var(--lh-head-3);
+  }
+}
+
+@media (min-width: 1200px) {
+  .decision {
+    display: grid;
+    grid-template-columns: 570fr 590fr;
+    align-items: start;
+  }
+}

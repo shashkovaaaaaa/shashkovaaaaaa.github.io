@@ -1,0 +1,42 @@
+/*
+ * table: col gap 16 между строками; строка — pad-bottom 16, разделитель снизу (#00000033).
+ * Колонки: mobile 175 / 175 (gap 20), tablet 320 / остаток (gap 40), desktop 320 / 440 в таблице шириной 800.
+ * Шрифт в макете — SF Pro Display; берём Inter по стилю text-M-regular (см. DESIGN-QUESTIONS.md).
+ */
+.table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-head-4);
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.table th,
+.table td {
+  /* 15 + 1px границы = 16, как в макете (граница внутри строки). */
+  padding: 16px 0 15px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.table thead th {
+  padding-top: 0;
+  font-weight: var(--fw-semibold);
+}
+
+/* Первая колонка + отступ между колонками: 175 + 20 на mobile. */
+.table :is(th, td):first-child {
+  width: calc(50% + 10px);
+  padding-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .table :is(th, td):first-child {
+    width: 360px;
+    padding-right: 40px;
+  }
+}

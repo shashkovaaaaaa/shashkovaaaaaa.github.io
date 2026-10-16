@@ -75,12 +75,13 @@ public/images/            # исходники картинок для опти�
 - Build Command: `pnpm build`
 - Node.js: 24 (из `engines`/`.nvmrc`; при необходимости выставить в Project Settings → General)
 - `NEXT_PUBLIC_BASE_PATH` **не задавать** (сайт в корне домена)
+- `NEXT_PUBLIC_SITE_URL` можно не задавать: адрес для Open Graph / canonical берётся из системной переменной Vercel `VERCEL_PROJECT_PRODUCTION_URL`. Для своего домена — задать, например `https://example.com`
 
 ### GitHub Pages (запасной)
 
 1. В репозитории: Settings → Pages → Source: **GitHub Actions**.
 2. Пуш в `main` (или ручной запуск) запускает `.github/workflows/deploy.yml`:
-   `pnpm install` → `pnpm build` c `NEXT_PUBLIC_BASE_PATH=/<имя репозитория>` → `upload-pages-artifact` (`out/`) → `deploy-pages`.
+   `pnpm install` → `pnpm build` c `NEXT_PUBLIC_BASE_PATH=/<имя репозитория>` и `NEXT_PUBLIC_SITE_URL=https://<owner>.github.io` → `upload-pages-artifact` (`out/`) → `deploy-pages`.
 3. Сайт будет доступен по `https://<user>.github.io/<repo>/`.
 
 `public/.nojekyll` нужен, чтобы Pages отдавал папку `_next/`.
