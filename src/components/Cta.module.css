@@ -1,0 +1,40 @@
+/*
+ * design/pages/main-page-*.md → CTA
+ * desktop/tablet: высота 850, заголовок head-1 80px шириной 512;
+ * mobile: высота 700, заголовок head-3 40px шириной 256.
+ */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  min-height: 700px;
+}
+
+/* 40px на 390 → 80px на 768. Ширина 6.4em = 256/40 = 512/80. */
+.title {
+  max-width: 6.4em;
+  font-size: clamp(var(--fs-head-3), calc(10.582vw - 1.27px), var(--fs-head-1));
+  line-height: var(--lh-head-3);
+  letter-spacing: var(--ls-head);
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .cta {
+    min-height: 850px;
+  }
+
+  .title {
+    line-height: var(--lh-head-1);
+  }
+}

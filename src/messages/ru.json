@@ -10,11 +10,45 @@
     "label": "Тема",
     "light": "Светлая",
     "dark": "Тёмная",
-    "system": "Системная"
+    "system": "Системная",
+    "switchTo": "Тема: {current}. Сменить тему"
   },
   "LocaleSwitch": {
     "label": "Язык",
     "en": "English",
     "ru": "Русский"
+  },
+  "Header": {
+    "name": "Анастасия Шашкова",
+    "role": "Продуктовый дизайнер",
+    "home": "Главная страница",
+    "nav": "Основная навигация",
+    "contacts": "Контакты"
+  },
+  "Nav": {
+    "works": "Мои работы",
+    "about": "Обо мне"
+  },
+  "Contacts": {
+    "telegram": "Telegram",
+    "email": "Email",
+    "linkedin": "Linkedin",
+    "behance": "Behance",
+    "resume": "Резюме",
+    "whatsapp": "WhatsApp"
+  },
+  "MobileMenu": {
+    "open": "Открыть меню",
+    "close": "Закрыть меню",
+    "portfolio": "Портфолио",
+    "contacts": "Контакты",
+    "settings": "Настройки"
+  },
+  "Cta": {
+    "title": "Обсудим вашу следующую идею"
+  },
+  "Footer": {
+    "location": "Сейчас живу в Санкт-Петербурге",
+    "updated": "Обновлено в ноябре 2026"
   }
 }

@@ -1,0 +1,46 @@
+/*
+ * Поля страницы и отступы между блоками по макетам:
+ *   mobile  — pad 40 10 20, хедер вплотную к контенту, блоки через 10;
+ *   tablet  — pad 40 20 20, блоки через 80;
+ *   desktop — pad 40 20 20, блоки через 40.
+ */
+.page {
+  --section-gap: 10px;
+  --header-gap: 0px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(var(--content-max-width) + 2 * var(--page-gutter));
+  margin: 0 auto;
+  padding: 40px 10px 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  margin-top: var(--header-gap);
+}
+
+.content > main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+@media (min-width: 768px) {
+  .page {
+    --section-gap: 80px;
+    --header-gap: 80px;
+
+    padding: 40px var(--page-gutter) 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page {
+    --section-gap: 40px;
+    --header-gap: 40px;
+  }
+}

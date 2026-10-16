@@ -10,11 +10,45 @@
     "label": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "switchTo": "Theme: {current}. Switch theme"
   },
   "LocaleSwitch": {
     "label": "Language",
     "en": "English",
     "ru": "Русский"
+  },
+  "Header": {
+    "name": "Anastasiia Shashkova",
+    "role": "Product Designer",
+    "home": "Home page",
+    "nav": "Main navigation",
+    "contacts": "Contacts"
+  },
+  "Nav": {
+    "works": "My works",
+    "about": "About me"
+  },
+  "Contacts": {
+    "telegram": "Telegram",
+    "email": "Email",
+    "linkedin": "Linkedin",
+    "behance": "Behance",
+    "resume": "Resume",
+    "whatsapp": "WhatsApp"
+  },
+  "MobileMenu": {
+    "open": "Open menu",
+    "close": "Close menu",
+    "portfolio": "Portfolio",
+    "contacts": "Contacts",
+    "settings": "Settings"
+  },
+  "Cta": {
+    "title": "Let’s discuss your next idea"
+  },
+  "Footer": {
+    "location": "Currently located in Saint Petersburg",
+    "updated": "Updated November 2026"
   }
 }

@@ -13,6 +13,9 @@
   --border-strong: #000;
   --border-divider: #00000033;
   --border-avatar: #0000001a;
+  --icon-muted: #475569;
+  --bg-elevated: #fff;
+  --shadow-menu: 0 6px 10px #00000014;
 
   /* Типографика: размеры */
   --font-family-base: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -31,6 +34,12 @@
   --ls-head-4: -0.02em;
   --ls-text: -0.01em;
 
+  /* Типографика: высота строки (по высотам текстовых блоков в макете) */
+  --lh-head-1: 0.95; /* 80 → 76 */
+  --lh-head-3: 1; /* 40 → 40, 30 → 30 */
+  --lh-control: 20px; /* текст в кнопках */
+  --lh-caption: 17px; /* 14px-подписи: имя, роль, бейдж, футер */
+
   /* Начертания */
   --fw-regular: 400;
   --fw-medium: 500;
@@ -44,7 +53,15 @@
   --radius-l: 10px;
 
   --transition-fast: 150ms ease;
+  --transition-medium: 200ms ease;
 }
+
+/*
+ * Брейкпоинты (в CSS Modules переменные в @media не работают, значения пишутся числами):
+ *   mobile  < 768px          — макет 390, поля 10
+ *   tablet  768px – 1199px   — макет 768, поля 20, мобильный хедер
+ *   desktop ≥ 1200px         — макет 1280, поля 20, десктопный хедер
+ */
 
 /* TODO: согласовать с дизайнером — в макете тёмной палитры нет, это черновик. */
 [data-theme='dark'] {
@@ -61,4 +78,7 @@
   --border-strong: #ececf0;
   --border-divider: #ffffff33;
   --border-avatar: #ffffff1a;
+  --icon-muted: #9aa0ae;
+  --bg-elevated: #1b1c20;
+  --shadow-menu: 0 6px 16px #00000066;
 }

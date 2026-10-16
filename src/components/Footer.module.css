@@ -1,0 +1,12 @@
+/* design/pages/main-page-*.md → нижний `header` (в Figma так назван футер): row gap 10, space-evenly, wrap */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
+  font-size: var(--fs-text-s);
+  line-height: var(--lh-caption);
+  letter-spacing: normal;
+  color: var(--text-primary);
+}

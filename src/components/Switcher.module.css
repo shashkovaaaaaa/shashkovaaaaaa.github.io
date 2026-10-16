@@ -26,3 +26,14 @@
   background-color: var(--bg-badge-case);
   color: var(--text-primary);
 }
+
+/* Компактные варианты для десктопного хедера: размер как у кнопки type=link (40×40). */
+.iconButton {
+  width: 40px;
+  height: 40px;
+}
+
+.code {
+  min-width: 40px;
+  text-transform: uppercase;
+}

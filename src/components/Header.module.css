@@ -1,0 +1,103 @@
+/*
+ * design/pages/main-page-desktop.md → header (1240×40)
+ * design/pages/main-page-{tablet-vertical,mobile}.md → header device=mobile (pad 10 0, radius 20)
+ */
+.header {
+  position: relative;
+  z-index: 10;
+  border-radius: 20px;
+  background-color: var(--bg-page);
+  padding: 10px 0;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-right: 10px;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  border-radius: var(--radius-l);
+}
+
+.avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-avatar);
+  object-fit: cover;
+}
+
+.accountText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--fs-text-s);
+  line-height: var(--lh-caption);
+  letter-spacing: normal;
+}
+
+.name {
+  color: var(--text-primary);
+}
+
+/* На mobile/tablet роль — 70%, на desktop — 60% (как в макетах). */
+.role {
+  color: var(--text-secondary);
+}
+
+.nav,
+.contacts {
+  display: none;
+}
+
+.contactList {
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 6px;
+  background-color: var(--border-divider);
+}
+
+@media (min-width: 1200px) {
+  .header {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  /* Колонки 1fr auto 1fr — ссылки «My works / About me» строго по центру. */
+  .bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    padding-right: 0;
+  }
+
+  .role {
+    color: var(--text-tertiary);
+  }
+
+  .nav {
+    display: flex;
+  }
+
+  .contacts {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .mobileMenu {
+    display: none;
+  }
+}

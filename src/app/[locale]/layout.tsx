@@ -4,9 +4,12 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
 
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
 import { routing } from '@/i18n/routing';
 
 import { inter } from '../fonts';
+import styles from './layout.module.css';
 
 export const dynamicParams = false;
 
@@ -41,7 +44,15 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <div className={styles.page}>
+              <Header />
+              <div className={styles.content}>
+                {children}
+                <Footer />
+              </div>
+            </div>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

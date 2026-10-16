@@ -1,0 +1,134 @@
+/* design/components.md → header device=mobile open=true, Icon state=1…4 */
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: var(--radius-l);
+  color: var(--icon-muted);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+/* state=2 (hover) и открытое состояние — линии цвета текста. */
+.toggle:hover,
+.toggle[aria-expanded='true'] {
+  color: var(--text-primary);
+  background-color: var(--bg-hover);
+}
+
+/*
+ * Иконка 24×24, три линии 16×1.
+ * state=1/2 — три линии; state=4 — линии сведены к центру; state=3 — две линии крестом.
+ * Открытие: сведение (100ms) → поворот (100ms). Закрытие — в обратном порядке.
+ */
+.burger {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.burger span {
+  position: absolute;
+  top: calc(50% - 0.5px);
+  left: 4px;
+  width: 16px;
+  height: 1px;
+  background-color: currentColor;
+  transition:
+    rotate 100ms ease,
+    translate 100ms ease 100ms,
+    opacity 0ms linear 100ms;
+}
+
+.burger span:nth-child(1) {
+  translate: 0 -6px;
+}
+
+.burger span:nth-child(3) {
+  translate: 0 6px;
+}
+
+.burger[data-open='true'] span {
+  translate: 0 0;
+  transition:
+    translate 100ms ease,
+    rotate 100ms ease 100ms,
+    opacity 0ms linear 100ms;
+}
+
+.burger[data-open='true'] span:nth-child(1) {
+  rotate: 45deg;
+}
+
+.burger[data-open='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger[data-open='true'] span:nth-child(3) {
+  rotate: -45deg;
+}
+
+/* Карточка меню: 370 wide, col gap 10, pad 20 20 20 10, radius 20, drop_shadow 0 6 10. */
+.menu {
+  position: absolute;
+  /* Хедер: pad 10 + строка 44 + gap 8 = 62px, т.е. 100% (64px) − 2px. */
+  top: calc(100% - 2px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 20px 20px 10px;
+  border-radius: 20px;
+  background-color: var(--bg-elevated);
+  box-shadow: var(--shadow-menu);
+  opacity: 0;
+  translate: 0 -8px;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-medium),
+    translate var(--transition-medium),
+    visibility 0ms linear 200ms;
+}
+
+.menu[data-open='true'] {
+  opacity: 1;
+  translate: 0 0;
+  visibility: visible;
+  transition:
+    opacity var(--transition-medium),
+    translate var(--transition-medium);
+}
+
+.title {
+  padding: 0 10px;
+  font-size: var(--fs-text-s);
+  line-height: var(--lh-control);
+  color: var(--text-secondary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Пункты: 340×46, pad 12 10, выравнивание влево, text-M-semibold. */
+.item {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 12px 10px;
+  font-size: var(--fs-text-m);
+  font-weight: var(--fw-semibold);
+  line-height: 22px;
+}
+
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 10px;
+}
