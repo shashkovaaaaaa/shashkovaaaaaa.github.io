@@ -6,12 +6,27 @@
 }
 
 /* Текст ограничен 800, а вложенные блоки на всю ширину (Columns в «learnings» — 1200). */
-.body > :where(p, ul, ol) {
+.body > :where(p, ul, ol, [data-column]) {
   max-width: 800px;
 }
 
 .body {
   gap: 10px;
+}
+
+/*
+ * mobile (макет плоский): вложенные блоки (картинки, BadgeList, Columns) и вводный абзац → список — через 20,
+ * подразделы (Column прямо в секции: Audience, Goals…) — через 40.
+ */
+.body > * + :not(p, ul:not([data-badge-list]), ol),
+.body > :not(p, ul:not([data-badge-list]), ol) + *,
+.body > p + :is(ul:not([data-badge-list]), ol) {
+  margin-top: 10px;
+}
+
+.body > * + [data-column],
+.body > [data-column] + * {
+  margin-top: 30px;
 }
 
 @media (min-width: 768px) {
@@ -23,8 +38,12 @@
     gap: 40px;
   }
 
-  /* Между абзацем и вложенным блоком (Columns) — как gap секции. */
-  .body > * + :not(p, ul, ol) {
+  /* Вокруг вложенных блоков (Columns, BadgeList, картинки) и между абзацем и списком — как gap секции: 10 + 20 = 30. */
+  .body > * + :not(p, ul:not([data-badge-list]), ol),
+  .body > :not(p, ul:not([data-badge-list]), ol) + *,
+  .body > p + :is(ul:not([data-badge-list]), ol),
+  .body > * + [data-column],
+  .body > [data-column] + * {
     margin-top: 20px;
   }
 }

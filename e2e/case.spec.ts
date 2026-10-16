@@ -69,7 +69,52 @@ test('кейс: смена языка ведёт на тот же кейс', asy
   await expect(page.locator('h1')).toHaveText('Маркетплейс поставщиков Amazon и Walmart');
 });
 
-test('кейс: неопубликованный slug — 404', async ({ page }) => {
-  const res = await page.goto('/en/work/askezio/');
+test('кейс: несуществующий slug — 404', async ({ page }) => {
+  const res = await page.goto('/en/work/unknown/');
   expect(res?.status()).toBe(404);
 });
+
+const CASES = [
+  {
+    slug: 'supply-leader',
+    en: 'Marketplace for suppliers from Amazon and Walmart',
+    ru: 'Маркетплейс поставщиков Amazon и Walmart',
+  },
+  {
+    slug: 'askezio',
+    en: 'Designing a Quiz & Test-builder – from MVP to release',
+    ru: 'Конструктор квизов и тестов — от MVP до релиза',
+  },
+] as const;
+
+for (const item of CASES) {
+  for (const locale of ['en', 'ru'] as const) {
+    test(`кейс ${item.slug} /${locale}/: заголовок, видимые картинки, OG, нет ошибок`, async ({
+      page,
+    }) => {
+      const errors = collectErrors(page);
+      await page.goto(`/${locale}/work/${item.slug}/`);
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.locator('h1')).toHaveText(item[locale]);
+
+      // На mobile и desktop видны разные наборы картинок — проверяем только видимые.
+      const images = page.locator('main article img:visible');
+      expect(await images.count()).toBeGreaterThan(0);
+      for (const img of await images.all()) {
+        await img.scrollIntoViewIfNeeded();
+        await expect(img).toHaveJSProperty('complete', true);
+        expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
+        expect(await img.getAttribute('alt')).toBeTruthy();
+      }
+
+      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+        'content',
+        new RegExp(`/og/${item.slug}\\.jpg$`),
+      );
+      const og = await page.request.get(`/og/${item.slug}.jpg`);
+      expect(og.status()).toBe(200);
+      await page.waitForLoadState('networkidle');
+      expect(errors).toEqual([]);
+    });
+  }
+}

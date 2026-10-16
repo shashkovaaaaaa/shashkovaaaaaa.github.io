@@ -79,10 +79,34 @@ const manifest = [
   ]),
 ];
 
+// Кейс Askezio (design/pages/work-askezio-*.md).
+manifest.push(
+  // Первый экран и «relationship»: два квадрата 592 (desktop) → 2×.
+  ...square('cases/askezio/hero', 1184, [
+    '852940fe138248b3489f2c48aa6bf29063329f8e.png',
+    '73a2e80d584d3be9c7a1c5b8e035547ab53da968.png',
+  ]),
+  ...square('cases/askezio/relationship', 1184, [
+    '78794b893d80ab34c885b531eb9ddbfeaf7e14dd.png',
+    '5688fe17ab00b6c096d759466bf99beddb162340.png',
+  ]),
+  // Широкая картинка 1200×700 (12:7) → 2×.
+  {
+    src: 'd34d798459c5b18154b3112ff3c0a5d69a7519a6.png',
+    out: 'cases/askezio/challenges.webp',
+    width: 2400,
+    height: 1400,
+  },
+  // Approach / Reflection: 590 (desktop), 728 (tablet) → 2× от 728.
+  ...square('cases/askezio/approach', 1456, ['a0a706087855afccd11417617839649562b8d5fb.png']),
+  ...square('cases/askezio/reflection', 1456, ['0b31ed9709fd7ace6b4add87e38cf485197cc1bd.png']),
+);
+
 // Open Graph: 1200×630 JPEG. Лежат в public/og — вне папки оптимизатора, поэтому сжимаются один раз здесь.
 const OG_OUT = 'public/og';
 const ogManifest = [
   { src: 'aadf5171ed67f428d6ffb7d7c81eb94335b22dc4.png', out: 'supply-leader.jpg' },
+  { src: 'c345934c8441d8cbde4b1b1b133be3a83c9ea739.png', out: 'askezio.jpg' },
 ];
 
 // Серия квадратных картинок: <prefix>-1.webp, <prefix>-2.webp, …

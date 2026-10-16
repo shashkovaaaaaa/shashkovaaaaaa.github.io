@@ -16,12 +16,6 @@
   color: var(--text-primary);
 }
 
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-
 @media (min-width: 768px) {
   .hero {
     gap: 30px;

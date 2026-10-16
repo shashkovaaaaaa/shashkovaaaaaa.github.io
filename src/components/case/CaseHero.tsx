@@ -1,32 +1,37 @@
-import { Badge } from '../Badge';
-import { CaseImage } from './CaseImage';
+import { BadgeList } from './BadgeList';
 import styles from './CaseHero.module.css';
+import { ImageRow, type CaseImageItem } from './ImageRow';
 
 type CaseHeroProps = {
   title: string;
   badges: string[];
-  image: string;
-  alt: string;
-};
+} & (
+  | // Одна большая картинка 2:1 (Supply Leader, Prokladovki); на mobile можно дать свой квадратный кроп.
+    { image: string; alt: string; mobileImage?: string; images?: never }
+    // Несколько квадратов в ряд (Askezio: 2 × 592).
+  | { images: CaseImageItem[]; image?: never; alt?: never; mobileImage?: never }
+);
 
 // design/pages/work-*-desktop.md → first screen / hero block
-export function CaseHero({ title, badges, image, alt }: CaseHeroProps) {
+export function CaseHero(props: CaseHeroProps) {
+  const { title, badges } = props;
+
   return (
     <header className={styles.hero}>
       <h1 className={styles.title}>{title}</h1>
-      <ul className={styles.badges}>
-        {badges.map((badge) => (
-          <li key={badge}>
-            <Badge variant="case">{badge}</Badge>
-          </li>
-        ))}
-      </ul>
-      <CaseImage
-        src={image}
-        alt={alt}
-        ratio="2 / 1"
-        sizes="(min-width: 1200px) 1200px, (min-width: 768px) calc(100vw - 40px), calc(100vw - 20px)"
-      />
+      <BadgeList items={badges} />
+      {props.images ? (
+        <ImageRow images={props.images} />
+      ) : (
+        <ImageRow
+          images={[{ src: props.image, alt: props.alt }]}
+          ratio="2 / 1"
+          mobileImages={
+            props.mobileImage ? [{ src: props.mobileImage, alt: props.alt }] : undefined
+          }
+          mobileRatio="1"
+        />
+      )}
     </header>
   );
 }

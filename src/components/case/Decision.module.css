@@ -48,6 +48,11 @@
     gap: 30px;
   }
 
+  /* approach / reflection (без подписи): text block col gap 20 */
+  .plain .text {
+    gap: 20px;
+  }
+
   /* desktop/tablet: head-4 Semi Bold 24, ls -2% */
   .label {
     font-size: var(--fs-head-4);

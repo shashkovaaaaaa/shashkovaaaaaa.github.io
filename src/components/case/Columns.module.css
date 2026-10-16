@@ -1,8 +1,16 @@
-/* column: col gap 10; заголовок head-4 24 Semi Bold (ls -2%); пункты через 10. */
+/*
+ * columns / cards: колонки gap 40 с переносом (`grow`, `wrap`): 2 (Supply Leader) или 3 (Prokladovki) в ряд
+ * на desktop; на tablet — по две (третья на всю ширину), на mobile — столбиком.
+ * column: col gap 10; заголовок head-4 24 Semi Bold (ls -2%); пункты через 10.
+ */
 .columns {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+}
+
+.columns > .column {
+  flex: 1 1 300px;
 }
 
 .column {
@@ -20,14 +28,12 @@
 }
 
 /* В колонках пункты списка всегда через 10 (в обычном тексте на desktop — 20). */
-.body :is(ul, ol) {
+.body :is(ul:not([data-badge-list]), ol) {
   gap: 10px;
 }
 
 @media (min-width: 768px) {
   .columns {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px;
+    row-gap: 40px;
   }
 }

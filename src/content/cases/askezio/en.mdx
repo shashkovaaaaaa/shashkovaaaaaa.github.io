@@ -1,0 +1,77 @@
+{/* Тексты — из design/pages/work-askezio-desktop.md (v2). Картинки — public/images/cases/askezio (pnpm images). */}
+
+<CaseHero
+  title="Designing a Quiz & Test-builder – from MVP to release"
+  badges={['Web App Design', 'B2B', 'Educational tools']}
+  images={[
+    { src: 'askezio/hero-1.webp', alt: 'Askezio test builder: question editor' },
+    { src: 'askezio/hero-2.webp', alt: 'Askezio test builder: test settings' },
+  ]}
+/>
+
+<TextSection title="Context">
+
+A product-minded founder found me through a test assignment and, within weeks, turned it into a long-term collaboration. He’d already built a working MVP — but came with a clear diagnosis: the interface was inconsistent, lacked visual rhythm, and wasn’t built to scale as new mechanics kept landing.
+
+The target audience was broad and demanding: educational institutions, HR departments, corporate teams, quiz and survey platforms — each with different needs and different tolerance for complexity.
+
+</TextSection>
+
+<TextSection title="Working relationship">
+
+This wasn’t a «deliver and disappear» freelance engagement. The client paid close attention to every decision and came with strong opinions of his own — we’d discuss, argue with evidence, and find the answer together. When we disagreed, both sides made the case, and he made the final call.
+
+To keep that dialogue fast, I prototyped ideas as interactive flows instead of static screens — giving him something to «touch» before committing to a direction. It cut revision loops significantly and made decisions faster and more confident on both sides.
+
+</TextSection>
+
+<ImageRow
+  images={[
+    { src: 'askezio/relationship-1.webp', alt: 'Interactive prototype of the test creation flow' },
+    { src: 'askezio/relationship-2.webp', alt: 'Interactive prototype of the test taking flow' },
+  ]}
+/>
+
+<TextSection title="Challenges">
+
+- Interactive question types on mobile — two of the 7 question types were highly interactive and worked great on desktop, but nearly broke on mobile. I proposed a simpler dropdown fallback for small screens — less delightful, but usable. The client kept the original interaction; the trade-off discussion shaped how we approached all 7 types going forward.
+- Constraints as a design tool — total creative freedom was producing broken layouts and unreadable cards. Adding min/max limits on text, images, and answer counts felt counterintuitive, but it’s what made the UI consistent without removing real flexibility.
+- A real token system for light & dark themes — one-off style overrides couldn’t hold up across a complex interface. We built a token system from scratch that now scales with the product instead of fighting it.
+
+</TextSection>
+
+<ImageRow
+  ratio="12 / 7"
+  images={[
+    { src: 'askezio/challenges.webp', alt: 'Question types and cards in light and dark themes' },
+  ]}
+/>
+
+<Decision
+  title="Approach"
+  image="askezio/approach-1.webp"
+  alt="Components and question types of the Askezio design system"
+  facts={[
+    '7 question types designed across all breakpoints',
+    '300+ color tokens covering both themes',
+    '3 screen sizes — desktop, tablet, mobile',
+  ]}
+>
+
+I owned the end-to-end design surface: user scenarios, individual components, and the product’s overall visual language — how creation and taking flows move, how feedback and error states feel, how the logic reads visually. The client brought ongoing research into competitors and industry leaders; I translated the strongest patterns into our own system, rather than copying them wholesale.
+
+</Decision>
+
+<Decision title="Reflection" image="askezio/reflection-1.webp" alt="Askezio interface across desktop, tablet and mobile">
+
+The product shipped — from a messy MVP with no design system into a structured product with real component logic, working token architecture, and a consistent visual language across three screen sizes.
+
+What I’d do differently: start with a token system from day one, not retrofit it once complexity became undeniable. What I learned about process: distance helps — some of the best solutions showed up only after stepping away from a hard problem for a few days. What I learned about myself: freelance work usually means you deliver, it ships, and you never hear what happened next. This project was different — real back-and-forth, multiple iterations, sometimes a long search for the right answer. I thrive on that feedback loop. It makes the work, and me, better.
+
+</Decision>
+
+<TextSection title="What’s next">
+
+This collaboration is ongoing — new mechanics and features are still being designed as the product grows. Phase 2, coming soon…
+
+</TextSection>

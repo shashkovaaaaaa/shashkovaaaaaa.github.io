@@ -53,6 +53,8 @@ export const cases: CaseMeta[] = [
   },
   {
     slug: 'askezio',
+    published: true,
+    ogImage: '/og/askezio.jpg',
     cover: askezioCover,
     coverMobile: askezioCoverMobile,
     coverAlt: {

@@ -20,7 +20,7 @@
 }
 
 /* Списки в тексте (например, «Key UX Problems»): без маркеров, пункты через 10 (desktop/tablet — 20). */
-.prose ul,
+.prose ul:not([data-badge-list]),
 .prose ol {
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
     line-height: var(--lh-head-3);
   }
 
-  .prose ul,
+  .prose ul:not([data-badge-list]),
   .prose ol {
     gap: 20px;
   }
