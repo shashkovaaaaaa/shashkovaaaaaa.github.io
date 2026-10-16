@@ -2,19 +2,14 @@ import { expect, type Page } from '@playwright/test';
 
 export type ThemeName = 'light' | 'dark';
 
-// TODO: убрать, когда появится кейс Prokladovki. Next prefetch-ит ссылку его карточки
-// и получает 404 — это ожидаемо.
-const PENDING_ROUTES = /\/work\/prokladovki\//;
-
 export function collectErrors(page: Page) {
   const errors: string[] = [];
   page.on('console', (m) => {
-    if (m.type() !== 'error' || PENDING_ROUTES.test(m.location().url)) return;
-    errors.push(`${m.text()} (${m.location().url})`);
+    if (m.type() === 'error') errors.push(`${m.text()} (${m.location().url})`);
   });
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('response', (r) => {
-    if (r.status() >= 400 && !PENDING_ROUTES.test(r.url())) errors.push(`${r.status()} ${r.url()}`);
+    if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`);
   });
   return errors;
 }

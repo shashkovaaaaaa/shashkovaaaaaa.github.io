@@ -16,6 +16,8 @@ export type CaseMeta = {
   published?: boolean;
   // Open Graph: public/og/<slug>.jpg, 1200×630 (scripts/prepare-images.mjs).
   ogImage?: string;
+  // Отступ между секциями кейса на tablet/desktop: 60 (по умолчанию) или 100 (Prokladovki).
+  sectionGap?: 'default' | 'loose';
   // desktop/tablet — 5:4, mobile — 1:1 (в макете разные кропы).
   cover: StaticImageData;
   coverMobile: StaticImageData;
@@ -35,6 +37,9 @@ const defaultBadges: Localized<string[]> = {
 export const cases: CaseMeta[] = [
   {
     slug: 'prokladovki',
+    published: true,
+    ogImage: '/og/prokladovki.jpg',
+    sectionGap: 'loose',
     cover: prokladovkiCover,
     coverMobile: prokladovkiCoverMobile,
     coverAlt: {

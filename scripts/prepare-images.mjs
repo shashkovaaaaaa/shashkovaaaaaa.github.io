@@ -102,11 +102,45 @@ manifest.push(
   ...square('cases/askezio/reflection', 1456, ['0b31ed9709fd7ace6b4add87e38cf485197cc1bd.png']),
 );
 
+// Кейс Prokladovki (design/pages/work-prokladovki-*.md). На mobile у большинства картинок свои кропы.
+const wide = (out, src, height = 1200) => ({ src, out, width: 2400, height });
+const portrait = (out, src) => ({ src, out, width: 740, height: 1200 }); // mobile 370×600
+manifest.push(
+  wide('cases/prokladovki/hero.webp', 'e1b1c87aec3c3277656336369b4e26e30f2e5aa5.png'),
+  ...square('cases/prokladovki/hero-mobile', 740, ['b281e511df12cc35a05407a00bd3856d3d497d98.png']),
+  wide('cases/prokladovki/learning.webp', '4534c89589779fcd6e7d1825103a1954dbd71b8d.png'),
+  portrait(
+    'cases/prokladovki/learning-mobile.webp',
+    'acfeae945c1a6ed4ce5f11f20736f05958285621.png',
+  ),
+  wide('cases/prokladovki/mapping.webp', '021d6466fac588ff1da4aa7019c90be277691611.png'),
+  ...square('cases/prokladovki/mapping-mobile', 740, [
+    '7a7229cf49d99beadc44dea795a65564722979fe.png',
+    'b77612538c4617bfe715f10a32cea9271be5731e.png',
+  ]),
+  // Таблица приоритизации: 1200×400 (3:1), на mobile та же картинка.
+  wide(
+    'cases/prokladovki/prioritization.webp',
+    'f5ac89b9566e24bd0f8ac036f7dba2c85c78898e.png',
+    800,
+  ),
+  wide('cases/prokladovki/stage-1.webp', '7e888183b4cef6ac95369202624b03e4edf12153.png'),
+  wide('cases/prokladovki/stage-2.webp', 'c6fe8da7588f10d7b617389dadf5009a0173098b.png'),
+  wide('cases/prokladovki/stage-3.webp', '5064e3db8fdd04f3c261cf95807c09e9c99d405b.png'),
+  // stage-4: 1200×710 → 2×.
+  wide('cases/prokladovki/stage-4.webp', 'e02990677645daa192cfd31ee9687d5b2ad6ceda.png', 1420),
+  portrait('cases/prokladovki/stage-1-mobile.webp', 'a69d4137afdb7194decbfd8de37b17c44e910e78.png'),
+  portrait('cases/prokladovki/stage-2-mobile.webp', 'e2f6f894e87ac36ade48f64c559cacbcfb4455f1.png'),
+  portrait('cases/prokladovki/stage-3-mobile.webp', '442a3fdedfa7db1b26e718fa60ba9c1f3351837c.png'),
+  portrait('cases/prokladovki/stage-4-mobile.webp', '3379149408a662cb62cbf4ac4b5d10a99ff4b3aa.png'),
+);
+
 // Open Graph: 1200×630 JPEG. Лежат в public/og — вне папки оптимизатора, поэтому сжимаются один раз здесь.
 const OG_OUT = 'public/og';
 const ogManifest = [
   { src: 'aadf5171ed67f428d6ffb7d7c81eb94335b22dc4.png', out: 'supply-leader.jpg' },
   { src: 'c345934c8441d8cbde4b1b1b133be3a83c9ea739.png', out: 'askezio.jpg' },
+  { src: 'c428001613940105efc1aff78457e6f4fa9ec4e2.png', out: 'prokladovki.jpg' },
 ];
 
 // Серия квадратных картинок: <prefix>-1.webp, <prefix>-2.webp, …

@@ -1,0 +1,56 @@
+/*
+ * reflection: col gap 20, radius 8, surface/surface-images.
+ *   mobile  pad 20, заголовок head-4-mobile (Medium 24), текст 16/22
+ *   tablet  pad 40, заголовок head-4 (Semi Bold 24), текст subtitile-M 26
+ *   desktop pad 40, текст 24 (ls −2%)
+ */
+.callout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: var(--radius-m);
+  background-color: var(--surface-images);
+}
+
+.title {
+  font-size: var(--fs-head-4);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-head-4);
+  letter-spacing: var(--ls-head-4);
+  color: var(--text-third);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .callout {
+    padding: 40px;
+  }
+
+  .title {
+    font-weight: var(--fw-semibold);
+  }
+
+  .body {
+    gap: 16px;
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-subtitle);
+    letter-spacing: var(--ls-head);
+  }
+}
+
+@media (min-width: 1200px) {
+  .body {
+    font-size: var(--fs-head-4);
+    letter-spacing: var(--ls-head-4);
+  }
+}

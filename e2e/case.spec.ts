@@ -85,6 +85,11 @@ const CASES = [
     en: 'Designing a Quiz & Test-builder – from MVP to release',
     ru: 'Конструктор квизов и тестов — от MVP до релиза',
   },
+  {
+    slug: 'prokladovki',
+    en: 'Redesigning Host Onboarding for a Self-Storage Marketplace',
+    ru: 'Редизайн онбординга хостов для маркетплейса self-storage',
+  },
 ] as const;
 
 for (const item of CASES) {
@@ -118,3 +123,14 @@ for (const item of CASES) {
     });
   }
 }
+
+test('главная: prefetch ссылок на кейсы не даёт 404', async ({ page }) => {
+  const failed: string[] = [];
+  page.on('response', (r) => r.status() >= 400 && failed.push(`${r.status()} ${r.url()}`));
+  await page.goto('/en/');
+  // Карточки попадают во viewport — Next prefetch-ит их страницы.
+  for (const card of await page.locator('#works article').all())
+    await card.scrollIntoViewIfNeeded();
+  await page.waitForLoadState('networkidle');
+  expect(failed).toEqual([]);
+});

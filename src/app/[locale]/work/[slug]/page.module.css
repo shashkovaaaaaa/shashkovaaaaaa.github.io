@@ -12,4 +12,9 @@
   .body {
     gap: 60px;
   }
+
+  /* Prokladovki: case body col gap 100 */
+  .loose {
+    gap: 100px;
+  }
 }

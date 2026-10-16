@@ -1,4 +1,5 @@
 export { BadgeList } from './BadgeList';
+export { Callout } from './Callout';
 export { CaseHero } from './CaseHero';
 export { CaseImage } from './CaseImage';
 export { Column, Columns } from './Columns';

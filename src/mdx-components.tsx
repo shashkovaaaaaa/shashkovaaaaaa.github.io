@@ -2,6 +2,7 @@ import type { MDXComponents } from 'mdx/types';
 
 import {
   BadgeList,
+  Callout,
   CaseHero,
   CaseImage,
   Column,
@@ -15,6 +16,7 @@ import {
 // Секции кейсов доступны в MDX без импортов: content/cases/<slug>/<locale>.mdx.
 const components: MDXComponents = {
   BadgeList,
+  Callout,
   CaseHero,
   CaseImage,
   Column,

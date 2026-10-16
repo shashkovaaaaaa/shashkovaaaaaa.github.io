@@ -1,0 +1,240 @@
+{/* Тексты — из design/pages/work-prokladovki-desktop.md (v2). Картинки — public/images/cases/prokladovki (pnpm images). */}
+
+<CaseHero
+  title="Redesigning Host Onboarding for a Self-Storage Marketplace"
+  badges={['Product Design Deep Dive', 'B2B2C', 'Marketplace', 'Onboarding']}
+  image="prokladovki/hero.webp"
+  mobileImage="prokladovki/hero-mobile-1.webp"
+  alt="Host onboarding screens: passport upload and company TIN lookup"
+/>
+
+<TextSection title="Project Context">
+
+The marketplace connected storage owners with people looking to rent self-storage spaces. As supply grew, manually onboarding every new host became a bottleneck, creating the need for a scalable self-service onboarding experience.
+
+<Column title="Audience">
+
+The primary audience was storage owners who wanted to list and rent out their spaces through the marketplace. This included individuals, self-employed hosts, sole proprietors, and companies — each with different legal, verification, and documentation requirements.
+
+</Column>
+
+<Column title="Business Goals">
+
+- Scale host acquisition without increasing the operational workload.
+- Increase marketplace supply by helping more hosts create their first listing independently.
+
+</Column>
+
+<Column title="User Goals">
+
+- Complete registration and verification with as little manual data entry as possible.
+- Provide only the information and documents relevant to their legal status.
+- Create and publish their first storage listing as quickly as possible.
+
+</Column>
+
+<Column title="Success Metrics">
+
+Success would be measured by how effectively hosts could complete onboarding and reach their first published listing without manual support.
+
+<BadgeList
+  items={[
+    'Host Activation Rate',
+    'Onboarding Completion Rate',
+    'Time to First Listing',
+    'Manual Intervention Rate',
+  ]}
+/>
+
+</Column>
+
+Market context: The product was designed for the Russian market, where onboarding requirements vary by legal status and may include INN (TIN)-based business verification, local banking details, and a public offer agreement.
+
+</TextSection>
+
+<TextSection title="Learning from Existing Host Onboarding Patterns">
+
+To understand how complex host onboarding could be simplified, I analyzed how established marketplaces guide suppliers through registration, verification, payout setup, and the creation of their first listing.
+
+Rather than copying a specific flow, I focused on recurring patterns that could be adapted to the legal and operational requirements of a self-storage marketplace.
+
+<ImageRow
+  ratio="2 / 1"
+  images={[
+    {
+      src: 'prokladovki/learning.webp',
+      alt: 'Comparison of host onboarding flows on established marketplaces',
+    },
+  ]}
+  mobileRatio="37 / 60"
+  mobileImages={[
+    {
+      src: 'prokladovki/learning-mobile.webp',
+      alt: 'Comparison of host onboarding flows on established marketplaces',
+    },
+  ]}
+/>
+
+</TextSection>
+
+<TextSection title="Mapping the Universal Host Onboarding Flow">
+
+Based on the recurring patterns identified during competitive research, I mapped a universal host onboarding flow covering the full journey from registration to completing the first storage listing.
+
+The goal was to create a clear baseline that captured all essential steps before identifying friction points and exploring how the experience could be improved.
+
+<ImageRow
+  ratio="2 / 1"
+  images={[
+    {
+      src: 'prokladovki/mapping.webp',
+      alt: 'Universal host onboarding flow from registration to the first listing',
+    },
+  ]}
+  mobileImages={[
+    {
+      src: 'prokladovki/mapping-mobile-1.webp',
+      alt: 'Universal host onboarding flow: registration and verification',
+    },
+    {
+      src: 'prokladovki/mapping-mobile-2.webp',
+      alt: 'Universal host onboarding flow: payouts and the first listing',
+    },
+  ]}
+/>
+
+</TextSection>
+
+<TextSection title="Turning Friction into Product Hypotheses">
+
+The universal flow exposed several points where hosts were likely to drop off: too much manual data entry, different requirements for each legal status, and a long path before reaching the first published listing.
+
+I translated these friction points into three product hypotheses and prioritized them based on expected user impact, business value, and implementation complexity.
+
+<Columns>
+<Column title="Adaptive Onboarding">
+
+If onboarding branches immediately after legal status selection, each host will only go through the steps and requirements relevant to them
+
+</Column>
+<Column title="Automation-First Data Collection">
+
+If available data is automatically extracted from identity documents or retrieved by Tax ID, users will spend less time filling out forms and make fewer input errors
+
+</Column>
+<Column title="Activation-Focused Onboarding">
+
+If onboarding naturally continues from verification to creating the first storage unit and signing the offer, more hosts will reach a listing ready for publication
+
+</Column>
+</Columns>
+
+<ImageRow
+  ratio="3 / 1"
+  images={[
+    {
+      src: 'prokladovki/prioritization.webp',
+      alt: 'Hypotheses prioritized by user impact, business value and complexity',
+    },
+  ]}
+/>
+
+The prioritization showed that adaptive onboarding and an activation-focused flow could deliver strong impact with relatively manageable complexity.
+
+Automation also had high potential, but depended on third-party integrations, so I treated it as an enhancement layer rather than making the entire flow dependent on it.
+
+</TextSection>
+
+<TextSection title="Host Onboarding Flow">
+
+<ImageRow
+  ratio="2 / 1"
+  images={[
+    { src: 'prokladovki/stage-1.webp', alt: 'Stage 1: legal status selection and registration' },
+  ]}
+  mobileRatio="37 / 60"
+  mobileImages={[
+    {
+      src: 'prokladovki/stage-1-mobile.webp',
+      alt: 'Stage 1: legal status selection and registration',
+    },
+  ]}
+/>
+
+<ImageRow
+  ratio="2 / 1"
+  images={[
+    {
+      src: 'prokladovki/stage-2.webp',
+      alt: 'Stage 2: verification with passport upload and TIN lookup',
+    },
+  ]}
+  mobileRatio="37 / 60"
+  mobileImages={[
+    {
+      src: 'prokladovki/stage-2-mobile.webp',
+      alt: 'Stage 2: verification with passport upload and TIN lookup',
+    },
+  ]}
+/>
+
+<ImageRow
+  ratio="2 / 1"
+  images={[{ src: 'prokladovki/stage-3.webp', alt: 'Stage 3: payout details' }]}
+  mobileRatio="37 / 60"
+  mobileImages={[{ src: 'prokladovki/stage-3-mobile.webp', alt: 'Stage 3: payout details' }]}
+/>
+
+<ImageRow
+  ratio="2400 / 1420"
+  images={[
+    {
+      src: 'prokladovki/stage-4.webp',
+      alt: 'Stage 4: the first storage listing and the offer agreement',
+    },
+  ]}
+  mobileRatio="37 / 60"
+  mobileImages={[
+    {
+      src: 'prokladovki/stage-4-mobile.webp',
+      alt: 'Stage 4: the first storage listing and the offer agreement',
+    },
+  ]}
+/>
+
+</TextSection>
+
+<TextSection title="What the Final Concept Solves">
+
+The final onboarding concept addressed three core challenges:
+
+- Less irrelevant complexity – the flow adapts to the host’s legal status.
+- Less manual work – reliable data is retrieved or extracted automatically.
+- A clear path to activation – registration ends with the first usable listing, not an empty account.
+
+</TextSection>
+
+<TextSection title="Recommendations & Next Steps">
+
+The next step would be to validate whether the new flow actually reduces friction without increasing operational risk. I would focus on where users drop off, how reliably automation performs, and whether more hosts reach a listing ready for publication without manual support.
+
+<BadgeList
+  items={[
+    'Drop-off by step & legal status',
+    'OCR / TIN lookup success rate',
+    'Manual correction rate',
+    'Time to complete onboarding',
+    'Time to first listing',
+    'Manual support rate',
+  ]}
+/>
+
+</TextSection>
+
+<Callout title="Reflection">
+
+This project reinforced one of my core product design beliefs: constraints do not necessarily make a journey harder. When they are introduced at the right moment, they can give users clarity, confidence, and a sense of progress.
+
+Good onboarding works like a guided tour. It does not simply explain the product — it leads users toward their first meaningful outcome. In this case, that meant not just creating an account, but getting the first storage unit ready to go live.
+
+</Callout>

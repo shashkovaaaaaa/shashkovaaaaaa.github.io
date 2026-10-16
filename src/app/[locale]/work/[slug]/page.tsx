@@ -60,13 +60,13 @@ export async function generateMetadata({
 }
 
 export default async function CasePage({ params }: PageProps<'/[locale]/work/[slug]'>) {
-  const { locale, slug } = await resolve(params);
+  const { locale, slug, item } = await resolve(params);
   setRequestLocale(locale);
   const { default: Content } = await import(`@/content/cases/${slug}/${locale}.mdx`);
 
   return (
     <main data-layout="case">
-      <article className={styles.body}>
+      <article className={`${styles.body} ${item.sectionGap === 'loose' ? styles.loose : ''}`}>
         <Content />
       </article>
       <Cta />
