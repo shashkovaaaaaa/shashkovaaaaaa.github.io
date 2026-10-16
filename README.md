@@ -25,6 +25,9 @@ pnpm install
 | `pnpm lint`                         | ESLint, предупреждения считаются ошибками                                          |
 | `pnpm typecheck`                    | Генерация типов маршрутов (`next typegen`) + `tsc --noEmit`                        |
 | `pnpm format` / `pnpm format:check` | Prettier: отформатировать / проверить                                              |
+| `pnpm test:e2e`                     | Playwright-тесты по собранному `out/` на 390/768/1280 (сначала `pnpm build`)       |
+
+E2E-тесты используют системный Chromium (`/usr/bin/chromium-browser`, путь можно переопределить через `PLAYWRIGHT_CHROMIUM_EXECUTABLE`), браузеры Playwright не скачиваются.
 
 На pre-commit husky запускает lint-staged (ESLint + Prettier по изменённым файлам).
 

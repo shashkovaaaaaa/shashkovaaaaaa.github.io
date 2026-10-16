@@ -8,3 +8,5 @@ design/
 CLAUDE.md
 AGENTS.md
 *.zip
+e2e/.results/
+playwright-report/
