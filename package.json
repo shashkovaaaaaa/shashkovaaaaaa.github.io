@@ -8,6 +8,7 @@
     "start": "serve out",
     "lint": "eslint --max-warnings=0",
     "format": "prettier --write .",
+    "images": "node scripts/prepare-images.mjs",
     "format:check": "prettier --check .",
     "typecheck": "next typegen && tsc --noEmit",
     "test:e2e": "playwright test",
@@ -37,6 +38,7 @@
     "lint-staged": "17.6.0",
     "prettier": "3.9.10",
     "serve": "14.2.6",
+    "sharp": "0.35.5",
     "typescript": "6.0.3"
   },
   "engines": {

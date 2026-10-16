@@ -1,0 +1,72 @@
+/*
+ * design/pages/main-page-*.md → projects block: col gap 40
+ *   заголовок head-3 40 (mobile head-3-mobile 30), подзаголовок 26 (mobile 16), gap 20
+ *   сетка: desktop 2 колонки gap 20, tablet 1 колонка gap 50, mobile gap 60
+ */
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  scroll-margin-top: 40px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+/* 30px на 390 → 40px на 768 */
+.title {
+  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
+  line-height: var(--lh-head-3);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-head);
+  color: var(--text-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px;
+}
+
+.whatsNext {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    font-size: var(--fs-subtitle);
+    line-height: var(--lh-subtitle);
+  }
+
+  .grid {
+    gap: 50px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .whatsNext {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-head-3);
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-head-3);
+    letter-spacing: var(--ls-head);
+    color: var(--text-primary);
+  }
+}

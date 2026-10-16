@@ -20,7 +20,8 @@ const nextConfig: NextConfig = {
   env: {
     nextImageExportOptimizer_imageFolderPath: 'public/images',
     nextImageExportOptimizer_exportFolderPath: 'out',
-    nextImageExportOptimizer_quality: '75',
+    // Единственное сжатие с потерями: исходники в public/images — lossless (scripts/prepare-images.mjs).
+    nextImageExportOptimizer_quality: '85',
     nextImageExportOptimizer_storePicturesInWEBP: 'true',
     nextImageExportOptimizer_exportFolderName: 'nextImageExportOptimizer',
     nextImageExportOptimizer_generateAndUseBlurImages: 'true',

@@ -8,11 +8,20 @@ declare global {
 
 type ThemeName = 'light' | 'dark' | 'system';
 
+// TODO: убрать, когда появятся страницы кейсов. Сейчас Next prefetch-ит ссылки карточек
+// на /work/<slug>/ и получает 404 — это ожидаемо.
+const PENDING_ROUTES = /\/work\//;
+
 function collectErrors(page: Page) {
   const errors: string[] = [];
-  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  page.on('console', (m) => {
+    if (m.type() !== 'error' || PENDING_ROUTES.test(m.location().url)) return;
+    errors.push(m.text());
+  });
   page.on('pageerror', (e) => errors.push(e.message));
-  page.on('response', (r) => r.status() >= 400 && errors.push(`${r.status()} ${r.url()}`));
+  page.on('response', (r) => {
+    if (r.status() >= 400 && !PENDING_ROUTES.test(r.url())) errors.push(`${r.status()} ${r.url()}`);
+  });
   return errors;
 }
 
@@ -83,9 +92,9 @@ test.describe('редирект с /', () => {
   });
 });
 
-for (const [locale, title, cta] of [
-  ['en', 'Home page', 'Let’s discuss your next idea'],
-  ['ru', 'Главная страница', 'Обсудим вашу следующую идею'],
+for (const [locale, title, projects, cta] of [
+  ['en', 'Hello, I’m Nastya.', 'Projects, but with the details', 'Let’s discuss your next idea'],
+  ['ru', 'Привет, я Настя.', 'Проекты — с подробностями', 'Обсудим вашу следующую идею'],
 ] as const) {
   test(`/${locale}/: lang, тексты, шрифт, нет ошибок`, async ({ page }) => {
     const errors = collectErrors(page);
@@ -93,13 +102,67 @@ for (const [locale, title, cta] of [
 
     await expect(page.locator('html')).toHaveAttribute('lang', locale);
     await expect(page.locator('h1')).toHaveText(title);
-    await expect(page.getByRole('heading', { level: 2 })).toHaveText(cta);
+    await expect(page.getByRole('heading', { level: 2 })).toHaveText([projects, cta]);
     await expect(page.locator('footer p')).toHaveCount(2);
     const font = await page.locator('body').evaluate((b) => getComputedStyle(b).fontFamily);
     expect(font).toMatch(/Inter/);
+
+    // Прокручиваем до конца, чтобы подгрузились lazy-обложки — 404 попадут в errors.
+    await page.locator('footer').scrollIntoViewIfNeeded();
+    await page.waitForLoadState('networkidle');
     expect(errors).toEqual([]);
   });
 }
+
+test.describe('главная', () => {
+  test('якоря hero и проектов, ссылки из хедера', async ({ page }) => {
+    await page.goto('/en/');
+    await expect(page.locator('section#about h1')).toBeVisible();
+    await expect(page.locator('section#works h2')).toBeVisible();
+  });
+
+  test('карточки проектов: ссылки на кейсы, обложки, What’s next только на desktop', async ({
+    page,
+  }, testInfo) => {
+    await page.goto('/en/');
+    const cards = page.locator('#works article');
+    await expect(cards).toHaveCount(3);
+
+    const hrefs = await cards
+      .getByRole('link')
+      .evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    expect(hrefs).toEqual([
+      '/en/work/prokladovki/',
+      '/en/work/askezio/',
+      '/en/work/supply-leader/',
+    ]);
+
+    // В каждой карточке видна ровно одна обложка (desktop/tablet 5:4 или mobile 1:1), и она загрузилась.
+    for (const card of await cards.all()) {
+      await card.scrollIntoViewIfNeeded();
+      const visible = card.locator('img:visible');
+      await expect(visible).toHaveCount(1);
+      await expect(visible).toHaveJSProperty('complete', true);
+      expect(await visible.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(
+        0,
+      );
+    }
+
+    const desktop = testInfo.project.name === 'desktop-1280';
+    await expect(page.getByText('What’s next...')).toBeVisible({ visible: desktop });
+  });
+
+  test('клик по карточке ведёт на страницу кейса', async ({ page }) => {
+    await page.goto('/en/');
+    const card = page.locator('#works article').first();
+    await card.scrollIntoViewIfNeeded();
+    // Кликаем мышью по центру превью: ссылка заголовка растянута на всю карточку через ::after.
+    const box = await card.locator('img:visible').boundingBox();
+    if (!box) throw new Error('нет обложки');
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+    await expect(page).toHaveURL('/en/work/prokladovki/');
+  });
+});
 
 test.describe('хедер', () => {
   test('нужный вариант хедера для вьюпорта', async ({ page }, testInfo) => {
@@ -199,7 +262,7 @@ test('LocaleSwitch ведёт на ту же страницу в другой л
   await switchLocale(page, 'Русский');
   await expect(page).toHaveURL('/ru/');
   await expect(html).toHaveAttribute('lang', 'ru');
-  await expect(page.locator('h1')).toHaveText('Главная страница');
+  await expect(page.locator('h1')).toHaveText('Привет, я Настя.');
   await expect(html).toHaveAttribute('data-theme', 'dark');
   if (await isMobileHeader(page)) {
     // Меню закрывается после перехода.
@@ -210,4 +273,26 @@ test('LocaleSwitch ведёт на ту же страницу в другой л
   await expect(page).toHaveURL('/en/');
   await expect(html).toHaveAttribute('lang', 'en');
   expect(errors).toEqual([]);
+});
+
+test.describe('hover карточки', () => {
+  test('лёгкий zoom превью', async ({ page }) => {
+    await page.goto('/en/');
+    const card = page.locator('#works article').first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await expect(card.locator('img:visible')).toHaveCSS('scale', '1.03');
+  });
+
+  test.describe('prefers-reduced-motion', () => {
+    test.use({ contextOptions: { reducedMotion: 'reduce' } });
+
+    test('без zoom', async ({ page }) => {
+      await page.goto('/en/');
+      const card = page.locator('#works article').first();
+      await card.scrollIntoViewIfNeeded();
+      await card.hover();
+      await expect(card.locator('img:visible')).toHaveCSS('scale', 'none');
+    });
+  });
 });

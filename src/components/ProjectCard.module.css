@@ -1,0 +1,113 @@
+/*
+ * design/pages/main-page-*.md → card-*
+ *   превью: desktop 610×488 / tablet 728×582 (5:4), mobile 370×370; radius 4
+ *   col gap 16; бейджи row gap 4; заголовок + описание col gap 8
+ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.thumbnail {
+  overflow: hidden;
+  aspect-ratio: 1;
+  border-radius: var(--radius-s);
+  background-color: var(--bg-badge);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale var(--transition-medium);
+}
+
+.imageDesktop {
+  display: none;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* mobile: head-4-mobile — Medium 24, ls -3% */
+.title {
+  font-size: var(--fs-head-4);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-head-4);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-s);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--border-strong);
+  outline-offset: 4px;
+  border-radius: var(--radius-s);
+}
+
+/* mobile: text-M-regular 16/22 */
+.summary {
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  color: var(--text-secondary);
+}
+
+/* Hover в макете нет — сдержанный zoom превью (см. DESIGN-QUESTIONS.md). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover .image {
+    scale: 1.03;
+  }
+}
+
+@media (min-width: 768px) {
+  .thumbnail {
+    aspect-ratio: 5 / 4;
+  }
+
+  .imageDesktop {
+    display: block;
+  }
+
+  .imageMobile {
+    display: none;
+  }
+
+  /* desktop/tablet: head-4 — Semi Bold 24, ls -2% */
+  .title {
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-head-4);
+  }
+
+  /* 14/20 */
+  .summary {
+    font-size: var(--fs-text-s);
+    line-height: var(--lh-control);
+  }
+}

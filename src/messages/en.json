@@ -4,7 +4,15 @@
     "description": "Portfolio of Anastasiia Shashkova, product designer based in Saint Petersburg."
   },
   "HomePage": {
-    "title": "Home page"
+    "hero": {
+      "title": "Hello, I’m Nastya.",
+      "subtitle": "I’ve been designing interfaces for 4 years.\nMostly dashboards, admin panels, tools with too many states. Not glamorous, but someone has to make them work."
+    },
+    "projects": {
+      "title": "Projects, but with the details",
+      "subtitle": "A closer look at how I think, design, and make decisions",
+      "whatsNext": "What’s next..."
+    }
   },
   "ThemeToggle": {
     "label": "Theme",

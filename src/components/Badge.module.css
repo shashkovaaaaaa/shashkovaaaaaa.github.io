@@ -11,6 +11,13 @@
   white-space: nowrap;
 }
 
+/* На mobile бейдж выше: 28 (текст 20), на desktop/tablet — 25 (текст 17). */
+@media (max-width: 767px) {
+  .badge {
+    line-height: var(--lh-control);
+  }
+}
+
 .card {
   background-color: var(--bg-badge);
 }
