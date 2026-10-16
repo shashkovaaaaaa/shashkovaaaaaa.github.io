@@ -13,7 +13,7 @@ import { MobileMenu } from './MobileMenu';
 import { ThemeToggle } from './ThemeToggle';
 import styles from './Header.module.css';
 
-import avatar from '../../public/images/avatar.jpg';
+import avatar from '@/assets/images/avatar.webp';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 

@@ -9,25 +9,40 @@ import { dirname, join } from 'node:path';
 import sharp from 'sharp';
 
 const SRC = 'design/images';
+// Картинки по строковому пути (страницы кейсов) — в public/images, их оптимизатор ищет по папке.
 const OUT = 'public/images';
+// Картинки со статическим импортом (обложки карточек, аватар) — вне public/, иначе Next скопирует
+// lossless-исходник в out/images, а оптимизатор обработает картинку дважды.
+const STATIC = 'src/assets/images';
 
 // width/height — итоговый размер (2× от максимального в макете); кадрирование по центру, как `fill` в Figma.
 const manifest = [
+  // Аватар в хедере: 40×40 → 2×.
+  {
+    src: '5db54b11bbd0942b58e1937b6ae4cf5b8c0ee851.png',
+    root: STATIC,
+    out: 'avatar.webp',
+    width: 80,
+    height: 80,
+  },
   // Главная, карточки: desktop 610×488 и tablet 728×582 (5:4) → 2× от 728.
   {
     src: 'c428001613940105efc1aff78457e6f4fa9ec4e2.png',
+    root: STATIC,
     out: 'cases/prokladovki/cover.webp',
     width: 1456,
     height: 1165,
   },
   {
     src: 'c345934c8441d8cbde4b1b1b133be3a83c9ea739.png',
+    root: STATIC,
     out: 'cases/askezio/cover.webp',
     width: 1456,
     height: 1165,
   },
   {
     src: 'aadf5171ed67f428d6ffb7d7c81eb94335b22dc4.png',
+    root: STATIC,
     out: 'cases/supply-leader/cover.webp',
     width: 1456,
     height: 1165,
@@ -35,18 +50,21 @@ const manifest = [
   // Главная, карточки: mobile 370×370 → 2×.
   {
     src: 'b281e511df12cc35a05407a00bd3856d3d497d98.png',
+    root: STATIC,
     out: 'cases/prokladovki/cover-mobile.webp',
     width: 740,
     height: 740,
   },
   {
     src: '7807b13a3de6046c3af2677e6e4534c8389195e9.png',
+    root: STATIC,
     out: 'cases/askezio/cover-mobile.webp',
     width: 740,
     height: 740,
   },
   {
     src: '1a836a40ede183ab978f6546ec6cd00f828fb337.png',
+    root: STATIC,
     out: 'cases/supply-leader/cover-mobile.webp',
     width: 740,
     height: 740,
@@ -166,8 +184,8 @@ async function render(src, target, width, height, encode) {
   console.log(`${target}  ${info.width}×${info.height}  ${kb} KB`);
 }
 
-for (const { src, out, width, height } of manifest) {
-  await render(src, join(OUT, out), width, height, (img) =>
+for (const { src, root = OUT, out, width, height } of manifest) {
+  await render(src, join(root, out), width, height, (img) =>
     img.webp({ lossless: true, effort: 6 }),
   );
 }

@@ -1,12 +1,12 @@
 import type { StaticImageData } from 'next/image';
 import type { Locale } from 'next-intl';
 
-import askezioCover from '../../public/images/cases/askezio/cover.webp';
-import askezioCoverMobile from '../../public/images/cases/askezio/cover-mobile.webp';
-import prokladovkiCover from '../../public/images/cases/prokladovki/cover.webp';
-import prokladovkiCoverMobile from '../../public/images/cases/prokladovki/cover-mobile.webp';
-import supplyLeaderCover from '../../public/images/cases/supply-leader/cover.webp';
-import supplyLeaderCoverMobile from '../../public/images/cases/supply-leader/cover-mobile.webp';
+import askezioCover from '@/assets/images/cases/askezio/cover.webp';
+import askezioCoverMobile from '@/assets/images/cases/askezio/cover-mobile.webp';
+import prokladovkiCover from '@/assets/images/cases/prokladovki/cover.webp';
+import prokladovkiCoverMobile from '@/assets/images/cases/prokladovki/cover-mobile.webp';
+import supplyLeaderCover from '@/assets/images/cases/supply-leader/cover.webp';
+import supplyLeaderCoverMobile from '@/assets/images/cases/supply-leader/cover-mobile.webp';
 
 type Localized<T> = Record<Locale, T>;
 

@@ -134,3 +134,32 @@ test('главная: prefetch ссылок на кейсы не даёт 404', 
   await page.waitForLoadState('networkidle');
   expect(failed).toEqual([]);
 });
+
+// Порядок карточек на главной — как в макете: Prokladovki, Askezio, Supply Leader.
+// У карточки Supply Leader в макете нет прототипной ссылки — это ошибка макета (CLAUDE.md, «Нестыковки»).
+const CARD_ORDER = ['prokladovki', 'askezio', 'supply-leader'] as const;
+
+for (const locale of ['en', 'ru'] as const) {
+  test(`главная /${locale}/: три карточки-ссылки, каждая открывает свой кейс`, async ({ page }) => {
+    await page.goto(`/${locale}/`);
+    const cards = page.locator('#works article');
+    await expect(cards).toHaveCount(3);
+    await expect(cards.getByRole('link')).toHaveCount(3);
+
+    for (const [index, slug] of CARD_ORDER.entries()) {
+      await page.goto(`/${locale}/`);
+      const card = page.locator('#works article').nth(index);
+      await expect(card.getByRole('link')).toHaveAttribute('href', `/${locale}/work/${slug}/`);
+
+      // Кликаем по центру превью: ссылка заголовка растянута на всю карточку.
+      await card.scrollIntoViewIfNeeded();
+      const box = await card.locator('img:visible').boundingBox();
+      if (!box) throw new Error(`нет видимой обложки у карточки ${slug}`);
+      await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+
+      await expect(page).toHaveURL(`/${locale}/work/${slug}/`);
+      const expected = CASES.find((c) => c.slug === slug);
+      await expect(page.locator('h1')).toHaveText(expected![locale]);
+    }
+  });
+}

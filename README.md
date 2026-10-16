@@ -17,17 +17,17 @@ pnpm install
 
 ## Команды
 
-| Команда                             | Что делает                                                                                                              |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `pnpm dev`                          | Дев-сервер на http://localhost:3000 (корень `/` редиректит на `/en/` или `/ru/`)                                        |
-| `pnpm build`                        | Статическая сборка в `out/` + оптимизация картинок (`next-image-export-optimizer`)                                      |
-| `pnpm start`                        | Раздать собранный `out/` локально (http://localhost:3000)                                                               |
-| `pnpm lint`                         | ESLint, предупреждения считаются ошибками                                                                               |
-| `pnpm typecheck`                    | Генерация типов маршрутов (`next typegen`) + `tsc --noEmit`                                                             |
-| `pnpm format` / `pnpm format:check` | Prettier: отформатировать / проверить                                                                                   |
-| `pnpm images`                       | Пережать картинки из `design/images` (локально, не в git) в `public/images` по манифесту в `scripts/prepare-images.mjs` |
-| `pnpm test:e2e`                     | Playwright-тесты по собранному `out/` на 390/768/1280 (сначала `pnpm build`)                                            |
-| `pnpm test:e2e:dev`                 | Проверка консоли в `next dev` (dev-предупреждения React); переиспользует запущенный `pnpm dev` на :3000                 |
+| Команда                             | Что делает                                                                                                                                                             |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                          | Дев-сервер на http://localhost:3000 (корень `/` редиректит на `/en/` или `/ru/`)                                                                                       |
+| `pnpm build`                        | Статическая сборка в `out/`: `next build` → оптимизация картинок (`next-image-export-optimizer`) → удаление lossless-исходников из `out/` (`scripts/prune-export.mjs`) |
+| `pnpm start`                        | Раздать собранный `out/` локально (http://localhost:3000)                                                                                                              |
+| `pnpm lint`                         | ESLint, предупреждения считаются ошибками                                                                                                                              |
+| `pnpm typecheck`                    | Генерация типов маршрутов (`next typegen`) + `tsc --noEmit`                                                                                                            |
+| `pnpm format` / `pnpm format:check` | Prettier: отформатировать / проверить                                                                                                                                  |
+| `pnpm images`                       | Пережать картинки из `design/images` (локально, не в git) в `public/images` по манифесту в `scripts/prepare-images.mjs`                                                |
+| `pnpm test:e2e`                     | Playwright-тесты по собранному `out/` на 390/768/1280 (сначала `pnpm build`)                                                                                           |
+| `pnpm test:e2e:dev`                 | Проверка консоли в `next dev` (dev-предупреждения React); переиспользует запущенный `pnpm dev` на :3000                                                                |
 
 E2E-тесты используют системный Chromium (`/usr/bin/chromium-browser`, путь можно переопределить через `PLAYWRIGHT_CHROMIUM_EXECUTABLE`), браузеры Playwright не скачиваются.
 
@@ -59,8 +59,13 @@ public/images/            # исходники картинок для опти�
 
 ## Картинки
 
-Класть в `public/images/` уменьшенные копии (не шире 2× от макета, WebP lossless; сжатие с потерями — только оптимизатор при сборке, см. CLAUDE.md, «Картинки»; новые добавлять в манифест `scripts/prepare-images.mjs` и запускать `pnpm images`) и использовать компонент `ExportedImage` из `next-image-export-optimizer`. WebP-варианты и `srcset` генерируются на `pnpm build`.
-При деплое в подпапку (GitHub Pages) передавайте `basePath={process.env.NEXT_PUBLIC_BASE_PATH}` в `ExportedImage`.
+Исходники макета — в `design/images/` (локально, не в git). Уменьшенные копии без потерь (не шире 2× от макета, WebP lossless) делает `pnpm images` по манифесту `scripts/prepare-images.mjs`:
+
+- картинки страниц кейсов (строковый путь в MDX, компонент `CaseImage`) — в `public/images/cases/<slug>/`;
+- картинки со статическим импортом (обложки карточек, аватар) — в `src/assets/images/`.
+
+Сжатие с потерями — только при `pnpm build` (`next-image-export-optimizer`, качество 85, ширины до 2400). Затем `scripts/prune-export.mjs` удаляет из `out/` lossless-исходники, так что на хостинг уезжают только WebP-варианты.
+При деплое в подпапку (GitHub Pages) `basePath` передаётся в `ExportedImage` из `NEXT_PUBLIC_BASE_PATH` (уже сделано в `CaseImage`, `ProjectCard`, `Header`).
 
 ## Деплой
 
@@ -107,7 +112,7 @@ Settings → Domains → добавить домен и прописать DNS �
 
 #### Что попадает на хостинг
 
-Только статика из `out/`: HTML, `_next/static`, оптимизированные WebP (`nextImageExportOptimizer/`), OG-картинки. Серверных функций нет. В `out/images/` копируются и lossless-исходники из `public/images` (~20 МБ): сайт их не запрашивает, но они доступны по прямой ссылке.
+Только статика из `out/` (~16 МБ): HTML, `_next/static`, оптимизированные WebP (`nextImageExportOptimizer/`), OG-картинки. Серверных функций нет. Lossless-исходники в `out/` не попадают — их удаляет `scripts/prune-export.mjs`.
 
 ### GitHub Pages (запасной)
 
