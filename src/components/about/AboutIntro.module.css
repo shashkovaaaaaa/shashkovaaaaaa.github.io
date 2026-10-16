@@ -1,0 +1,57 @@
+/*
+ * desktop: row gap 40, align center; текст 570 (col gap 30), фото 590×590 radius 8.
+ * tablet/mobile (не нарисованы): столбиком, как Decision в кейсах.
+ */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* head-3 40 (на mobile — 30), 4 строки = 160 на desktop */
+.title {
+  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
+  line-height: var(--lh-head-3);
+  letter-spacing: var(--ls-head);
+  color: var(--text-primary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+  color: var(--text-primary);
+}
+
+.photo {
+  aspect-ratio: 1;
+  border-radius: var(--radius-m);
+  background-color: var(--surface-images);
+}
+
+@media (min-width: 768px) {
+  .intro {
+    gap: 40px;
+  }
+
+  .text {
+    gap: 30px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .intro {
+    display: grid;
+    grid-template-columns: 570fr 590fr;
+    align-items: center;
+  }
+}

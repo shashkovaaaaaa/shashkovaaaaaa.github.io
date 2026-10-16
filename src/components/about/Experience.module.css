@@ -1,0 +1,80 @@
+/* experience block: col gap 30 (mobile 20), по центру */
+.experience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* head-3 40 (на mobile — head-3-mobile 30) */
+.title {
+  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
+  line-height: var(--lh-head-3);
+  letter-spacing: var(--ls-head);
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* image-*: 48×48, surface/surface-images, radius 8 */
+.logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-m);
+  background-color: var(--surface-images);
+  font-size: 20px;
+  font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+}
+
+/* text: col gap 4; text-M-semibold (Medium 16/22) */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: var(--fs-text-m);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+}
+
+.company {
+  font: inherit;
+  color: var(--text-primary);
+}
+
+.meta {
+  color: var(--text-secondary);
+}
+
+/* Достижения: Medium 16/22, text-primary */
+.achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--fs-text-m);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .experience {
+    gap: 30px;
+  }
+
+  .head {
+    gap: 20px;
+  }
+}

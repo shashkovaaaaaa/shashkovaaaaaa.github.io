@@ -3,9 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
+  width: 42px;
+  height: 42px;
+  padding: 9px;
   border-radius: var(--radius-l);
   color: var(--icon-muted);
   transition:
@@ -17,7 +17,7 @@
 .toggle:hover,
 .toggle[aria-expanded='true'] {
   color: var(--text-primary);
-  background-color: var(--bg-hover);
+  background-color: var(--button-surface-link-hover);
 }
 
 /*
@@ -72,10 +72,10 @@
   rotate: -45deg;
 }
 
-/* Карточка меню: 370 wide, col gap 10, pad 20 20 20 10, radius 20, drop_shadow 0 6 10. */
+/* Карточка меню: 370×388, col gap 10, pad 20 20 20 10, radius 20, drop_shadow 0 6 10. */
 .menu {
   position: absolute;
-  /* Хедер: pad 10 + строка 44 + gap 8 = 62px, т.е. 100% (64px) − 2px. */
+  /* Хедер: pad 10 + строка 42 + gap 8 = 60px, т.е. 100% (62px) − 2px. */
   top: calc(100% - 2px);
   left: 0;
   right: 0;
@@ -84,8 +84,8 @@
   gap: 10px;
   padding: 20px 20px 20px 10px;
   border-radius: 20px;
-  background-color: var(--bg-elevated);
-  box-shadow: var(--shadow-menu);
+  background-color: var(--menu-surface);
+  box-shadow: var(--menu-shadow);
   opacity: 0;
   translate: 0 -8px;
   visibility: hidden;
@@ -116,19 +116,23 @@
   flex-direction: column;
 }
 
-/* Пункты: 340×46, pad 12 10, выравнивание влево, text-M-semibold. */
+/* Пункты: 340×46, pad 12 10, выравнивание влево, text-M-semibold (в v2 — Medium 500). */
 .item {
   width: 100%;
   justify-content: flex-start;
   padding: 12px 10px;
   font-size: var(--fs-text-m);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-medium);
   line-height: 22px;
 }
 
-.settings {
+/* Фон ссылки по умолчанию — фон страницы; на карточке меню (в тёмной теме она светлее) он был бы виден плашкой. */
+.item:not(:hover) {
+  background-color: transparent;
+}
+
+/* Frame 270989056: switch темы и языка в ряд, gap 10. */
+.switches {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-  padding: 0 10px;
 }

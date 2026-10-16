@@ -1,12 +1,12 @@
 /*
- * design/pages/main-page-desktop.md → header (1240×40)
+ * design/pages/main-page-desktop.md → header (1880×42, v2)
  * design/pages/main-page-{tablet-vertical,mobile}.md → header device=mobile (pad 10 0, radius 20)
  */
 .header {
   position: relative;
   z-index: 10;
   border-radius: 20px;
-  background-color: var(--bg-page);
+  background-color: var(--surface-overall);
   padding: 10px 0;
 }
 
@@ -31,7 +31,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid var(--border-avatar);
+  border: 1px solid var(--border-primary);
   object-fit: cover;
 }
 
@@ -48,7 +48,6 @@
   color: var(--text-primary);
 }
 
-/* На mobile/tablet роль — 70%, на desktop — 60% (как в макетах). */
 .role {
   color: var(--text-secondary);
 }
@@ -61,13 +60,6 @@
 .contactList {
   display: flex;
   align-items: center;
-}
-
-.divider {
-  width: 1px;
-  height: 20px;
-  margin: 0 6px;
-  background-color: var(--border-divider);
 }
 
 @media (min-width: 1200px) {
@@ -83,18 +75,16 @@
     padding-right: 0;
   }
 
-  .role {
-    color: var(--text-tertiary);
-  }
-
   .nav {
     display: flex;
   }
 
+  /* contacts group: иконки (без gap), затем switch темы и языка — gap 8. */
   .contacts {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 8px;
   }
 
   .mobileMenu {

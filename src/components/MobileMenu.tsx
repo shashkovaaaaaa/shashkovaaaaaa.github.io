@@ -87,10 +87,10 @@ export function MobileMenu({ className }: { className?: string }) {
           ))}
         </ul>
 
-        <p className={styles.title}>{t('settings')}</p>
-        <div className={styles.settings}>
-          <ThemeToggle variant="segmented" />
-          <LocaleSwitch variant="full" />
+        {/* v2: вместо секции Settings — ряд из двух switch (тема, язык). */}
+        <div className={styles.switches}>
+          <ThemeToggle />
+          <LocaleSwitch />
         </div>
       </div>
     </div>

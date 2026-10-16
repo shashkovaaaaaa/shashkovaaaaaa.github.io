@@ -1,27 +1,53 @@
-/* design/components.md → button: type=link / type=outline, state=default / hover */
+/*
+ * design/components.md → button: type=link / type=outline, state=default / hover.
+ * Высота 42 (pad 10 + текст 20 + 2), gap 6 у link, 10 у outline.
+ */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 6px;
+  min-height: 42px;
   padding: 10px;
   border-radius: var(--radius-l);
   font-size: var(--fs-text-s);
   line-height: var(--lh-control);
   letter-spacing: var(--ls-text);
-  color: var(--text-primary);
   white-space: nowrap;
   transition: background-color var(--transition-fast);
 }
 
-.button:hover {
-  background-color: var(--bg-hover);
-}
-
 .link {
   border: none;
+  color: var(--button-text-link-default);
+  background-color: var(--button-surface-link-default);
+}
+
+.link:hover {
+  color: var(--button-text-link-hover);
+  background-color: var(--button-surface-link-hover);
 }
 
 .outline {
-  border: 1px solid var(--border-strong);
+  gap: 10px;
+  border: 1px solid var(--button-stroke-outlined-default);
+  color: var(--button-text-outlined-default);
+  background-color: var(--button-surface-outlined-default);
+}
+
+.outline:hover {
+  border-color: var(--button-stroke-outlined-hover);
+  color: var(--button-text-outlined-hover);
+  background-color: var(--button-surface-outlined-hover);
+}
+
+/* Квадратная кнопка с иконкой 24 (контакты в хедере): 42×42. */
+.icon {
+  width: 42px;
+  padding: 9px;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
 }

@@ -24,7 +24,7 @@ export function ProjectCard({ item, locale }: ProjectCardProps) {
         <ExportedImage
           src={item.cover}
           alt={alt}
-          sizes="(min-width: 1200px) 610px, (min-width: 768px) 728px, 1px"
+          sizes="(min-width: 1600px) 33vw, (min-width: 1100px) 50vw, (min-width: 768px) 728px, 1px"
           basePath={basePath}
           className={`${styles.image} ${styles.imageDesktop}`}
         />

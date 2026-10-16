@@ -20,7 +20,7 @@
   /* 15 + 1px границы = 16, как в макете (граница внутри строки). */
   padding: 16px 0 15px;
   vertical-align: top;
-  border-bottom: 1px solid var(--border-divider);
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .table thead th {

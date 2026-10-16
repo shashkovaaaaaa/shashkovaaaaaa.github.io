@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-m);
-  background-color: var(--bg-badge);
+  background-color: var(--surface-images);
 }
 
 .image {

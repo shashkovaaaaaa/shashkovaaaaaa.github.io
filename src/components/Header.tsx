@@ -6,6 +6,8 @@ import { mainNav } from '@/config/navigation';
 import { Link } from '@/i18n/navigation';
 
 import { ButtonLink } from './Button';
+import buttonStyles from './Button.module.css';
+import { IconFile, IconMail, IconTelegram } from './icons';
 import { LocaleSwitch } from './LocaleSwitch';
 import { MobileMenu } from './MobileMenu';
 import { ThemeToggle } from './ThemeToggle';
@@ -14,6 +16,9 @@ import styles from './Header.module.css';
 import avatar from '../../public/images/avatar.jpg';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+// design/icons: кнопки-иконки контактов в десктопном хедере.
+const contactIcons = { telegram: IconTelegram, email: IconMail, resume: IconFile };
 
 export function Header() {
   const t = useTranslations('Header');
@@ -50,15 +55,24 @@ export function Header() {
 
         <div className={styles.contacts}>
           <ul className={styles.contactList} aria-label={t('contacts')}>
-            {headerContacts.map((key) => (
-              <li key={key}>
-                <ButtonLink href={contacts[key]}>{tContacts(key)}</ButtonLink>
-              </li>
-            ))}
+            {headerContacts.map((key) => {
+              const Icon = contactIcons[key];
+              return (
+                <li key={key}>
+                  <ButtonLink
+                    href={contacts[key]}
+                    className={buttonStyles.icon}
+                    aria-label={tContacts(key)}
+                    title={tContacts(key)}
+                  >
+                    <Icon />
+                  </ButtonLink>
+                </li>
+              );
+            })}
           </ul>
-          <span className={styles.divider} aria-hidden />
-          <ThemeToggle variant="icon" />
-          <LocaleSwitch variant="compact" />
+          <ThemeToggle />
+          <LocaleSwitch />
         </div>
 
         <MobileMenu className={styles.mobileMenu} />

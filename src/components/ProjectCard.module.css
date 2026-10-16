@@ -14,7 +14,7 @@
   overflow: hidden;
   aspect-ratio: 1;
   border-radius: var(--radius-s);
-  background-color: var(--bg-badge);
+  background-color: var(--surface-images);
 }
 
 .image {
@@ -46,7 +46,7 @@
   gap: 8px;
 }
 
-/* mobile: head-4-mobile — Medium 24, ls -3% */
+/* По стилю слоя (высоты блоков 29/58 — это 24px): mobile — head-4-mobile, Medium 24, ls -3%. */
 .title {
   font-size: var(--fs-head-4);
   font-weight: var(--fw-medium);
@@ -67,7 +67,7 @@
 }
 
 .card:has(.link:focus-visible) {
-  outline: 2px solid var(--border-strong);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 4px;
   border-radius: var(--radius-s);
 }
@@ -91,18 +91,18 @@
     aspect-ratio: 5 / 4;
   }
 
+  /* desktop/tablet: head-4 — Semi Bold 24, ls -2% */
+  .title {
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-head-4);
+  }
+
   .imageDesktop {
     display: block;
   }
 
   .imageMobile {
     display: none;
-  }
-
-  /* desktop/tablet: head-4 — Semi Bold 24, ls -2% */
-  .title {
-    font-weight: var(--fw-semibold);
-    letter-spacing: var(--ls-head-4);
   }
 
   /* 14/20 */

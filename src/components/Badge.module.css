@@ -1,4 +1,4 @@
-/* design/components.md → badge: 43×25, pad 4 8, radius 2 */
+/* design/components.md → badge: 43×25, pad 4 8, radius 2, badge/badge-surface + badge/badge-text */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -7,7 +7,8 @@
   border-radius: 2px;
   font-size: var(--fs-text-s);
   line-height: var(--lh-caption);
-  color: var(--text-secondary);
+  color: var(--badge-text);
+  background-color: var(--badge-surface);
   white-space: nowrap;
 }
 
@@ -16,12 +17,4 @@
   .card {
     line-height: var(--lh-control);
   }
-}
-
-.card {
-  background-color: var(--bg-badge);
-}
-
-.case {
-  background-color: var(--bg-badge-case);
 }

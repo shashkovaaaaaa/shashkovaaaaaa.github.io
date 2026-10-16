@@ -1,21 +1,52 @@
 :root {
   color-scheme: light;
 
-  /* Цвета (design/tokens.md) */
+  /*
+   * Цвета — переменные Figma (design/tokens.md, v2): `text/text-primary` → `--text-primary` и т.д.
+   * Значения берём из таблицы tokens.md, а не hex рядом с var(...) в pages/*.md.
+   */
+
+  /* База */
   --text-primary: #20232c;
-  --text-secondary: #20232cb2; /* 70% */
-  --text-tertiary: #20232c99; /* 60% */
-  --text-tertiary-muted: #20232c66; /* 40% */
-  --bg-page: #fff;
-  --bg-badge: #fafafc;
-  --bg-badge-case: #3434340f;
-  --bg-hover: #f9f9fb;
-  --border-strong: #000;
-  --border-divider: #00000033;
-  --border-avatar: #0000001a;
-  --icon-muted: #475569;
-  --bg-elevated: #fff;
-  --shadow-menu: 0 6px 10px #00000014;
+  --text-secondary: #63656b;
+  --text-third: #a6a7ab;
+  --surface-overall: #fff;
+  --surface-images: #f7f7f7;
+  --border-primary: #ebebed;
+  --border-secondary: #ebebed;
+
+  /* badge */
+  --badge-surface: #fafafc;
+  --badge-text: var(--text-secondary);
+
+  /* button/link */
+  --button-surface-link-default: var(--surface-overall);
+  --button-surface-link-hover: #f9f9fb;
+  --button-text-link-default: var(--text-primary);
+  --button-text-link-hover: var(--text-primary);
+
+  /* button/outlined */
+  --button-surface-outlined-default: var(--surface-overall);
+  --button-surface-outlined-hover: #f9f9fb;
+  --button-stroke-outlined-default: var(--border-secondary);
+  --button-stroke-outlined-hover: var(--border-secondary);
+  --button-text-outlined-default: var(--text-primary);
+  --button-text-outlined-hover: var(--text-primary);
+
+  /* tab (switch) */
+  --tab-surface: var(--surface-images);
+  --tab-button-surface-default: var(--tab-surface);
+  --tab-button-surface-hover: var(--tab-surface);
+  --tab-button-surface-active: var(--surface-overall);
+  --tab-button-text-default: var(--text-third);
+  --tab-button-text-hover: var(--text-primary);
+  --tab-button-text-active: var(--text-secondary);
+
+  /* Не из Figma-переменных (в макете hex или нет совсем) */
+  --icon-muted: #475569; /* иконка бургера state=1, «unofficial/mid alt» */
+  --menu-surface: #fff; /* карточка мобильного меню */
+  --menu-shadow: 0 6px 10px #00000014;
+  --focus-ring: var(--text-primary);
 
   /* Типографика: размеры */
   --font-family-base: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -49,7 +80,7 @@
   --fw-semibold: 600;
 
   /* Сетка и радиусы */
-  --content-max-width: 1240px;
+  --content-max-width: 1880px; /* десктоп-макет 1920, поля 20 */
   --page-gutter: 20px;
   --radius-s: 4px;
   --radius-m: 8px;
@@ -63,25 +94,30 @@
  * Брейкпоинты (в CSS Modules переменные в @media не работают, значения пишутся числами):
  *   mobile  < 768px          — макет 390, поля 10
  *   tablet  768px – 1199px   — макет 768, поля 20, мобильный хедер
- *   desktop ≥ 1200px         — макет 1280, поля 20, десктопный хедер
+ *   desktop ≥ 1200px         — макет 1920 (контент до 1880), поля 20, десктопный хедер
+ * Сетка карточек на главной: 1 колонка, 2 — с 1100px, 3 — с 1600px.
+ * Узкие блоки (текст hero 800, тело кейса 1200) центрируются.
  */
 
-/* TODO: согласовать с дизайнером — в макете тёмной палитры нет, это черновик. */
+/* TODO: согласовать с дизайнером — тёмных значений в макете нет (одна коллекция, один режим).
+   Черновик на тех же Figma-именах: дизайнер даст значения 1:1. Алиасы (badge, button, tab) пересчитываются сами. */
 [data-theme='dark'] {
   color-scheme: dark;
 
   --text-primary: #ececf0;
-  --text-secondary: #ececf0b2;
-  --text-tertiary: #ececf099;
-  --text-tertiary-muted: #ececf066;
-  --bg-page: #121316;
-  --bg-badge: #1c1d21;
-  --bg-badge-case: #ffffff0f;
-  --bg-hover: #1f2025;
-  --border-strong: #ececf0;
-  --border-divider: #ffffff33;
-  --border-avatar: #ffffff1a;
+  --text-secondary: #a3a5ad;
+  --text-third: #6c6e76;
+  --surface-overall: #121316;
+  --surface-images: #1c1d21;
+  --border-primary: #2a2c32;
+  --border-secondary: #34363d;
+
+  --badge-surface: #1c1d21;
+  --button-surface-link-hover: #1f2025;
+  --button-surface-outlined-hover: #1f2025;
+  --tab-button-surface-active: #2a2c32;
+
   --icon-muted: #9aa0ae;
-  --bg-elevated: #1b1c20;
-  --shadow-menu: 0 6px 16px #00000066;
+  --menu-surface: #1b1c20;
+  --menu-shadow: 0 6px 16px #00000066;
 }

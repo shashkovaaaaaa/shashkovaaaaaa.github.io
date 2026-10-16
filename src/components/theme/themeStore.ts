@@ -1,8 +1,8 @@
 // Внешнее хранилище темы: localStorage + системная схема. Читается через useSyncExternalStore.
 
-export const THEMES = ['light', 'dark', 'system'] as const;
+// В v2 только светлая и тёмная. Пока пользователь не выбрал сам — берём системную.
+export const THEMES = ['light', 'dark'] as const;
 export type Theme = (typeof THEMES)[number];
-export type ResolvedTheme = Exclude<Theme, 'system'>;
 
 export const STORAGE_KEY = 'theme';
 const CHANGE_EVENT = 'themechange';
@@ -12,12 +12,13 @@ export function isTheme(value: unknown): value is Theme {
   return THEMES.some((t) => t === value);
 }
 
-export function readStoredTheme(): Theme {
+// null — выбора нет (или старое значение 'system' из v1): тема по системе.
+export function readStoredTheme(): Theme | null {
   try {
     const value = localStorage.getItem(STORAGE_KEY);
-    return isTheme(value) ? value : 'system';
+    return isTheme(value) ? value : null;
   } catch {
-    return 'system';
+    return null;
   }
 }
 
@@ -51,9 +52,8 @@ export function subscribeSystemDark(callback: () => void) {
   return () => mql.removeEventListener('change', callback);
 }
 
-export function resolveTheme(theme: Theme, systemDark: boolean): ResolvedTheme {
-  if (theme !== 'system') return theme;
-  return systemDark ? 'dark' : 'light';
+export function resolveTheme(stored: Theme | null, systemDark: boolean): Theme {
+  return stored ?? (systemDark ? 'dark' : 'light');
 }
 
 // Тот же алгоритм, что и выше, но строкой: выполняется до отрисовки, чтобы не было мигания.

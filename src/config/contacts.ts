@@ -1,21 +1,18 @@
 // TODO: заменить плейсхолдеры реальными ссылками.
+// LinkedIn и Behance в v2 макета убраны.
 export const contacts = {
   email: 'mailto:TODO@example.com',
   telegram: 'https://t.me/TODO',
   whatsapp: 'https://wa.me/TODO',
-  linkedin: 'https://www.linkedin.com/in/TODO',
-  behance: 'https://www.behance.net/TODO',
   resume: 'TODO',
 } as const;
 
 export type ContactKey = keyof typeof contacts;
 
-// Порядок кнопок — как в макете.
+// Порядок — как в макете: хедер (иконки на desktop, ссылки в мобильном меню) и CTA.
 export const headerContacts = [
   'telegram',
   'email',
-  'linkedin',
-  'behance',
   'resume',
 ] as const satisfies readonly ContactKey[];
 

@@ -5,53 +5,32 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 
-import buttonStyles from './Button.module.css';
-import styles from './Switcher.module.css';
+import styles from './Switch.module.css';
 
-type LocaleSwitchProps = {
-  // compact — одна ссылка на другую локаль с кодом языка (десктопный хедер);
-  // full — все локали полными названиями (мобильное меню).
-  variant?: 'compact' | 'full';
-};
-
-export function LocaleSwitch({ variant = 'full' }: LocaleSwitchProps) {
+/*
+ * Переключатель языка (design/components.md → switch type=text): EN / RU.
+ * Визуально — тот же switch, но это ссылки на ту же страницу в другой локали (навигация,
+ * работает без JS, видна поисковикам), поэтому role="radiogroup" здесь не используется.
+ */
+export function LocaleSwitch() {
   const t = useTranslations('LocaleSwitch');
   const locale = useLocale();
   const pathname = usePathname();
 
-  if (variant === 'compact') {
-    return (
-      <>
-        {routing.locales
-          .filter((value) => value !== locale)
-          .map((value) => (
-            <Link
-              key={value}
-              href={pathname}
-              locale={value}
-              hrefLang={value}
-              aria-label={t(value)}
-              className={`${buttonStyles.button} ${buttonStyles.link} ${styles.code}`}
-            >
-              {value}
-            </Link>
-          ))}
-      </>
-    );
-  }
-
   return (
-    <nav className={styles.group} aria-label={t('label')}>
+    <nav className={`${styles.switch} ${styles.text}`} aria-label={t('label')}>
       {routing.locales.map((value) => (
         <Link
           key={value}
           href={pathname}
           locale={value}
           hrefLang={value}
-          className={styles.item}
+          className={styles.option}
+          aria-label={t(value)}
+          title={t(value)}
           aria-current={value === locale ? 'page' : undefined}
         >
-          {t(value)}
+          {value}
         </Link>
       ))}
     </nav>

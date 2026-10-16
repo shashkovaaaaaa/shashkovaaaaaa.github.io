@@ -1,6 +1,6 @@
 import { expect, type Page } from '@playwright/test';
 
-export type ThemeName = 'light' | 'dark' | 'system';
+export type ThemeName = 'light' | 'dark';
 
 // TODO: убрать, когда появятся эти кейсы. Next prefetch-ит ссылки карточек
 // на ещё не готовые /work/<slug>/ и получает 404 — это ожидаемо.
@@ -34,23 +34,13 @@ export async function openMenuIfMobile(page: Page) {
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 }
 
+// Switch темы — radiogroup Light/Dark: на 1280 в хедере, на 390/768 — в мобильном меню.
 export async function setTheme(page: Page, theme: ThemeName) {
-  if (await isMobileHeader(page)) {
-    await openMenuIfMobile(page);
-    const name = {
-      light: /^(Light|Светлая)$/,
-      dark: /^(Dark|Тёмная)$/,
-      system: /^(System|Системная)$/,
-    };
-    await page.getByRole('button', { name: name[theme] }).click();
-    return;
-  }
-  // Десктоп: одна кнопка перебирает темы по кругу.
-  for (let i = 0; i < 3; i++) {
-    if ((await page.evaluate(() => localStorage.getItem('theme'))) === theme) return;
-    await page.getByRole('button', { name: /theme|тему/i }).click();
-  }
-  expect(await page.evaluate(() => localStorage.getItem('theme'))).toBe(theme);
+  await openMenuIfMobile(page);
+  const name = { light: /^(Light|Светлая)$/, dark: /^(Dark|Тёмная)$/ };
+  const radio = page.getByRole('radio', { name: name[theme] });
+  await radio.click();
+  await expect(radio).toHaveAttribute('aria-checked', 'true');
 }
 
 export async function switchLocale(page: Page, name: 'English' | 'Русский') {

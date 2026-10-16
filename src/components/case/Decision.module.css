@@ -1,5 +1,5 @@
 /*
- * mobile:  col gap 20, pad 40 0; подпись 24 Semi Bold (lh 34), заголовок 24; картинка 370×370
+ * mobile:  col gap 20, pad 40 0; подпись subtitile-M Regular 26 (lh 34, по --alt), заголовок 24; картинка 370×370
  * tablet:  col gap 40; текст col gap 30; заголовок 40; картинка 728×728
  * desktop: row gap 40, текст 570 + картинка 590×590
  */
@@ -23,11 +23,11 @@
 }
 
 .label {
-  font-size: var(--fs-head-4);
-  font-weight: var(--fw-semibold);
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-regular);
   line-height: 34px;
-  letter-spacing: var(--ls-head-4);
-  color: var(--text-tertiary-muted);
+  letter-spacing: var(--ls-head);
+  color: var(--text-third);
 }
 
 .title {
@@ -48,8 +48,12 @@
     gap: 30px;
   }
 
+  /* desktop/tablet: head-4 Semi Bold 24, ls -2% */
   .label {
+    font-size: var(--fs-head-4);
+    font-weight: var(--fw-semibold);
     line-height: var(--lh-head-4);
+    letter-spacing: var(--ls-head-4);
   }
 
   .title {

@@ -16,15 +16,14 @@ import {
   subscribeStoredTheme,
   subscribeSystemDark,
   writeStoredTheme,
-  type ResolvedTheme,
   type Theme,
 } from './themeStore';
 import { ThemeScript } from './ThemeScript';
 
 type ThemeContextValue = {
-  // undefined на сервере и при гидратации — выбранная тема известна только в браузере.
+  // Действующая тема: выбранная пользователем или системная.
+  // undefined на сервере и при гидратации — тема известна только в браузере.
   theme: Theme | undefined;
-  resolvedTheme: ResolvedTheme | undefined;
   setTheme: (theme: Theme) => void;
 };
 
@@ -42,22 +41,22 @@ function withoutTransitions(apply: () => void) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const theme = useSyncExternalStore(subscribeStoredTheme, readStoredTheme, () => undefined);
+  const stored = useSyncExternalStore(subscribeStoredTheme, readStoredTheme, () => undefined);
   const systemDark = useSyncExternalStore(subscribeSystemDark, readSystemDark, () => undefined);
-  const resolvedTheme =
-    theme === undefined || systemDark === undefined ? undefined : resolveTheme(theme, systemDark);
+  const theme =
+    stored === undefined || systemDark === undefined ? undefined : resolveTheme(stored, systemDark);
 
   useEffect(() => {
-    if (!resolvedTheme) return;
+    if (!theme) return;
     const root = document.documentElement;
-    if (root.getAttribute('data-theme') === resolvedTheme) return;
-    withoutTransitions(() => root.setAttribute('data-theme', resolvedTheme));
-  }, [resolvedTheme]);
+    if (root.getAttribute('data-theme') === theme) return;
+    withoutTransitions(() => root.setAttribute('data-theme', theme));
+  }, [theme]);
 
   const setTheme = useCallback((next: Theme) => writeStoredTheme(next), []);
 
   return (
-    <ThemeContext value={{ theme, resolvedTheme, setTheme }}>
+    <ThemeContext value={{ theme, setTheme }}>
       <ThemeScript />
       {children}
     </ThemeContext>

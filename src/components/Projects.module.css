@@ -1,7 +1,7 @@
 /*
  * design/pages/main-page-*.md → projects block: col gap 40
  *   заголовок head-3 40 (mobile head-3-mobile 30), подзаголовок 26 (mobile 16), gap 20
- *   сетка: desktop 2 колонки gap 20, tablet 1 колонка gap 50, mobile gap 60
+ *   сетка (v2): mobile/tablet 1 колонка (gap 60 / 50), 2 колонки с 1100, 3 — с 1600 (макет 1920: 610+620+610), gap 20
  */
 .projects {
   display: flex;
@@ -53,20 +53,28 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
 
+  /* «What's next...» — заглушка в свободной ячейке. */
   .whatsNext {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 400px;
     font-size: var(--fs-head-3);
     font-weight: var(--fw-medium);
     line-height: var(--lh-head-3);
     letter-spacing: var(--ls-head);
-    color: var(--text-primary);
+    color: var(--text-third);
+  }
+}
+
+@media (min-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

@@ -19,9 +19,7 @@
   "ThemeToggle": {
     "label": "Theme",
     "light": "Light",
-    "dark": "Dark",
-    "system": "System",
-    "switchTo": "Theme: {current}. Switch theme"
+    "dark": "Dark"
   },
   "LocaleSwitch": {
     "label": "Language",
@@ -42,8 +40,6 @@
   "Contacts": {
     "telegram": "Telegram",
     "email": "Email",
-    "linkedin": "Linkedin",
-    "behance": "Behance",
     "resume": "Resume",
     "whatsapp": "WhatsApp"
   },
@@ -51,8 +47,7 @@
     "open": "Open menu",
     "close": "Close menu",
     "portfolio": "Portfolio",
-    "contacts": "Contacts",
-    "settings": "Settings"
+    "contacts": "Contacts"
   },
   "Cta": {
     "title": "Let’s discuss your next idea"
@@ -64,5 +59,14 @@
   "Case": {
     "images": "Images, scroll horizontally",
     "decision": "Decision {index}."
+  },
+  "About": {
+    "metaTitle": "About me",
+    "metaDescription": "Anastasiia Shashkova — product designer with 4 years of experience in B2B SaaS, web services and digital products.",
+    "title": "Hi, I’m Anastasiia – Product Designer with 4 years of experience in B2B SaaS, web services, and digital products",
+    "intro1": "Contributed to 40+ product and client projects. I design user flows and interfaces from research and prototyping through development handoff and design review.",
+    "intro2": "I have worked on products at different stages, from launching MVPs from scratch to developing existing services and design systems. I collaborate with Product and Project Managers, developers, and marketing teams, translating business requirements and user needs into clear product solutions.",
+    "experience": "Experience",
+    "achievements": "Achievements"
   }
 }

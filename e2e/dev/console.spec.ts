@@ -41,13 +41,18 @@ test('dev: нет ошибок и предупреждений в консоли
   await expect(page).toHaveURL('/en/');
 
   await openMenuIfMobile(page);
-  if (await menuToggle(page).isVisible()) {
-    await page.getByRole('button', { name: 'Dark' }).click();
-  } else {
-    await page.getByRole('button', { name: /theme/i }).click();
-  }
+  await page.getByRole('radio', { name: 'Dark' }).click();
   await page.reload();
   await expect(page.locator('h1')).toBeAttached();
+
+  // About: клиентские Accordion и Switch, переход через ссылку из хедера/меню.
+  await openMenuIfMobile(page);
+  await page.getByRole('link', { name: 'About me' }).click();
+  await expect(page).toHaveURL('/en/about/');
+  await page.getByRole('button', { name: 'Achievements' }).nth(1).click();
+  await openMenuIfMobile(page);
+  await page.getByRole('link', { name: 'Русский' }).click();
+  await expect(page).toHaveURL('/ru/about/');
 
   expect(messages).toEqual([]);
 });

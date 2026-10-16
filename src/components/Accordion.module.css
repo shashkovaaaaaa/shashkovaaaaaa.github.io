@@ -1,0 +1,92 @@
+/* design/pages/about-desktop.md → cards group: ширина 800, gap 20; строка — разделитель снизу, pad-bottom 20. */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+/* outside: row gap 20, align center */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header {
+  flex: 1;
+  min-width: 0;
+}
+
+.toggle {
+  flex: none;
+}
+
+/* На mobile текст кнопки скрыт визуально (остаётся доступным именем), виден шеврон. */
+.toggleLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.chevron {
+  transition: rotate var(--transition-medium);
+}
+
+.item[data-open='true'] .chevron {
+  rotate: 180deg;
+}
+
+/* Плавное раскрытие: 0fr → 1fr; отступ 16 между строкой и текстом (open=on: col gap 16). */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--transition-medium),
+    margin-top var(--transition-medium),
+    visibility 0ms linear 200ms;
+}
+
+.item[data-open='true'] .panel {
+  grid-template-rows: 1fr;
+  margin-top: 16px;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--transition-medium),
+    margin-top var(--transition-medium);
+}
+
+.panelInner {
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .row {
+    gap: 20px;
+  }
+
+  .toggleLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+
+  /* text: pad 0 44 */
+  .panelInner {
+    padding: 0 44px;
+  }
+}

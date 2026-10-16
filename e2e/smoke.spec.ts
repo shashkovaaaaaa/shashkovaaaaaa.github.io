@@ -1,6 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-import { collectErrors, isMobileHeader, menuToggle, setTheme, switchLocale } from './helpers';
+import {
+  collectErrors,
+  isMobileHeader,
+  menuToggle,
+  openMenuIfMobile,
+  setTheme,
+  switchLocale,
+} from './helpers';
 
 declare global {
   interface Window {
@@ -60,9 +67,9 @@ for (const [locale, title, projects, cta] of [
 }
 
 test.describe('главная', () => {
-  test('якоря hero и проектов, ссылки из хедера', async ({ page }) => {
+  test('hero и якорь проектов', async ({ page }) => {
     await page.goto('/en/');
-    await expect(page.locator('section#about h1')).toBeVisible();
+    await expect(page.locator('section[aria-labelledby="hero-title"] h1')).toBeVisible();
     await expect(page.locator('section#works h2')).toBeVisible();
   });
 
@@ -93,7 +100,7 @@ test.describe('главная', () => {
       );
     }
 
-    const desktop = testInfo.project.name === 'desktop-1280';
+    const desktop = testInfo.project.name.startsWith('desktop');
     await expect(page.getByText('What’s next...')).toBeVisible({ visible: desktop });
   });
 
@@ -116,7 +123,7 @@ test.describe('главная', () => {
 test.describe('хедер', () => {
   test('нужный вариант хедера для вьюпорта', async ({ page }, testInfo) => {
     await page.goto('/en/');
-    const desktop = testInfo.project.name === 'desktop-1280';
+    const desktop = testInfo.project.name.startsWith('desktop');
     const nav = page.getByRole('navigation', { name: 'Main navigation' });
 
     await expect(nav).toBeVisible({ visible: desktop });
@@ -133,7 +140,8 @@ test.describe('хедер', () => {
     await page.goto('/en/');
     test.skip(!(await isMobileHeader(page)), 'на десктопе меню нет');
     const toggle = menuToggle(page);
-    const menuLink = page.getByRole('link', { name: 'Behance' });
+    const menu = page.locator(`#${await toggle.getAttribute('aria-controls')}`);
+    const menuLink = menu.getByRole('link', { name: 'Telegram' });
 
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     await expect(menuLink).toBeHidden();
@@ -187,7 +195,7 @@ test.describe('тема', () => {
     expect(log[0]).toEqual({ theme: 'dark', contentInDom: false });
     expect(log.every((e) => e.theme === 'dark')).toBe(true);
 
-    await setTheme(page, 'system');
+    await setTheme(page, 'light');
     await expect(html).toHaveAttribute('data-theme', 'light');
     expect(errors).toEqual([]);
   });
@@ -195,10 +203,33 @@ test.describe('тема', () => {
   test.describe('тёмная ОС', () => {
     test.use({ colorScheme: 'dark' });
 
-    test('system → dark', async ({ page }) => {
+    test('без выбора — тема из системы, и она подсвечена в switch', async ({ page }) => {
       await page.goto('/ru/');
       await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+      await openMenuIfMobile(page);
+      await expect(page.getByRole('radio', { name: 'Тёмная' })).toHaveAttribute(
+        'aria-checked',
+        'true',
+      );
+      await expect(page.getByRole('radio', { name: 'Светлая' })).toHaveAttribute(
+        'aria-checked',
+        'false',
+      );
     });
+  });
+
+  test('switch темы: стрелки переключают и переносят фокус', async ({ page }) => {
+    await page.goto('/en/');
+    await openMenuIfMobile(page);
+    const light = page.getByRole('radio', { name: 'Light' });
+    const dark = page.getByRole('radio', { name: 'Dark' });
+    await light.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(dark).toBeFocused();
+    await expect(dark).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await page.keyboard.press('ArrowLeft');
+    await expect(light).toHaveAttribute('aria-checked', 'true');
   });
 });
 

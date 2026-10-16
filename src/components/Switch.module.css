@@ -1,0 +1,53 @@
+/* design/components.md → switch (type=icon / type=text), цвета — tab/* */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-l);
+  background-color: var(--tab-surface);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-m);
+  font-size: var(--fs-text-s);
+  line-height: var(--lh-control);
+  letter-spacing: var(--ls-text);
+  color: var(--tab-button-text-default);
+  background-color: var(--tab-button-surface-default);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.option:hover {
+  color: var(--tab-button-text-hover);
+  background-color: var(--tab-button-surface-hover);
+}
+
+.option[aria-checked='true'],
+.option[aria-current='page'] {
+  color: var(--tab-button-text-active);
+  background-color: var(--tab-button-surface-active);
+}
+
+/* type=icon: иконка 18, pad 8 */
+.icon .option {
+  padding: 8px;
+}
+
+.icon .option svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* type=text: EN / RU, pad 8×6 */
+.text .option {
+  padding: 8px 6px;
+  text-transform: uppercase;
+}
