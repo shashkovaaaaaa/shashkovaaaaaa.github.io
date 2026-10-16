@@ -106,7 +106,7 @@
 
   --text-primary: #ececf0;
   --text-secondary: #a3a5ad;
-  --text-third: #6c6e76;
+  --text-third: #868891; /* 4.77:1 на tab-surface, 5.26:1 на фоне — WCAG AA */
   --surface-overall: #121316;
   --surface-images: #1c1d21;
   --border-primary: #2a2c32;

@@ -21,7 +21,7 @@ export function CaseHero(props: CaseHeroProps) {
       <h1 className={styles.title}>{title}</h1>
       <BadgeList items={badges} />
       {props.images ? (
-        <ImageRow images={props.images} />
+        <ImageRow images={props.images} eager />
       ) : (
         <ImageRow
           images={[{ src: props.image, alt: props.alt }]}
@@ -30,6 +30,7 @@ export function CaseHero(props: CaseHeroProps) {
             props.mobileImage ? [{ src: props.mobileImage, alt: props.alt }] : undefined
           }
           mobileRatio="1"
+          eager
         />
       )}
     </header>

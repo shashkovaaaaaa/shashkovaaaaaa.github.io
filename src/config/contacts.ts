@@ -4,6 +4,8 @@ export const contacts = {
   email: 'mailto:TODO@example.com',
   telegram: 'https://t.me/TODO',
   whatsapp: 'https://wa.me/TODO',
+  // Файл резюме положить в public/ (например, public/resume.pdf) и указать путь '/resume.pdf';
+  // либо внешняя ссылка (Google Drive и т.п.).
   resume: 'TODO',
 } as const;
 

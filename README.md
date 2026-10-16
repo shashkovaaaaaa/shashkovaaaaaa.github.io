@@ -68,14 +68,46 @@ public/images/            # исходники картинок для опти�
 
 ### Vercel (основной)
 
-Импортировать репозиторий в Vercel — настройки по умолчанию подходят:
+#### Перед первым деплоем
 
-- Framework Preset: **Next.js** (определяется автоматически, `output: 'export'` Vercel понимает сам)
-- Install Command: `pnpm install` (pnpm определяется по `pnpm-lock.yaml` и `packageManager`)
-- Build Command: `pnpm build`
-- Node.js: 24 (из `engines`/`.nvmrc`; при необходимости выставить в Project Settings → General)
-- `NEXT_PUBLIC_BASE_PATH` **не задавать** (сайт в корне домена)
-- `NEXT_PUBLIC_SITE_URL` можно не задавать: адрес для Open Graph / canonical берётся из системной переменной Vercel `VERCEL_PROJECT_PRODUCTION_URL`. Для своего домена — задать, например `https://example.com`
+1. Заполнить контакты в `src/config/contacts.ts`: Email, Telegram, WhatsApp, Resume. Сейчас там плейсхолдеры `TODO`, и они видны на каждой странице.
+   - Resume: положить файл в `public/` (например, `public/resume.pdf`) и указать `'/resume.pdf'` — ссылка откроется без префикса локали и с учётом `basePath`. Либо указать внешнюю ссылку.
+2. Прогнать проверки локально:
+   ```bash
+   pnpm install --frozen-lockfile
+   pnpm lint && pnpm typecheck && pnpm build && pnpm test:e2e
+   ```
+3. Запушить `main` в GitHub.
+
+#### Создание проекта
+
+1. [vercel.com/new](https://vercel.com/new) → **Import Git Repository** → выбрать репозиторий.
+2. **Framework Preset**: Next.js — определится сам. Root Directory — корень репозитория.
+3. **Build and Output Settings** — оставить по умолчанию:
+   - Install Command: `pnpm install` (pnpm определяется по `pnpm-lock.yaml`);
+   - Build Command: `pnpm build` (это `next build && next-image-export-optimizer`);
+   - Output Directory: не трогать — при `output: 'export'` Vercel сам берёт `out/`.
+4. **Environment Variables** (Production и Preview):
+   - `ENABLE_EXPERIMENTAL_COREPACK=1` — Vercel возьмёт pnpm ровно той версии, что в `packageManager` (12.14.0);
+   - `NEXT_PUBLIC_BASE_PATH` — **не задавать** (сайт в корне домена);
+   - `NEXT_PUBLIC_SITE_URL` — только для своего домена, например `https://example.com`. Без неё адрес для Open Graph, canonical и hreflang берётся из системной переменной Vercel `VERCEL_PROJECT_PRODUCTION_URL`.
+5. **Deploy**. Затем **Settings → General → Node.js Version: 24.x** (если Vercel выбрал другую) и **Redeploy**.
+
+#### Проверка после деплоя
+
+- `/` перенаправляет на `/en/` или `/ru/` по языку браузера.
+- Открываются `/en/about/`, `/en/work/supply-leader/`, `/en/work/askezio/`, `/en/work/prokladovki/` и их `/ru/`-версии.
+- Переключатели темы и языка работают; после перезагрузки тема не мигает.
+- В превью ссылки (Telegram, Slack и т.п.) у кейса подтягивается картинка из `/og/<slug>.jpg` с домена Vercel.
+- Контакты в хедере и CTA ведут на реальные адреса, а не на `TODO`.
+
+#### Свой домен
+
+Settings → Domains → добавить домен и прописать DNS по подсказке Vercel. Затем задать `NEXT_PUBLIC_SITE_URL=https://<домен>` и сделать Redeploy, чтобы абсолютные ссылки в метаданных указывали на домен.
+
+#### Что попадает на хостинг
+
+Только статика из `out/`: HTML, `_next/static`, оптимизированные WebP (`nextImageExportOptimizer/`), OG-картинки. Серверных функций нет. В `out/images/` копируются и lossless-исходники из `public/images` (~20 МБ): сайт их не запрашивает, но они доступны по прямой ссылке.
 
 ### GitHub Pages (запасной)
 
