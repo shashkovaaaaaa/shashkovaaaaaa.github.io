@@ -69,20 +69,31 @@ public/images/            # исходники картинок для опти�
 
 ## Деплой
 
-Обе площадки получают одну и ту же статическую сборку из `out/`. Отличается только `NEXT_PUBLIC_BASE_PATH`.
+Сайт: **https://shashkovaaaaaa.github.io/** — GitHub Pages, репозиторий `shashkovaaaaaa/shashkovaaaaaa.github.io`, сайт в корне домена (basePath пустой). Vercel — запасной вариант, та же статическая сборка из `out/`.
 
-### Vercel (основной)
-
-#### Перед первым деплоем
+### Перед деплоем
 
 1. Проверить контакты в `src/config/contacts.ts` (Email, Telegram, WhatsApp). Пустое поле скрывает кнопку.
    - Resume: `public/resume-en.pdf` и `public/resume-ru.pdf`, кнопка скачивает файл на языке страницы (без префикса локали, с учётом `basePath`).
-2. Прогнать проверки локально:
+2. Прогнать проверки локально — с теми же env, что в CI:
    ```bash
    pnpm install --frozen-lockfile
-   pnpm lint && pnpm typecheck && pnpm build && pnpm test:e2e
+   pnpm lint && pnpm typecheck
+   NEXT_PUBLIC_BASE_PATH= NEXT_PUBLIC_SITE_URL=https://shashkovaaaaaa.github.io pnpm build
+   pnpm test:e2e
    ```
-3. Запушить `main` в GitHub.
+
+### GitHub Pages (основной)
+
+1. Один раз: в репозитории Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+2. Пуш в `main` (или ручной запуск во вкладке Actions) запускает `.github/workflows/deploy.yml`:
+   `pnpm install` → `pnpm lint` → `pnpm typecheck` → `pnpm build` (`NEXT_PUBLIC_BASE_PATH` пустой, `NEXT_PUBLIC_SITE_URL=https://shashkovaaaaaa.github.io`) → `upload-pages-artifact` (`out/`) → `deploy-pages`. e2e в CI не запускаются (нужен браузер) — их гонять локально.
+3. Node — из `.nvmrc`, pnpm — из `packageManager` (через `pnpm/action-setup`).
+
+`public/.nojekyll` нужен, чтобы Pages отдавал папку `_next/`; `out/404.html` Pages показывает для несуществующих адресов.
+Если сайт когда-нибудь переедет в репозиторий с другим именем (не `<user>.github.io`), в workflow нужно задать `NEXT_PUBLIC_BASE_PATH=/<имя репозитория>` и поменять `NEXT_PUBLIC_SITE_URL`.
+
+### Vercel (запасной)
 
 #### Создание проекта
 
@@ -98,34 +109,14 @@ public/images/            # исходники картинок для опти�
    - `NEXT_PUBLIC_SITE_URL` — только для своего домена, например `https://example.com`. Без неё адрес для Open Graph, canonical и hreflang берётся из системной переменной Vercel `VERCEL_PROJECT_PRODUCTION_URL`.
 5. **Deploy**. Затем **Settings → General → Node.js Version: 24.x** (если Vercel выбрал другую) и **Redeploy**.
 
-#### Проверка после деплоя
+### Проверка после деплоя
 
 - `/` перенаправляет на `/en/` или `/ru/` по языку браузера.
 - Открываются `/en/about/`, `/en/work/supply-leader/`, `/en/work/askezio/`, `/en/work/prokladovki/` и их `/ru/`-версии.
 - Переключатели темы и языка работают; после перезагрузки тема не мигает.
-- В превью ссылки (Telegram, Slack и т.п.) у кейса подтягивается картинка из `/og/<slug>.jpg` с домена Vercel.
+- В превью ссылки (Telegram, Slack и т.п.) у кейса подтягивается картинка из `/og/<slug>.jpg` с `https://shashkovaaaaaa.github.io`.
 - Контакты в хедере и CTA ведут на реальные адреса, Resume на `/en/` скачивает `resume-en.pdf`, на `/ru/` — `resume-ru.pdf`.
 
-#### Свой домен
+### Что попадает на хостинг
 
-Settings → Domains → добавить домен и прописать DNS по подсказке Vercel. Затем задать `NEXT_PUBLIC_SITE_URL=https://<домен>` и сделать Redeploy, чтобы абсолютные ссылки в метаданных указывали на домен.
-
-#### Что попадает на хостинг
-
-Только статика из `out/` (~16 МБ): HTML, `_next/static`, оптимизированные WebP (`nextImageExportOptimizer/`), OG-картинки. Серверных функций нет. Lossless-исходники в `out/` не попадают — их удаляет `scripts/prune-export.mjs`.
-
-### GitHub Pages (запасной)
-
-1. В репозитории: Settings → Pages → Source: **GitHub Actions**.
-2. Пуш в `main` (или ручной запуск) запускает `.github/workflows/deploy.yml`:
-   `pnpm install` → `pnpm build` c `NEXT_PUBLIC_BASE_PATH=/<имя репозитория>` и `NEXT_PUBLIC_SITE_URL=https://<owner>.github.io` → `upload-pages-artifact` (`out/`) → `deploy-pages`.
-3. Сайт будет доступен по `https://<user>.github.io/<repo>/`.
-
-`public/.nojekyll` нужен, чтобы Pages отдавал папку `_next/`.
-Если репозиторий называется `<user>.github.io` или подключён свой домен, в workflow `NEXT_PUBLIC_BASE_PATH` нужно сделать пустым.
-
-Проверить сборку под Pages локально:
-
-```bash
-NEXT_PUBLIC_BASE_PATH=/repo-name pnpm build
-```
+Только статика из `out/` (~18 МБ): HTML, `_next/static`, оптимизированные WebP (`nextImageExportOptimizer/`), OG-картинки, резюме, `404.html`. Серверных функций нет. Lossless-исходники в `out/` не попадают — их удаляет `scripts/prune-export.mjs`.
