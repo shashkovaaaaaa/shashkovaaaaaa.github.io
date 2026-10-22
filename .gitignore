@@ -49,8 +49,12 @@ next-image-export-optimizer-hashes.json
 # исходный архив макета
 *.zip
 
-# исходники картинок макета — только локально (см. CLAUDE.md, «Картинки»)
-/design/images/
+# служебные файлы — только локально, в публичный репозиторий не попадают:
+# макет в текстовом виде и исходники картинок, контекст для агента, вопросы к дизайнеру
+/design/
+/CLAUDE.md
+/.claude/
+/DESIGN-QUESTIONS.md
 
 # playwright
 /e2e/.results/
