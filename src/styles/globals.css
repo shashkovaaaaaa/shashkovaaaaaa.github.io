@@ -80,9 +80,15 @@ ol {
   white-space: nowrap;
 }
 
+/* Обводка фокуса — только при навигации с клавиатуры. */
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* Страховка для браузеров, чей UA-стиль рисует обводку по :focus (после клика/тапа). */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

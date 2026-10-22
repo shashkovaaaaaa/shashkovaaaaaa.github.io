@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useId, useRef, useState, type MouseEvent } from 'react';
+import { useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 
 import { getContactLinks, headerContacts } from '@/config/contacts';
 import { mainNav } from '@/config/navigation';
@@ -10,6 +10,23 @@ import { ButtonLink } from './Button';
 import { LocaleSwitch } from './LocaleSwitch';
 import { ThemeToggle } from './ThemeToggle';
 import styles from './MobileMenu.module.css';
+
+type MenuItemProps = {
+  href: string;
+  download?: string;
+  children: ReactNode;
+};
+
+// Пункт меню: страница, внешняя ссылка или файл — всегда один и тот же стиль (.item).
+function MenuItem({ href, download, children }: MenuItemProps) {
+  return (
+    <li>
+      <ButtonLink href={href} download={download} className={styles.item}>
+        {children}
+      </ButtonLink>
+    </li>
+  );
+}
 
 export function MobileMenu({ className }: { className?: string }) {
   const t = useTranslations('MobileMenu');
@@ -56,6 +73,11 @@ export function MobileMenu({ className }: { className?: string }) {
         aria-expanded={open}
         aria-controls={menuId}
         aria-label={open ? t('close') : t('open')}
+        // Если кнопка уже в фокусе с клавиатуры (Tab, Esc), Chrome держит :focus-visible и после тапа.
+        // Снимаем фокус: тап сфокусирует её заново — как указатель, без обводки.
+        onPointerDown={(e) => {
+          if (document.activeElement === e.currentTarget) e.currentTarget.blur();
+        }}
         onClick={() => setOpen((v) => !v)}
       >
         <span className={styles.burger} data-open={open} aria-hidden>
@@ -69,22 +91,18 @@ export function MobileMenu({ className }: { className?: string }) {
         <p className={styles.title}>{t('portfolio')}</p>
         <ul className={styles.list}>
           {mainNav.map(({ key, href }) => (
-            <li key={key}>
-              <ButtonLink href={href} className={styles.item}>
-                {tNav(key)}
-              </ButtonLink>
-            </li>
+            <MenuItem key={key} href={href}>
+              {tNav(key)}
+            </MenuItem>
           ))}
         </ul>
 
         <p className={styles.title}>{t('contacts')}</p>
         <ul className={styles.list}>
           {getContactLinks(headerContacts, locale).map(({ key, href, download }) => (
-            <li key={key}>
-              <ButtonLink href={href} download={download} className={styles.item}>
-                {tContacts(key)}
-              </ButtonLink>
-            </li>
+            <MenuItem key={key} href={href} download={download}>
+              {tContacts(key)}
+            </MenuItem>
           ))}
         </ul>
 

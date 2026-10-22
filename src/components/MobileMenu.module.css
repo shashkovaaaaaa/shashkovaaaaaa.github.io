@@ -116,14 +116,28 @@
   flex-direction: column;
 }
 
-/* Пункты: 340×46, pad 12 10, выравнивание влево, text-M-semibold (в v2 — Medium 500). */
+/*
+ * MenuItem: 340×46, pad 12 10, выравнивание влево. Inter Regular 16/22, ls −1%, text-primary —
+ * по решению владельца (в макете стиль text-M-semibold). Одинаково для страниц, внешних ссылок
+ * и файлов и во всех состояниях: шрифт и цвет заданы явно, а не унаследованы от кнопки.
+ */
+.item,
+.item:hover,
+.item:active,
+.item:focus-visible,
+.item:visited {
+  font-family: var(--font-family-base);
+  font-size: var(--fs-text-m);
+  font-weight: var(--fw-regular);
+  line-height: 22px;
+  letter-spacing: var(--ls-text);
+  color: var(--text-primary);
+}
+
 .item {
   width: 100%;
   justify-content: flex-start;
   padding: 12px 10px;
-  font-size: var(--fs-text-m);
-  font-weight: var(--fw-medium);
-  line-height: 22px;
 }
 
 /* Фон ссылки по умолчанию — фон страницы; на карточке меню (в тёмной теме она светлее) он был бы виден плашкой. */

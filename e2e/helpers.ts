@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 export type ThemeName = 'light' | 'dark';
 
@@ -36,6 +36,32 @@ export async function setTheme(page: Page, theme: ThemeName) {
   const radio = page.getByRole('radio', { name: name[theme] });
   await radio.click();
   await expect(radio).toHaveAttribute('aria-checked', 'true');
+}
+
+// Свойства, от которых зависит вид текста: у пунктов одного меню они должны совпадать.
+export const TEXT_STYLE_PROPS = [
+  'font-family',
+  'font-size',
+  'font-weight',
+  'line-height',
+  'letter-spacing',
+  'color',
+  'opacity',
+  'font-synthesis',
+  '-webkit-font-smoothing',
+  'text-rendering',
+  'font-variation-settings',
+] as const;
+
+export async function textStyles(items: Locator) {
+  return items.evaluateAll(
+    (els, props) =>
+      els.map((el) => {
+        const cs = getComputedStyle(el);
+        return Object.fromEntries(props.map((p) => [p, cs.getPropertyValue(p)]));
+      }),
+    [...TEXT_STYLE_PROPS],
+  );
 }
 
 export async function switchLocale(page: Page, name: 'English' | 'Русский') {

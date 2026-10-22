@@ -7,6 +7,7 @@ import {
   openMenuIfMobile,
   setTheme,
   switchLocale,
+  textStyles,
 } from './helpers';
 
 declare global {
@@ -143,6 +144,15 @@ test.describe('хедер', () => {
     }
   });
 
+  test('десктопный хедер: My works и About me выглядят одинаково', async ({ page }) => {
+    await page.goto('/en/');
+    test.skip(await isMobileHeader(page), 'на tablet/mobile десктопной навигации нет');
+    const links = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link');
+    await expect(links).toHaveText(['My works', 'About me']);
+    const [works, about] = await textStyles(links);
+    expect(about).toEqual(works);
+  });
+
   test('мобильное меню: открытие, Esc, клик снаружи', async ({ page }) => {
     await page.goto('/en/');
     test.skip(!(await isMobileHeader(page)), 'на десктопе меню нет');
@@ -166,6 +176,90 @@ test.describe('хедер', () => {
     await toggle.click();
     await page.mouse.click(5, 700);
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+});
+
+test.describe('мобильное меню: вес пунктов и фокус', () => {
+  test.use({ hasTouch: true });
+
+  test('пункты меню — Regular 400 по умолчанию, при hover и нажатии', async ({ page }) => {
+    await page.goto('/en/');
+    test.skip(!(await isMobileHeader(page)), 'на десктопе меню нет');
+    await openMenuIfMobile(page);
+    const menu = page.locator(`#${await menuToggle(page).getAttribute('aria-controls')}`);
+    const items = menu.locator('ul a');
+    await expect(items).toHaveText(['My works', 'About me', 'Telegram', 'Email', 'Resume']);
+
+    for (const item of await items.all()) {
+      await expect(item).toHaveCSS('font-weight', '400');
+      await item.hover();
+      await expect(item).toHaveCSS('font-weight', '400');
+      // :active — кнопка мыши зажата; отпускаем вне пункта, чтобы не переходить по ссылке.
+      await page.mouse.down();
+      await expect(item).toHaveCSS('font-weight', '400');
+      await page.mouse.move(5, 5);
+      await page.mouse.up();
+    }
+    // Подзаголовки не трогаем.
+    await expect(menu.locator('p').first()).toHaveCSS('font-size', '14px');
+
+    // После клика по пункту (меню закрывается) и повторного открытия вес тот же.
+    await items.first().click();
+    await openMenuIfMobile(page);
+    await expect(items.first()).toHaveCSS('font-weight', '400');
+  });
+
+  test('все пункты меню выглядят одинаково: вычисленные стили', async ({ page }) => {
+    await page.goto('/en/');
+    test.skip(!(await isMobileHeader(page)), 'на десктопе меню нет');
+    await openMenuIfMobile(page);
+    const menu = page.locator(`#${await menuToggle(page).getAttribute('aria-controls')}`);
+    const items = menu.locator('ul a');
+    await expect(items).toHaveCount(5);
+    await expect(items.last()).toBeVisible();
+
+    // Страница, внешняя ссылка и файл — идентичны по всему списку свойств.
+    const styles = await textStyles(items);
+    for (const s of styles) expect(s).toEqual(styles[0]);
+    expect(styles[0]).toMatchObject({
+      'font-size': '16px',
+      'font-weight': '400',
+      'line-height': '22px',
+      'letter-spacing': '-0.16px',
+      color: 'rgb(32, 35, 44)',
+      opacity: '1',
+    });
+  });
+
+  test('крестик: после тапа и клика нет обводки, после Tab — есть', async ({ page }) => {
+    await page.goto('/en/');
+    test.skip(!(await isMobileHeader(page)), 'на десктопе меню нет');
+    const toggle = menuToggle(page);
+
+    await toggle.tap();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(toggle).toHaveCSS('outline-style', 'none');
+    await toggle.tap();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toHaveCSS('outline-style', 'none');
+    await toggle.click();
+    await expect(toggle).toHaveCSS('outline-style', 'none');
+
+    // Esc возвращает фокус на кнопку — с клавиатуры обводка видна, но следующий тап её убирает.
+    await page.keyboard.press('Escape');
+    await expect(toggle).toBeFocused();
+    await expect(toggle).toHaveCSS('outline-style', 'solid');
+    await toggle.tap();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(toggle).toHaveCSS('outline-style', 'none');
+
+    // Tab с начала страницы доходит до кнопки — обводка видна.
+    await page.reload();
+    for (let i = 0; i < 5 && !(await toggle.evaluate((el) => el === document.activeElement)); i++)
+      await page.keyboard.press('Tab');
+    await expect(toggle).toBeFocused();
+    await expect(toggle).toHaveCSS('outline-style', 'solid');
+    await expect(toggle).toHaveCSS('outline-width', '2px');
   });
 });
 
