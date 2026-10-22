@@ -1,4 +1,4 @@
-/* design/pages/about-desktop.md → cards group: ширина 800, gap 20; строка — разделитель снизу, pad-bottom 20. */
+/* design/pages/work-about-*.md → cards group: ширина до 800, gap 20; строка — разделитель снизу, pad-bottom 20. */
 .accordion {
   display: flex;
   flex-direction: column;
@@ -14,11 +14,11 @@
   border-bottom: 1px solid var(--border-primary);
 }
 
-/* outside: row gap 20, align center */
+/* outside: row gap 20 (mobile 10), align center */
 .row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .header {
@@ -26,18 +26,14 @@
   min-width: 0;
 }
 
+/* mobile: кнопка 42×42, только шеврон; «Achievements» — в aria-label */
 .toggle {
   flex: none;
+  width: 42px;
 }
 
-/* На mobile текст кнопки скрыт визуально (остаётся доступным именем), виден шеврон. */
 .toggleLabel {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+  display: none;
 }
 
 .chevron {
@@ -77,12 +73,13 @@
     gap: 20px;
   }
 
-  .toggleLabel {
-    position: static;
+  /* tablet/desktop: текст + шеврон, 136×42 */
+  .toggle {
     width: auto;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
+  }
+
+  .toggleLabel {
+    display: inline;
   }
 
   /* text: pad 0 44 */

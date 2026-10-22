@@ -1,24 +1,28 @@
-/* experience block: col gap 30 (mobile 20), по центру */
+/*
+ * design/pages/work-about-*.md → experience block / about project:
+ *   mobile:  col gap 20, заголовок head-4-mobile 24 слева, аккордеон 370
+ *   tablet:  col gap 30, заголовок head-3 40 слева, аккордеон 728
+ *   desktop: col gap 30, align center — заголовок по центру, аккордеон 800
+ */
 .experience {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
 }
 
-/* head-3 40 (на mobile — head-3-mobile 30) */
+/* 24 на 390 → 40 на 768 (как заголовки секций кейса) */
 .title {
-  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
-  line-height: var(--lh-head-3);
+  font-size: clamp(var(--fs-head-4), calc(4.233vw + 7.49px), var(--fs-head-3));
+  line-height: var(--lh-head-4);
   letter-spacing: var(--ls-head);
-  text-align: center;
   color: var(--text-primary);
 }
 
+/* outside: row gap 10 (tablet/desktop — 20) */
 .head {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 /* image-*: 48×48, surface/surface-images, radius 8 */
@@ -48,13 +52,33 @@
   letter-spacing: var(--ls-text);
 }
 
+/*
+ * Название — в одну строку. На mobile колонка 260, а «Rekla: Telegram Autoposting Service» — 276:
+ * как в макете, оно заходит на левый отступ кнопки (до шеврона ещё ~6px), поэтому лежит поверх её фона.
+ * Уже 386px текст упёрся бы в шеврон — там многоточие.
+ */
 .company {
+  position: relative;
+  z-index: 1;
   font: inherit;
   color: var(--text-primary);
+  white-space: nowrap;
+}
+
+@media (max-width: 385px) {
+  .company {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .meta {
   color: var(--text-secondary);
+}
+
+/* Период не рвётся по тире («2025–» / «2026») в узкой колонке на mobile. */
+.meta span:last-child {
+  white-space: nowrap;
 }
 
 /* Достижения: Medium 16/22, text-primary */
@@ -74,7 +98,21 @@
     gap: 30px;
   }
 
+  .title {
+    line-height: var(--lh-head-3);
+  }
+
   .head {
     gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .experience {
+    align-items: center;
+  }
+
+  .title {
+    text-align: center;
   }
 }

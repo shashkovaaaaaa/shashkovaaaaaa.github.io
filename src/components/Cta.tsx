@@ -1,6 +1,6 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { contacts, ctaContacts } from '@/config/contacts';
+import { ctaContacts, getContactLinks } from '@/config/contacts';
 
 import { ButtonLink } from './Button';
 import styles from './Cta.module.css';
@@ -8,6 +8,7 @@ import styles from './Cta.module.css';
 export function Cta() {
   const t = useTranslations('Cta');
   const tContacts = useTranslations('Contacts');
+  const locale = useLocale();
 
   return (
     <section className={styles.cta} aria-labelledby="cta-title">
@@ -15,9 +16,10 @@ export function Cta() {
         {t('title')}
       </h2>
       <ul className={styles.buttons}>
-        {ctaContacts.map((key) => (
+        {/* Контакты без адреса (сейчас WhatsApp) не рендерятся. */}
+        {getContactLinks(ctaContacts, locale).map(({ key, href }) => (
           <li key={key}>
-            <ButtonLink href={contacts[key]} variant="outline">
+            <ButtonLink href={href} variant="outline">
               {tContacts(key)}
             </ButtonLink>
           </li>

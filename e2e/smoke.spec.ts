@@ -73,9 +73,7 @@ test.describe('главная', () => {
     await expect(page.locator('section#works h2')).toBeVisible();
   });
 
-  test('карточки проектов: ссылки на кейсы, обложки, What’s next только на desktop', async ({
-    page,
-  }, testInfo) => {
+  test('карточки проектов: ссылки на кейсы, обложки, без What’s next', async ({ page }) => {
     await page.goto('/en/');
     const cards = page.locator('#works article');
     await expect(cards).toHaveCount(3);
@@ -100,13 +98,22 @@ test.describe('главная', () => {
       );
     }
 
-    const desktop = testInfo.project.name.startsWith('desktop');
-    await expect(page.getByText('What’s next...')).toBeVisible({ visible: desktop });
+    // v3: заглушка убрана на всех брейкпоинтах.
+    await expect(page.getByText('What’s next...')).toHaveCount(0);
+  });
+
+  test('на 1920 три карточки в один ряд', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop-1920', 'только макет 1920');
+    await page.goto('/en/');
+    const tops = await page
+      .locator('#works article')
+      .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().top)));
+    expect(new Set(tops).size).toBe(1);
   });
 
   test('клик по карточке ведёт на страницу кейса', async ({ page }) => {
     await page.goto('/en/');
-    // Supply Leader — пока единственный опубликованный кейс.
+    // Supply Leader — третья карточка; в макете у неё нет прототипной ссылки (CLAUDE.md, «Нестыковки»).
     const card = page.locator('#works article').nth(2);
     await card.scrollIntoViewIfNeeded();
     // Кликаем мышью по центру превью: ссылка заголовка растянута на всю карточку через ::after.

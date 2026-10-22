@@ -1,9 +1,9 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useId, useRef, useState, type MouseEvent } from 'react';
 
-import { contacts, headerContacts } from '@/config/contacts';
+import { getContactLinks, headerContacts } from '@/config/contacts';
 import { mainNav } from '@/config/navigation';
 
 import { ButtonLink } from './Button';
@@ -15,6 +15,7 @@ export function MobileMenu({ className }: { className?: string }) {
   const t = useTranslations('MobileMenu');
   const tNav = useTranslations('Nav');
   const tContacts = useTranslations('Contacts');
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -78,16 +79,17 @@ export function MobileMenu({ className }: { className?: string }) {
 
         <p className={styles.title}>{t('contacts')}</p>
         <ul className={styles.list}>
-          {headerContacts.map((key) => (
+          {getContactLinks(headerContacts, locale).map(({ key, href, download }) => (
             <li key={key}>
-              <ButtonLink href={contacts[key]} className={styles.item}>
+              <ButtonLink href={href} download={download} className={styles.item}>
                 {tContacts(key)}
               </ButtonLink>
             </li>
           ))}
         </ul>
 
-        {/* v2: вместо секции Settings — ряд из двух switch (тема, язык). */}
+        {/* v2: вместо секции Settings — ряд из двух switch (тема, язык). В v3 дизайнер убрал
+            switch темы, но владелец сайта решил его оставить. */}
         <div className={styles.switches}>
           <ThemeToggle />
           <LocaleSwitch />

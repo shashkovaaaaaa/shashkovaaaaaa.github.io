@@ -22,8 +22,6 @@ export function Projects() {
         {cases.map((item) => (
           <ProjectCard key={item.slug} item={item} locale={locale} />
         ))}
-        {/* С 2 колонок: в макете четвёртая ячейка — заглушка (на 1920 уходит во второй ряд). */}
-        <p className={styles.whatsNext}>{t('whatsNext')}</p>
       </div>
     </section>
   );

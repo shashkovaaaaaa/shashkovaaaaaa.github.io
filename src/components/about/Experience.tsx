@@ -5,7 +5,7 @@ import { experience } from '@/content/experience';
 import { Accordion, AccordionItem } from '../Accordion';
 import styles from './Experience.module.css';
 
-// design/pages/about-desktop.md → experience block: заголовок head-3 по центру, аккордеон 800.
+// design/pages/work-about-*.md → experience block: заголовок (на desktop по центру) и аккордеон.
 export function Experience() {
   const t = useTranslations('About');
   const locale = useLocale();

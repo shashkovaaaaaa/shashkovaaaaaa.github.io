@@ -9,7 +9,7 @@ import styles from './Accordion.module.css';
 type AccordionItemProps = {
   // Шапка строки (логотип, название, подпись) — всегда видна.
   header: ReactNode;
-  // Текст кнопки-переключателя («Achievements»). На mobile виден только шеврон, текст — для скринридеров.
+  // Текст кнопки-переключателя («Achievements») и её aria-label. На mobile виден только шеврон.
   toggleLabel: string;
   defaultOpen?: boolean;
   children: ReactNode;
@@ -38,10 +38,12 @@ export function AccordionItem({
           className={`${buttonStyles.button} ${buttonStyles.link} ${styles.toggle}`}
           aria-expanded={open}
           aria-controls={panelId}
+          aria-label={toggleLabel}
           onClick={() => setOpen((v) => !v)}
         >
           <span className={styles.toggleLabel}>{toggleLabel}</span>
-          <IconChevronDown className={styles.chevron} />
+          {/* 18×18: кнопка 136×42, как в макете */}
+          <IconChevronDown size={18} className={styles.chevron} />
         </button>
       </div>
       <div id={panelId} className={styles.panel} inert={!open}>

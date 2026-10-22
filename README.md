@@ -43,7 +43,7 @@ src/
     [locale]/layout.tsx   # <html lang>, шрифт Inter, ThemeProvider (своя реализация, `components/theme/`), NextIntlClientProvider
     [locale]/page.tsx     # главная
   components/             # ThemeToggle, LocaleSwitch, ...; case/ — секции кейсов
-  config/contacts.ts      # ссылки на контакты (пока TODO)
+  config/contacts.ts      # контакты и файлы резюме по локалям
   content/cases/          # MDX кейсов
   i18n/                   # routing, request, navigation (next-intl)
   messages/en.json, ru.json
@@ -75,8 +75,8 @@ public/images/            # исходники картинок для опти�
 
 #### Перед первым деплоем
 
-1. Заполнить контакты в `src/config/contacts.ts`: Email, Telegram, WhatsApp, Resume. Сейчас там плейсхолдеры `TODO`, и они видны на каждой странице.
-   - Resume: положить файл в `public/` (например, `public/resume.pdf`) и указать `'/resume.pdf'` — ссылка откроется без префикса локали и с учётом `basePath`. Либо указать внешнюю ссылку.
+1. Проверить контакты в `src/config/contacts.ts` (Email, Telegram, WhatsApp). Пустое поле скрывает кнопку.
+   - Resume: `public/resume-en.pdf` и `public/resume-ru.pdf`, кнопка скачивает файл на языке страницы (без префикса локали, с учётом `basePath`).
 2. Прогнать проверки локально:
    ```bash
    pnpm install --frozen-lockfile
@@ -104,7 +104,7 @@ public/images/            # исходники картинок для опти�
 - Открываются `/en/about/`, `/en/work/supply-leader/`, `/en/work/askezio/`, `/en/work/prokladovki/` и их `/ru/`-версии.
 - Переключатели темы и языка работают; после перезагрузки тема не мигает.
 - В превью ссылки (Telegram, Slack и т.п.) у кейса подтягивается картинка из `/og/<slug>.jpg` с домена Vercel.
-- Контакты в хедере и CTA ведут на реальные адреса, а не на `TODO`.
+- Контакты в хедере и CTA ведут на реальные адреса, Resume на `/en/` скачивает `resume-en.pdf`, на `/ru/` — `resume-ru.pdf`.
 
 #### Свой домен
 

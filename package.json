@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next-image-export-optimizer && node scripts/prune-export.mjs",
-    "start": "serve out",
+    "start": "serve out -c ../serve.json",
     "lint": "eslint --max-warnings=0",
     "format": "prettier --write .",
     "images": "node scripts/prepare-images.mjs",

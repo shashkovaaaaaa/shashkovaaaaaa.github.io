@@ -1,7 +1,7 @@
 import ExportedImage from 'next-image-export-optimizer';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
-import { contacts, headerContacts } from '@/config/contacts';
+import { getContactLinks, headerContacts } from '@/config/contacts';
 import { mainNav } from '@/config/navigation';
 import { Link } from '@/i18n/navigation';
 
@@ -24,6 +24,7 @@ export function Header() {
   const t = useTranslations('Header');
   const tNav = useTranslations('Nav');
   const tContacts = useTranslations('Contacts');
+  const locale = useLocale();
 
   return (
     <header className={styles.header}>
@@ -55,12 +56,13 @@ export function Header() {
 
         <div className={styles.contacts}>
           <ul className={styles.contactList} aria-label={t('contacts')}>
-            {headerContacts.map((key) => {
+            {getContactLinks(headerContacts, locale).map(({ key, href, download }) => {
               const Icon = contactIcons[key];
               return (
                 <li key={key}>
                   <ButtonLink
-                    href={contacts[key]}
+                    href={href}
+                    download={download}
                     className={buttonStyles.icon}
                     aria-label={tContacts(key)}
                     title={tContacts(key)}

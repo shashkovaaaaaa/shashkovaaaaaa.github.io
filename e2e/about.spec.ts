@@ -45,6 +45,45 @@ test('About: аккордеон — первый раскрыт, aria-expanded/a
   await expect(second).toHaveAttribute('aria-expanded', 'true');
 });
 
+for (const [locale, label] of [
+  ['en', 'Achievements'],
+  ['ru', 'Достижения'],
+] as const) {
+  test(`About /${locale}/: достижения у всех компаний, без TODO, кнопка как в макете`, async ({
+    page,
+  }, testInfo) => {
+    await page.goto(`/${locale}/about/`);
+    const toggles = page.getByRole('button', { name: label });
+    await expect(toggles).toHaveCount(4);
+    const mobile = testInfo.project.name === 'mobile-390';
+
+    for (const [index, toggle] of (await toggles.all()).entries()) {
+      // mobile: 42×42, только шеврон (имя — из aria-label); tablet/desktop: текст + шеврон, 136×42.
+      await expect(toggle).toHaveAttribute('aria-label', label);
+      const box = await toggle.boundingBox();
+      expect(box?.height).toBe(42);
+      if (mobile) expect(box?.width).toBe(42);
+      await expect(toggle.getByText(label)).toBeVisible({ visible: !mobile });
+
+      // Название компании — в одну строку (22px) и не наезжает на шеврон.
+      const company = page.locator('main h3').nth(index);
+      expect((await company.boundingBox())?.height).toBe(22);
+      const textRight = await company.evaluate((el) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        return range.getBoundingClientRect().right;
+      });
+      const chevron = await toggle.locator('svg').boundingBox();
+      expect(textRight).toBeLessThan(chevron!.x);
+
+      if ((await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click();
+      const panel = page.locator(`#${await toggle.getAttribute('aria-controls')}`);
+      expect(await panel.locator('li').count()).toBeGreaterThanOrEqual(4);
+    }
+    await expect(page.locator('main')).not.toContainText('TODO');
+  });
+}
+
 test('About: ссылка «About me» из хедера/меню и смена языка', async ({ page }) => {
   await page.goto('/en/');
   await openMenuIfMobile(page);

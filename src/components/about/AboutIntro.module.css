@@ -1,27 +1,33 @@
 /*
- * desktop: row gap 40, align center; текст 570 (col gap 30), фото 590×590 radius 8.
- * tablet/mobile (не нарисованы): столбиком, как Decision в кейсах.
+ * design/pages/work-about-*.md:
+ *   mobile:  text — col gap 16 pad 80 0: заголовок Semi Bold 22 (ls −2%), текст text-secondary, фото 370×370
+ *   tablet:  decision-1 — row gap 20 align center: текст 344 (col gap 30, заголовок Medium 30) + фото 364×364
+ *   desktop: decision-1 — row gap 40 align center: текст 570 (col gap 30, заголовок head-3 40) + фото 590×590
+ * Фото — radius 8.
  */
 .intro {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  padding: 80px 0;
 }
 
 .text {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
-/* head-3 40 (на mobile — 30), 4 строки = 160 на desktop */
+/* mobile: 22 → 104 на 4 строки (lh 26) */
 .title {
-  font-size: clamp(30px, calc(2.646vw + 19.68px), var(--fs-head-3));
-  line-height: var(--lh-head-3);
-  letter-spacing: var(--ls-head);
+  font-size: 22px;
+  font-weight: var(--fw-semibold);
+  line-height: 26px;
+  letter-spacing: var(--ls-head-4);
   color: var(--text-primary);
 }
 
+/* text-M-regular 16/22, абзацы через 10 */
 .body {
   display: flex;
   flex-direction: column;
@@ -29,7 +35,7 @@
   font-size: var(--fs-text-m);
   line-height: var(--lh-text-m);
   letter-spacing: var(--ls-text);
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .photo {
@@ -40,18 +46,33 @@
 
 @media (min-width: 768px) {
   .intro {
-    gap: 40px;
+    display: grid;
+    grid-template-columns: 344fr 364fr;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
   }
 
   .text {
     gap: 30px;
   }
+
+  /* Medium 30 на 768 → head-3 40 на 1200; lh 1 (tablet 5 строк = 150, desktop 4 = 160) */
+  .title {
+    font-size: clamp(30px, calc(2.315vw + 12.22px), var(--fs-head-3));
+    font-weight: var(--fw-medium);
+    line-height: var(--lh-head-3);
+    letter-spacing: var(--ls-head);
+  }
+
+  .body {
+    color: var(--text-primary);
+  }
 }
 
 @media (min-width: 1200px) {
   .intro {
-    display: grid;
     grid-template-columns: 570fr 590fr;
-    align-items: center;
+    gap: 40px;
   }
 }

@@ -29,7 +29,7 @@ export async function generateMetadata({
   };
 }
 
-// design/pages/about-desktop.md: как страница кейса — тело 1200 (gap 60), затем CTA и футер.
+// design/pages/work-about-*.md: как страница кейса — тело 1200 (gap 60, mobile 40), затем CTA и футер.
 export default async function AboutPage({ params }: PageProps<'/[locale]/about'>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();

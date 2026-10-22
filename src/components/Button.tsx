@@ -29,7 +29,8 @@ type ButtonLinkProps = CommonProps &
     href: string;
   };
 
-// Файл из public/ (`/resume.pdf`): без префикса локали, но с basePath, в новой вкладке.
+// Файл из public/ (`/resume-en.pdf`): без префикса локали, но с basePath.
+// С `download` — скачивается (резюме), без него — открывается в новой вкладке.
 const isAsset = (href: string) => href.startsWith('/') && /\.[a-z0-9]+$/i.test(href);
 
 // Внутренние страницы (`/...`) — через Link с префиксом локали, остальные — обычный <a>.
@@ -37,7 +38,8 @@ export function ButtonLink({ variant = 'link', className, href, ...rest }: Butto
   const cls = classNames(variant, className);
 
   if (isAsset(href)) {
-    return <a href={withBasePath(href)} className={cls} target="_blank" rel="noopener" {...rest} />;
+    const tabProps = rest.download ? {} : { target: '_blank', rel: 'noopener' };
+    return <a href={withBasePath(href)} className={cls} {...tabProps} {...rest} />;
   }
 
   if (href.startsWith('/')) {

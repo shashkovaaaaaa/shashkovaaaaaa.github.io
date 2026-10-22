@@ -26,8 +26,10 @@ export default defineConfig({
     { name: 'desktop-1920', use: { viewport: { width: 1920, height: 1080 } } },
   ],
   // Тестируем собранную статику: перед запуском нужен `pnpm build`.
+  // serve.json (путь — относительно out/): без него serve отдаёт PDF с `Content-Disposition: inline;
+  // filename=...`, и это имя перебивает атрибут download у ссылки на резюме. Vercel и Pages такого заголовка не ставят.
   webServer: {
-    command: `pnpm exec serve out -l ${PORT} --no-port-switching`,
+    command: `pnpm exec serve out -c ../serve.json -l ${PORT} --no-port-switching`,
     url: `http://localhost:${PORT}/en/`,
     reuseExistingServer: !process.env.CI,
   },
