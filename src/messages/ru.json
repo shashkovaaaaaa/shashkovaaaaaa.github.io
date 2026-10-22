@@ -40,7 +40,8 @@
     "telegram": "Telegram",
     "email": "Email",
     "resume": "Резюме",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "emailCopied": "Почта скопирована"
   },
   "MobileMenu": {
     "open": "Открыть меню",

@@ -40,7 +40,8 @@
     "telegram": "Telegram",
     "email": "Email",
     "resume": "Resume",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "emailCopied": "Email copied"
   },
   "MobileMenu": {
     "open": "Open menu",

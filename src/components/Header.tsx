@@ -1,7 +1,7 @@
 import ExportedImage from 'next-image-export-optimizer';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { getContactLinks, headerContacts } from '@/config/contacts';
+import { emailAddress, getContactLinks, headerContacts } from '@/config/contacts';
 import { mainNav } from '@/config/navigation';
 import { Link } from '@/i18n/navigation';
 
@@ -65,7 +65,8 @@ export function Header() {
                     download={download}
                     className={buttonStyles.icon}
                     aria-label={tContacts(key)}
-                    title={tContacts(key)}
+                    // У почты подсказка — сам адрес.
+                    title={key === 'email' ? emailAddress : tContacts(key)}
                   >
                     <Icon />
                   </ButtonLink>

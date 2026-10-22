@@ -8,6 +8,9 @@ export const contacts = {
   whatsapp: 'https://wa.me/79111151400',
 } as const;
 
+// Сам адрес — для подсказки у иконки почты.
+export const emailAddress = contacts.email.replace(/^mailto:/, '');
+
 // Резюме на языке текущей локали: файл из public/ и имя при скачивании.
 export const resume: Record<Locale, { href: string; fileName: string }> = {
   en: { href: '/resume-en.pdf', fileName: 'Anastasiia-Shashkova-CV-EN.pdf' },

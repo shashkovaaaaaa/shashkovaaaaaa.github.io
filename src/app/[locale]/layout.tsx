@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { EmailCopyToast } from '@/components/EmailCopyToast';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
@@ -50,6 +51,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
                 <Footer />
               </div>
             </div>
+            <EmailCopyToast />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
