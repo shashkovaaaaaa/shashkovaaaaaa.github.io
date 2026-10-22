@@ -25,6 +25,14 @@ const manifest = [
     width: 80,
     height: 80,
   },
+  // About, фото: desktop 590×590 → 2×. Исходник от владельца (не из Figma) меньше — остаётся родной размер.
+  {
+    src: 'about-photo.jpg',
+    root: STATIC,
+    out: 'about/photo.webp',
+    width: 1180,
+    height: 1180,
+  },
   // Главная, карточки: desktop 610×488 и tablet 728×582 (5:4) → 2× от 728.
   {
     src: 'c428001613940105efc1aff78457e6f4fa9ec4e2.png',

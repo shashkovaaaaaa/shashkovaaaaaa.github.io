@@ -38,10 +38,23 @@
   color: var(--text-secondary);
 }
 
+/* Фото: cover, radius 8, под картинкой surface-images */
 .photo {
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 1;
   border-radius: var(--radius-m);
   background-color: var(--surface-images);
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* Без фото: пустая квадратная ячейка без фона держит раскладку desktop/tablet; на mobile её нет. */
+.photoSlot {
+  display: none;
+  aspect-ratio: 1;
 }
 
 @media (min-width: 768px) {
@@ -67,6 +80,10 @@
 
   .body {
     color: var(--text-primary);
+  }
+
+  .photoSlot {
+    display: block;
   }
 }
 

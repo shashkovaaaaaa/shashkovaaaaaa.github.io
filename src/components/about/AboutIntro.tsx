@@ -1,11 +1,16 @@
-import { useTranslations } from 'next-intl';
+import ExportedImage from 'next-image-export-optimizer';
+import { useLocale, useTranslations } from 'next-intl';
+
+import { basePath } from '@/config/site';
+import { aboutPhoto } from '@/content/about';
 
 import styles from './AboutIntro.module.css';
 
 // design/pages/work-about-*.md → decision-1 / text: текст + фото (desktop 570 + 590, tablet 344 + 364 в ряд,
-// mobile столбиком 370).
+// mobile столбиком 370). Фото — из src/content/about.ts, может отсутствовать.
 export function AboutIntro() {
   const t = useTranslations('About');
+  const locale = useLocale();
 
   return (
     <section className={styles.intro}>
@@ -18,8 +23,25 @@ export function AboutIntro() {
           <p>{t('intro2')}</p>
         </div>
       </div>
-      {/* TODO: фото от дизайнера (590 / 364 / 370). Пока — пустой плейсхолдер. */}
-      <div className={styles.photo} aria-hidden />
+      {aboutPhoto ? (
+        <div className={styles.photo}>
+          {/* Первый экран — грузим сразу, без lazy. */}
+          <ExportedImage
+            src={aboutPhoto.src}
+            alt={aboutPhoto.alt[locale]}
+            fill
+            sizes="(min-width: 1200px) 590px, (min-width: 768px) calc((100vw - 60px) * 364 / 708), calc(100vw - 20px)"
+            loading="eager"
+            fetchPriority="high"
+            placeholder="empty"
+            basePath={basePath}
+            className={styles.image}
+          />
+        </div>
+      ) : (
+        // Фото нет: на desktop/tablet ячейка держит раскладку (текст на том же месте), на mobile скрыта.
+        <div className={styles.photoSlot} aria-hidden />
+      )}
     </section>
   );
 }

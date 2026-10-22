@@ -84,6 +84,69 @@ for (const [locale, label] of [
   });
 }
 
+// Позиция и размер текстового блока вступления до добавления фото ([x, y, ширина, высота]).
+// Фото (или пустая ячейка вместо него) не должно его сдвигать.
+const INTRO_TEXT: Record<string, Record<'en' | 'ru', number[]>> = {
+  'desktop-1280': { en: [40, 249, 570, 376], ru: [40, 229, 570, 416] },
+  'desktop-1920': { en: [360, 249, 570, 376], ru: [360, 229, 570, 416] },
+};
+
+for (const locale of ['en', 'ru'] as const) {
+  test(`About /${locale}/: фото или зарезервированное место, текст на прежнем месте`, async ({
+    page,
+  }, testInfo) => {
+    await page.goto(`/${locale}/about/`);
+    await page.evaluate(() => document.fonts.ready);
+    const intro = page.locator('main section').first();
+    const text = intro.locator('> div').first();
+    const photo = intro.getByRole('img');
+    const hasPhoto = (await photo.count()) > 0;
+
+    const expected = INTRO_TEXT[testInfo.project.name]?.[locale];
+    if (expected) {
+      const box = await text.boundingBox();
+      expect([box!.x, box!.y, box!.width, box!.height].map(Math.round)).toEqual(expected);
+      // Блок той же высоты, что в макете (590), с фото или без.
+      expect((await intro.boundingBox())!.height).toBe(590);
+    }
+
+    // Серого плейсхолдера нет: последняя ячейка — либо картинка, либо пустая и прозрачная.
+    const cell = intro.locator('> div').nth(1);
+    if (hasPhoto) {
+      await expect(photo).toBeVisible();
+      await expect(photo).toHaveJSProperty('complete', true);
+      expect(await photo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+      await expect(photo).toHaveAttribute('loading', 'eager');
+      await expect(photo).toHaveAttribute(
+        'alt',
+        locale === 'en' ? 'Anastasiia Shashkova' : 'Анастасия Шашкова',
+      );
+      await expect(photo).toHaveCSS('object-fit', 'cover');
+      await expect(cell).toHaveCSS('border-radius', '8px');
+    } else if (await cell.isVisible()) {
+      await expect(cell).toHaveAttribute('aria-hidden', 'true');
+      await expect(cell).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(cell).toHaveCSS('border-style', 'none');
+      await expect(cell).toHaveCSS('box-shadow', 'none');
+    }
+
+    // mobile: после текста — фото через 16 или ничего (только нижний pad 80 блока).
+    if (testInfo.project.name === 'mobile-390') {
+      const textBottom = (await text.boundingBox())!.y + (await text.boundingBox())!.height;
+      const introBox = (await intro.boundingBox())!;
+      if (hasPhoto) {
+        const photoBox = (await cell.boundingBox())!;
+        expect(Math.round(photoBox.y - textBottom)).toBe(16);
+        expect(Math.round(photoBox.width)).toBe(370);
+        expect(Math.round(introBox.y + introBox.height - (photoBox.y + photoBox.height))).toBe(80);
+      } else {
+        await expect(cell).toBeHidden();
+        expect(Math.round(introBox.y + introBox.height - textBottom)).toBe(80);
+      }
+    }
+  });
+}
+
 test('About: ссылка «About me» из хедера/меню и смена языка', async ({ page }) => {
   await page.goto('/en/');
   await openMenuIfMobile(page);
