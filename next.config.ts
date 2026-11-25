@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
@@ -33,6 +35,11 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   extension: /\.(md|mdx)$/,
+  options: {
+    // Неразрывные пробелы после предлогов/союзов в текстах кейсов. Строкой — так требует Turbopack;
+    // путь абсолютный: относительный @next/mdx резолвит от папки .mdx-файла.
+    remarkPlugins: [path.join(process.cwd(), 'src/lib/remark-typograph.mjs')],
+  },
 });
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');

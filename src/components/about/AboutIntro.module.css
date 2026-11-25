@@ -27,6 +27,11 @@
   color: var(--text-primary);
 }
 
+/* Ручные переносы в заголовке: на mobile/tablet строки переносятся сами. */
+.lineBreak {
+  display: none;
+}
+
 /* text-M-regular 16/22, абзацы через 10 */
 .body {
   display: flex;
@@ -35,7 +40,8 @@
   font-size: var(--fs-text-m);
   line-height: var(--lh-text-m);
   letter-spacing: var(--ls-text);
-  color: var(--text-secondary);
+  /* На всех экранах основной цвет (в макете mobile был text-secondary — владелец попросила убрать). */
+  color: var(--text-primary);
 }
 
 /* Фото: cover, radius 8, под картинкой surface-images */
@@ -78,10 +84,6 @@
     letter-spacing: var(--ls-head);
   }
 
-  .body {
-    color: var(--text-primary);
-  }
-
   .photoSlot {
     display: block;
   }
@@ -91,5 +93,9 @@
   .intro {
     grid-template-columns: 570fr 590fr;
     gap: 40px;
+  }
+
+  .lineBreak {
+    display: inline;
   }
 }

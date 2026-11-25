@@ -1,6 +1,8 @@
 import type { StaticImageData } from 'next/image';
 import type { Locale } from 'next-intl';
 
+import { typographDeep } from '@/lib/typograph.mjs';
+
 import askezioCover from '@/assets/images/cases/askezio/cover.webp';
 import askezioCoverMobile from '@/assets/images/cases/askezio/cover-mobile.webp';
 import prokladovkiCover from '@/assets/images/cases/prokladovki/cover.webp';
@@ -34,7 +36,7 @@ const defaultBadges: Localized<string[]> = {
 };
 
 // Порядок — как на главной в макете. RU — черновой перевод, TODO: вычитка.
-export const cases: CaseMeta[] = [
+export const cases: CaseMeta[] = typographDeep([
   {
     slug: 'prokladovki',
     published: true,
@@ -96,7 +98,7 @@ export const cases: CaseMeta[] = [
       ru: 'Сначала меня позвали освежить визуал — сделать его современнее и «европейнее». Но чем глубже я погружалась в продукт, тем яснее становилось: устаревший UI скрывал куда более серьёзные UX-проблемы',
     },
   },
-];
+]);
 
 export const publishedCases = cases.filter((c) => c.published);
 

@@ -12,8 +12,9 @@ export function Cta() {
 
   return (
     <section className={styles.cta} aria-labelledby="cta-title">
+      {/* <br></br> в Cta.title — ручной перенос (RU: «Обсудим вашу / следующую идею»). */}
       <h2 id="cta-title" className={styles.title}>
-        {t('title')}
+        {t.rich('title', { br: () => <br /> })}
       </h2>
       <ul className={styles.buttons}>
         {/* Контакты без адреса (сейчас WhatsApp) не рендерятся. */}

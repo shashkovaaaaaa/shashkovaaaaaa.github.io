@@ -1,4 +1,11 @@
+import type { StaticImageData } from 'next/image';
 import type { Locale } from 'next-intl';
+
+import askezioLogo from '@/assets/images/experience/askezio.webp';
+import freelanceLogo from '@/assets/images/experience/freelance.webp';
+import prokladovkiLogo from '@/assets/images/experience/prokladovki.webp';
+import reklaLogo from '@/assets/images/experience/rekla.webp';
+import { typographDeep } from '@/lib/typograph.mjs';
 
 type Localized<T> = Record<Locale, T>;
 
@@ -7,7 +14,8 @@ export type ExperienceItem = {
   company: Localized<string>;
   position: Localized<string>;
   period: string;
-  // Плитка логотипа: SVG логотипов от дизайнера пока нет — показываем первую букву.
+  // Плитка 48×48: логотип (96×96, 2×) или, если его нет, первая буква.
+  logo?: StaticImageData;
   letter: string;
   achievements: Localized<string[]>;
 };
@@ -15,7 +23,7 @@ export type ExperienceItem = {
 // design/pages/work-about-*.md → experience block: порядок и периоды — как в макете.
 // Тексты — дословно из design/about-texts.md (из резюме public/resume-{en,ru}.pdf), вычитка не нужна.
 // Названия компаний на RU — как в русском резюме (на английском), кроме «Фриланс».
-export const experience: ExperienceItem[] = [
+export const experience: ExperienceItem[] = typographDeep([
   {
     id: 'askezio',
     company: {
@@ -23,7 +31,8 @@ export const experience: ExperienceItem[] = [
       ru: 'Askezio: Test Creation Platform',
     },
     position: { en: 'Product Designer', ru: 'Продуктовый дизайнер' },
-    period: '2025–2026',
+    period: '2025–26',
+    logo: askezioLogo,
     letter: 'A',
     achievements: {
       en: [
@@ -49,7 +58,8 @@ export const experience: ExperienceItem[] = [
     company: { en: 'Pro-Kladovki Service', ru: 'Pro-Kladovki Service' },
     position: { en: 'Product Designer', ru: 'Продуктовый дизайнер' },
     // TODO: в макете 2024–2026, в резюме 2025–2026 — оставлен макет (DESIGN-QUESTIONS.md, 38).
-    period: '2024–2026',
+    period: '2024–26',
+    logo: prokladovkiLogo,
     letter: 'P',
     achievements: {
       en: [
@@ -75,7 +85,8 @@ export const experience: ExperienceItem[] = [
       ru: 'Rekla: Telegram Autoposting Service',
     },
     position: { en: 'Product Designer', ru: 'Продуктовый дизайнер' },
-    period: '2023–2024',
+    period: '2023–24',
+    logo: reklaLogo,
     letter: 'R',
     achievements: {
       en: [
@@ -100,7 +111,8 @@ export const experience: ExperienceItem[] = [
     company: { en: 'Freelance', ru: 'Фриланс' },
     // На mobile в макете «Product, UX/UI designer» — берём текст из резюме, как на tablet/desktop.
     position: { en: 'Product and UX/UI designer', ru: 'Продуктовый и UX/UI дизайнер' },
-    period: '2022–2026',
+    period: '2022–26',
+    logo: freelanceLogo,
     letter: 'F',
     achievements: {
       en: [
@@ -117,4 +129,4 @@ export const experience: ExperienceItem[] = [
       ],
     },
   },
-];
+]);

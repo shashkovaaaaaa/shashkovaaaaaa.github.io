@@ -22,6 +22,14 @@
   color: var(--text-primary);
 }
 
+/* RU: слова длиннее, строки заданы вручную через <br> — ширину 6.4em не ограничиваем,
+   иначе «следующую идею» не влезает в одну строку. */
+.title:lang(ru) {
+  max-width: none;
+  /* Уже 390 шрифт продолжает уменьшаться (на 360 — ~37px), чтобы строка не переносилась. */
+  font-size: clamp(32px, calc(10.582vw - 1.27px), var(--fs-head-1));
+}
+
 .buttons {
   display: flex;
   flex-wrap: wrap;

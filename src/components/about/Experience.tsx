@@ -1,5 +1,7 @@
+import ExportedImage from 'next-image-export-optimizer';
 import { useLocale, useTranslations } from 'next-intl';
 
+import { basePath } from '@/config/site';
 import { experience } from '@/content/experience';
 
 import { Accordion, AccordionItem } from '../Accordion';
@@ -24,12 +26,24 @@ export function Experience() {
             defaultOpen={index === 0}
             header={
               <div className={styles.head}>
-                {/* TODO: SVG логотипа от дизайнера; пока плитка с первой буквой. */}
-                <span className={styles.logo} aria-hidden>
-                  {item.letter}
-                </span>
+                {item.logo ? (
+                  <ExportedImage
+                    src={item.logo}
+                    alt=""
+                    width={48}
+                    height={48}
+                    placeholder="empty"
+                    basePath={basePath}
+                    className={styles.logoImage}
+                  />
+                ) : (
+                  <span className={styles.logo} aria-hidden>
+                    {item.letter}
+                  </span>
+                )}
                 <div className={styles.text}>
                   <h3 className={styles.company}>{item.company[locale]}</h3>
+                  {/* Должность одной строкой, годы рядом (или на следующей строке, если не влезли). */}
                   <p className={styles.meta}>
                     <span>{item.position[locale]},</span> <span>{item.period}</span>
                   </p>

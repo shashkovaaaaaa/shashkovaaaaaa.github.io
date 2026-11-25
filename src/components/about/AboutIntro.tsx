@@ -17,7 +17,10 @@ export function AboutIntro() {
       <div className={styles.text}>
         {/* TODO: вычитка RU-заголовка (ru.json → About.title): в резюме нет приветствия,
             «Привет, я Анастасия —» добавлено по аналогии с EN (design/about-texts.md). */}
-        <h1 className={styles.title}>{t('title')}</h1>
+        {/* <br></br> в About.title — ручные переносы строк, только на desktop (≥1200). */}
+        <h1 className={styles.title}>
+          {t.rich('title', { br: () => <br className={styles.lineBreak} /> })}
+        </h1>
         <div className={styles.body}>
           <p>{t('intro1')}</p>
           <p>{t('intro2')}</p>

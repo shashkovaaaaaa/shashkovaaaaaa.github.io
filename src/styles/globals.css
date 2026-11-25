@@ -63,6 +63,8 @@ h5,
 h6 {
   font-weight: var(--fw-medium);
   overflow-wrap: break-word;
+  /* Строки заголовка одинаковой длины — без одного слова на последней строке. */
+  text-wrap: balance;
 }
 
 ul,

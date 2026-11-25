@@ -40,6 +40,15 @@
   color: var(--text-secondary);
 }
 
+/* Логотип-картинка: та же плитка 48×48, фон и скругление уже нарисованы в самом файле. */
+.logoImage {
+  display: block;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-m);
+}
+
 /* text: col gap 4; text-M-semibold (Medium 16/22) */
 .text {
   display: flex;
@@ -72,25 +81,55 @@
   }
 }
 
+/* Должность и годы — Regular (название компании остаётся Medium из .text). */
 .meta {
+  font-weight: var(--fw-regular);
   color: var(--text-secondary);
 }
 
-/* Период не рвётся по тире («2025–» / «2026») в узкой колонке на mobile. */
-.meta span:last-child {
+/*
+ * Должность и годы — каждая часть неразрывна; если вместе не влезают (Freelance на mobile),
+ * годы уходят на вторую строку целиком.
+ */
+.meta span {
   white-space: nowrap;
 }
 
-/* Достижения: Medium 16/22, text-primary */
+/* mobile: как и название компании, строка может зайти на левый отступ кнопки — до шеврона. */
+@media (max-width: 767px) {
+  .meta {
+    margin-right: -20px;
+  }
+}
+
+/* Совсем узкие телефоны: длинная должность («Продуктовый и UX/UI дизайнер») может переноситься. */
+@media (max-width: 385px) {
+  .meta span:first-child {
+    white-space: normal;
+  }
+}
+
+/* Достижения: Regular 16/22, text-primary */
 .achievements {
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-size: var(--fs-text-m);
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   line-height: var(--lh-text-m);
   letter-spacing: var(--ls-text);
   color: var(--text-primary);
+  /*
+   * Маркеры как у обычного списка (глобально list-style сброшен в globals.css).
+   * Текст пунктов начинается на одной вертикали с названием компании: логотип 48 + gap .head
+   * (mobile 10, tablet/desktop 20 минус pad 44 у панели аккордеона). Точка висит в этом отступе.
+   */
+  padding-left: 58px;
+  list-style: disc outside;
+}
+
+.achievements li {
+  display: list-item;
 }
 
 @media (min-width: 768px) {
@@ -104,6 +143,11 @@
 
   .head {
     gap: 20px;
+  }
+
+  /* 48 + 20 − 44 (pad панели) */
+  .achievements {
+    padding-left: 24px;
   }
 }
 
