@@ -11,6 +11,7 @@
       "subtitle": "I’ve been designing interfaces for 4 years.\nMostly dashboards, admin panels, tools with too many states. Not glamorous, but someone has to make them work."
     },
     "projects": {
+      "moreBadges": "+{count} more",
       "title": "Projects, but with the details",
       "subtitle": "A closer look at how I think, design, and make decisions"
     }

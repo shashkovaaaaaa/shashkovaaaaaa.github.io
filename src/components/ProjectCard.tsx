@@ -4,7 +4,7 @@ import type { Locale } from 'next-intl';
 import type { CaseMeta } from '@/content/cases';
 import { Link } from '@/i18n/navigation';
 
-import { Badge } from './Badge';
+import { BadgeRow } from './BadgeRow';
 import styles from './ProjectCard.module.css';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
@@ -38,13 +38,7 @@ export function ProjectCard({ item, locale }: ProjectCardProps) {
       </div>
 
       <div className={styles.description}>
-        <ul className={styles.badges}>
-          {item.badges[locale].map((badge) => (
-            <li key={badge}>
-              <Badge>{badge}</Badge>
-            </li>
-          ))}
-        </ul>
+        <BadgeRow items={item.badges[locale]} />
         <div className={styles.text}>
           <h3 className={styles.title}>
             {/* Ссылка растянута на всю карточку через ::after. */}

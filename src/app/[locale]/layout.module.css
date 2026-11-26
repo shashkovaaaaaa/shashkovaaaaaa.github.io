@@ -1,8 +1,9 @@
 /*
  * Поля страницы и отступы между блоками по макетам:
  *   mobile  — pad 10 16 20 (+10 внутри хедера = аватар в 20 от верха), хедер вплотную к контенту, блоки через 10;
- *   tablet  — pad 40 20 20, блоки через 80;
- *   desktop — pad 40 20 20, блоки через 40.
+ *   tablet  — pad 20 20 20, блоки через 80;
+ *   desktop — pad 20 20 20, блоки через 40.
+ * Сверху везде 20 (в макете главной было 40 — владелец попросила как на кейсах).
  */
 .page {
   --section-gap: 10px;
@@ -34,7 +35,7 @@
     --section-gap: 80px;
     --header-gap: 80px;
 
-    padding: 40px var(--page-gutter) 20px;
+    padding: 20px var(--page-gutter);
   }
 }
 
@@ -58,7 +59,5 @@
   .page:has(main[data-layout='case']) {
     --section-gap: 80px;
     --header-gap: 80px;
-
-    padding-top: 20px;
   }
 }

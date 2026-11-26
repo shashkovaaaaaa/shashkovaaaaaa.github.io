@@ -29,12 +29,6 @@ export type CaseMeta = {
   description: Localized<string>;
 };
 
-// TODO: бейджи в макете у всех карточек одинаковые (похоже на тексты мастер-компонента) — уточнить у дизайнера.
-const defaultBadges: Localized<string[]> = {
-  en: ['Case Study', 'B2B', 'SaaS', 'Redesign'],
-  ru: ['Кейс', 'B2B', 'SaaS', 'Редизайн'],
-};
-
 // Порядок — как на главной в макете. RU — черновой перевод, TODO: вычитка.
 export const cases: CaseMeta[] = typographDeep([
   {
@@ -48,7 +42,41 @@ export const cases: CaseMeta[] = typographDeep([
       en: 'Host onboarding screens: passport upload and company TIN lookup',
       ru: 'Экраны онбординга хоста: загрузка паспорта и поиск компании по ИНН',
     },
-    badges: defaultBadges,
+    badges: {
+      // Ключевые слова — те же, что под заголовком кейса (content/cases/prokladovki/*.mdx, CaseHero badges).
+      en: [
+        'Product Design Deep Dive',
+        'B2B2C',
+        'Marketplace',
+        'Activation',
+        'User flows',
+        'Competitive analysis',
+        'Product hypotheses',
+        'Prioritization',
+        'Product strategy',
+        'Conversion optimization',
+        'Product metrics',
+        'Self-service',
+        'Automation',
+        'Form design',
+      ],
+      ru: [
+        'Продуктовый кейс',
+        'B2B2C',
+        'Маркетплейс',
+        'Активация',
+        'Пользовательские сценарии',
+        'Конкурентный анализ',
+        'Продуктовые гипотезы',
+        'Приоритизация',
+        'Продуктовая стратегия',
+        'Оптимизация конверсии',
+        'Продуктовые метрики',
+        'Self-service',
+        'Автоматизация',
+        'Дизайн форм',
+      ],
+    },
     title: {
       en: 'Redesigning Host Onboarding for a Self-Storage Marketplace',
       ru: 'Редизайн онбординга хостов для маркетплейса self-storage',
@@ -68,7 +96,37 @@ export const cases: CaseMeta[] = typographDeep([
       en: 'Askezio quiz and test builder interface',
       ru: 'Интерфейс конструктора квизов и тестов Askezio',
     },
-    badges: defaultBadges,
+    badges: {
+      // Ключевые слова — те же, что под заголовком кейса (content/cases/askezio/*.mdx, CaseHero badges).
+      en: [
+        'Web App Design',
+        'B2B',
+        'Design system',
+        'Design tokens',
+        'EdTech',
+        'Component library',
+        'Dark mode',
+        'Responsive design',
+        'MVP',
+        'Interactive prototyping',
+        'End-to-end design',
+        'Interaction design',
+      ],
+      ru: [
+        'Веб-приложение',
+        'B2B',
+        'Дизайн-система',
+        'Дизайн-токены',
+        'EdTech',
+        'Библиотека компонентов',
+        'Тёмная тема',
+        'Адаптивный дизайн',
+        'MVP',
+        'Интерактивные прототипы',
+        'End-to-end дизайн',
+        'Дизайн взаимодействия',
+      ],
+    },
     title: {
       en: 'Quiz and Test-builder from MVP to release',
       ru: 'Конструктор квизов и тестов: от MVP до релиза',
@@ -88,7 +146,39 @@ export const cases: CaseMeta[] = typographDeep([
       en: 'Supply Leader product catalog with price history charts',
       ru: 'Каталог товаров Supply Leader с графиками истории цен',
     },
-    badges: defaultBadges,
+    badges: {
+      // Ключевые слова — те же, что под заголовком кейса (content/cases/supply-leader/*.mdx, CaseHero badges).
+      en: [
+        'Web service',
+        'SAAS',
+        'B2B',
+        'UX audit',
+        'E-commerce',
+        'Marketplace',
+        'User flows',
+        'Information architecture',
+        'Data visualization',
+        'Interaction design',
+        'Figma',
+        'Redesign',
+        'Responsive design',
+      ],
+      ru: [
+        'Веб-сервис',
+        'SAAS',
+        'B2B',
+        'UX-аудит',
+        'E-commerce',
+        'Маркетплейс',
+        'Пользовательские сценарии',
+        'Информационная архитектура',
+        'Визуализация данных',
+        'Дизайн взаимодействия',
+        'Figma',
+        'Редизайн',
+        'Адаптивный дизайн',
+      ],
+    },
     title: {
       en: 'Marketplace for suppliers from Amazon and Walmart',
       ru: 'Маркетплейс поставщиков Amazon и Walmart',

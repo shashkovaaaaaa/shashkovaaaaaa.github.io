@@ -1,0 +1,23 @@
+/* Одна строка бейджей, gap 4 (как .badges у карточки); лишнее не переносится. */
+.row {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+  /* Ширина строки берётся от карточки, а не от суммы всех бейджей (иначе на одной колонке
+     карточка растягивается под все ключевые слова). */
+  contain: inline-size;
+}
+
+.row > li {
+  flex: none;
+}
+
+/* Не влезшие бейджи: убраны из строки, но остаются в разметке для измерения ширины. */
+.row > .hidden {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
