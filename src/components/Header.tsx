@@ -8,9 +8,9 @@ import { Link } from '@/i18n/navigation';
 import { ButtonLink } from './Button';
 import buttonStyles from './Button.module.css';
 import { IconFile, IconMail, IconTelegram } from './icons';
+import { HeaderShell } from './HeaderShell';
 import { LocaleSwitch } from './LocaleSwitch';
 import { MobileMenu } from './MobileMenu';
-import { ThemeToggle } from './ThemeToggle';
 import styles from './Header.module.css';
 
 import avatar from '@/assets/images/avatar.webp';
@@ -27,7 +27,7 @@ export function Header() {
   const locale = useLocale();
 
   return (
-    <header className={styles.header}>
+    <HeaderShell className={styles.header}>
       <div className={styles.bar}>
         <Link href="/" className={styles.account} aria-label={`${t('name')} — ${t('home')}`}>
           <ExportedImage
@@ -74,12 +74,11 @@ export function Header() {
               );
             })}
           </ul>
-          <ThemeToggle />
           <LocaleSwitch />
         </div>
 
         <MobileMenu className={styles.mobileMenu} />
       </div>
-    </header>
+    </HeaderShell>
   );
 }

@@ -1,12 +1,62 @@
-/* design/pages/main-page-*.md → нижний `header` (в Figma так назван футер): row gap 10, space-evenly, wrap */
+/*
+ * Футер из трёх групп, всё text-S 14/20.
+ * mobile — столбиком по центру, группы через 10; в последней группе сверху «Версия» (medium).
+ * tablet/desktop (≥768) — в ряд: слева / по центру / справа; сверху «Обновлено» (medium).
+ */
 .footer {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
   gap: 10px;
   font-size: var(--fs-text-s);
-  line-height: var(--lh-caption);
-  letter-spacing: normal;
+  line-height: var(--lh-control);
+  letter-spacing: var(--ls-text);
   color: var(--text-primary);
+  text-align: center;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.medium {
+  font-weight: var(--fw-medium);
+}
+
+.version {
+  flex-direction: column-reverse;
+}
+
+.versionLine {
+  font-weight: var(--fw-medium);
+}
+
+@media (min-width: 768px) {
+  .footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: 20px;
+  }
+
+  .start {
+    text-align: left;
+  }
+
+  .end {
+    text-align: right;
+  }
+
+  .version {
+    flex-direction: column;
+  }
+
+  .updated {
+    font-weight: var(--fw-medium);
+  }
+
+  .versionLine {
+    font-weight: var(--fw-regular);
+  }
 }

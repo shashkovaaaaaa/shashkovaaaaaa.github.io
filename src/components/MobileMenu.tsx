@@ -8,7 +8,6 @@ import { mainNav } from '@/config/navigation';
 
 import { ButtonLink } from './Button';
 import { LocaleSwitch } from './LocaleSwitch';
-import { ThemeToggle } from './ThemeToggle';
 import styles from './MobileMenu.module.css';
 
 type MenuItemProps = {
@@ -106,10 +105,9 @@ export function MobileMenu({ className }: { className?: string }) {
           ))}
         </ul>
 
-        {/* v2: вместо секции Settings — ряд из двух switch (тема, язык). В v3 дизайнер убрал
-            switch темы, но владелец сайта решил его оставить. */}
+        {/* Переключатель темы убран из хедера и меню (ThemeToggle остался в коде). Тёмная тема
+            выключена (DARK_THEME_ENABLED в themeStore), всем показываем светлую. */}
         <div className={styles.switches}>
-          <ThemeToggle />
           <LocaleSwitch />
         </div>
       </div>

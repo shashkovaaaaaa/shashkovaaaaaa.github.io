@@ -77,8 +77,9 @@
   position: absolute;
   /* Хедер: pad 10 + строка 42 + gap 8 = 60px, т.е. 100% (62px) − 2px. */
   top: calc(100% - 2px);
-  left: 0;
+  /* Не на всю ширину экрана: до 300px, прижато к правому краю под бургером. */
   right: 0;
+  width: min(300px, 100%);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -117,7 +118,7 @@
 }
 
 /*
- * MenuItem: 340×46, pad 12 10, выравнивание влево. Inter Regular 16/22, ls −1%, text-primary —
+ * MenuItem: 340×46, pad 12 10, выравнивание влево. Inter Medium 16/22, ls −1%, text-primary —
  * по решению владельца (в макете стиль text-M-semibold). Одинаково для страниц, внешних ссылок
  * и файлов и во всех состояниях: шрифт и цвет заданы явно, а не унаследованы от кнопки.
  */
@@ -128,7 +129,7 @@
 .item:visited {
   font-family: var(--font-family-base);
   font-size: var(--fs-text-m);
-  font-weight: var(--fw-regular);
+  font-weight: var(--fw-medium);
   line-height: 22px;
   letter-spacing: var(--ls-text);
   color: var(--text-primary);
