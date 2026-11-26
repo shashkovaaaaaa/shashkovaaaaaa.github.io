@@ -3,6 +3,11 @@
 // Заголовки (## …, пропсы и поля *title*) обрабатываются с более коротким лимитом склейки концовки.
 import { isTitleKey, typograph } from './typograph.mjs';
 
+// Служебные пропсы (пути, пропорции, классы) — не текст, их не трогаем: NBSP в `ratio="2 / 1"`
+// ломает CSS aspect-ratio, и картинка схлопывается в нулевую высоту.
+const NON_TEXT_PROPS =
+  /^(src|href|id|className|style|ratio|mobileRatio|image|mobileImage|direction|variant)$/;
+
 /**
  * Строковые литералы внутри выражения пропса: {['…', '…']}, {[{ title: '…' }]}.
  * @param {any} node
@@ -25,6 +30,7 @@ function walkEstree(node, kind) {
   // { title: '…' } внутри массива объектов — заголовок.
   if (node.type === 'Property') {
     const keyName = node.key?.name ?? node.key?.value;
+    if (NON_TEXT_PROPS.test(keyName)) return;
     walkEstree(node.value, isTitleKey(keyName) ? 'heading' : kind);
     return;
   }
@@ -48,6 +54,7 @@ function walk(node, kind) {
   if (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') {
     for (const attr of node.attributes ?? []) {
       if (attr.type !== 'mdxJsxAttribute' || attr.value == null) continue;
+      if (NON_TEXT_PROPS.test(attr.name)) continue;
       const attrKind = isTitleKey(attr.name) ? 'heading' : 'text';
       if (typeof attr.value === 'string') {
         attr.value = typograph(attr.value, attrKind);

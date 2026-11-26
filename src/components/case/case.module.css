@@ -27,6 +27,19 @@
   gap: 10px;
 }
 
+/*
+ * <TextSection bullets> / <Column bullets>: обычный маркированный список, точка висит слева от текста
+ * (Prokladovki: Business Goals, User Goals, What the Final Concept Solves).
+ */
+.bullets > ul:not([data-badge-list]) {
+  padding-left: 1.25em;
+  list-style: disc outside;
+}
+
+.bullets > ul:not([data-badge-list]) > li {
+  display: list-item;
+}
+
 .prose strong {
   font-weight: var(--fw-semibold);
 }

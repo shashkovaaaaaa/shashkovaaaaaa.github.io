@@ -1,20 +1,22 @@
-/* design/components.md → badge: 43×25, pad 4 8, radius 2, badge/badge-surface + badge/badge-text */
+/*
+ * design/components.md → badge: pad 4 8, radius 2, badge/badge-surface + badge/badge-text.
+ * Текст — основной размер 16/22, как у остального текста (в макете было 14/17), высота бейджа 30.
+ */
 .badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 4px 8px;
   border-radius: 2px;
-  font-size: var(--fs-text-s);
-  line-height: var(--lh-caption);
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
   color: var(--badge-text);
   background-color: var(--badge-surface);
   white-space: nowrap;
 }
 
-/* Бейдж карточки на главной на mobile выше: 28 (текст 20), в остальных случаях — 25 (текст 17). */
-@media (max-width: 767px) {
-  .card {
-    line-height: var(--lh-control);
-  }
+/* Бейджи кейсов: длинные бейджи-факты («3 размера экрана — …») на узком экране переносятся,
+   а не вылезают за край. */
+.case {
+  white-space: normal;
 }

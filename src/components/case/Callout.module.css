@@ -1,8 +1,8 @@
 /*
  * reflection: col gap 20, radius 8, surface/surface-images.
- *   mobile  pad 20, заголовок head-4-mobile (Medium 24), текст 16/22
- *   tablet  pad 40, заголовок head-4 (Semi Bold 24), текст subtitile-M 26
- *   desktop pad 40, текст 24 (ls −2%)
+ *   mobile  pad 20, заголовок head-4-mobile (Medium 24)
+ *   tablet/desktop pad 40, заголовок head-4 (Semi Bold 24)
+ *   текст везде 16/22 (по просьбе владельца; в макете на tablet/desktop был крупнее)
  */
 .callout {
   display: flex;
@@ -40,17 +40,13 @@
     font-weight: var(--fw-semibold);
   }
 
+  /*
+   * Текст — основной 16/22 на всех экранах (в макете tablet 26, desktop 24).
+   * Абзацы — в два столбика (каждый абзац — свой столбик); на mobile друг под другом.
+   */
   .body {
-    gap: 16px;
-    font-size: var(--fs-subtitle);
-    line-height: var(--lh-subtitle);
-    letter-spacing: var(--ls-head);
-  }
-}
-
-@media (min-width: 1200px) {
-  .body {
-    font-size: var(--fs-head-4);
-    letter-spacing: var(--ls-head-4);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 40px;
   }
 }

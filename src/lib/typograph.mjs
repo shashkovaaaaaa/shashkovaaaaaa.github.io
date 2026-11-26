@@ -99,8 +99,8 @@ const MAX_TAIL = { text: 30, heading: 0 };
  * @returns {string}
  */
 export function typograph(text, kind = 'text') {
-  // Строки без пробелов (slug, пути, id, одиночные слова) не трогаем.
-  if (!/\s/.test(text)) return text;
+  // Строки без пробелов (slug, пути, id, одиночные слова) и без букв («2 / 1») не трогаем.
+  if (!/\s/.test(text) || !/\p{L}/u.test(text)) return text;
   const result = text
     .replace(wordHyphenRe, NB_HYPHEN)
     .replace(dashRe, `${NBSP}$1`)

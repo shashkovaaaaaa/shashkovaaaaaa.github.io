@@ -72,7 +72,7 @@
   border-radius: var(--radius-s);
 }
 
-/* mobile: text-M-regular 16/22 */
+/* text-M-regular 16/22 на всех экранах (в макете desktop/tablet было 14/20). */
 .summary {
   font-size: var(--fs-text-m);
   line-height: var(--lh-text-m);
@@ -103,11 +103,5 @@
 
   .imageMobile {
     display: none;
-  }
-
-  /* 14/20 */
-  .summary {
-    font-size: var(--fs-text-s);
-    line-height: var(--lh-control);
   }
 }
