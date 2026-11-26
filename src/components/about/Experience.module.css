@@ -62,9 +62,9 @@
 }
 
 /*
- * Название — в одну строку. На mobile колонка 260, а «Rekla: Telegram Autoposting Service» — 276:
+ * Название — в одну строку. На mobile колонка 260, а «Rekla: Telegram Autoposting» — ~220:
  * как в макете, оно заходит на левый отступ кнопки (до шеврона ещё ~6px), поэтому лежит поверх её фона.
- * Уже 386px текст упёрся бы в шеврон — там многоточие.
+ * Уже 398px (поля страницы на mobile 16) текст упёрся бы в шеврон — там многоточие.
  */
 .company {
   position: relative;
@@ -74,7 +74,7 @@
   white-space: nowrap;
 }
 
-@media (max-width: 385px) {
+@media (max-width: 397px) {
   .company {
     overflow: hidden;
     text-overflow: ellipsis;

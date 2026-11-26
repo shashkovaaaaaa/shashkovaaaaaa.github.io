@@ -19,6 +19,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+}
+
+/* Наведение на любую часть строки подсвечивает кнопку — понятно, что строка раскрывается. */
+@media (hover: hover) {
+  .row:hover .toggle {
+    background-color: var(--button-surface-link-hover);
+  }
 }
 
 .header {

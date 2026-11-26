@@ -19,6 +19,8 @@ type AccordionItemProps = {
  * design/components.md → experience: open=off / open=on.
  * Кнопка — type=link с шевроном (icon-chevron-down / -up), aria-expanded + aria-controls.
  * Раскрытие — 200ms через grid-template-rows; prefers-reduced-motion гасит transition глобально.
+ * Кликабельна вся строка (логотип, название, должность), а не только кнопка. С клавиатуры
+ * и для скринридеров переключатель — по-прежнему кнопка: её клик всплывает до строки.
  */
 export function AccordionItem({
   header,
@@ -29,9 +31,15 @@ export function AccordionItem({
   const [open, setOpen] = useState(defaultOpen);
   const panelId = useId();
 
+  const toggle = () => {
+    // Выделяли текст в строке (например, копировали название) — не сворачиваем/разворачиваем.
+    if (window.getSelection()?.toString()) return;
+    setOpen((v) => !v);
+  };
+
   return (
     <div className={styles.item} data-open={open}>
-      <div className={styles.row}>
+      <div className={styles.row} onClick={toggle}>
         <div className={styles.header}>{header}</div>
         <button
           type="button"
@@ -39,7 +47,6 @@ export function AccordionItem({
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={toggleLabel}
-          onClick={() => setOpen((v) => !v)}
         >
           <span className={styles.toggleLabel}>{toggleLabel}</span>
           {/* 18×18: кнопка 136×42, как в макете */}

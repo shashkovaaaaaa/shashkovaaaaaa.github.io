@@ -18,11 +18,11 @@
   gap: 16px;
 }
 
-/* mobile: 22 → 104 на 4 строки (lh 26) */
+/* mobile: 28 / lh 32 (владелец попросила крупнее, в макете было 22/26) */
 .title {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: var(--fw-semibold);
-  line-height: 26px;
+  line-height: 32px;
   letter-spacing: var(--ls-head-4);
   color: var(--text-primary);
 }

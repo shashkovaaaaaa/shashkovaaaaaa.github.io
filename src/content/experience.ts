@@ -81,8 +81,8 @@ export const experience: ExperienceItem[] = typographDeep([
   {
     id: 'rekla',
     company: {
-      en: 'Rekla: Telegram Autoposting Service',
-      ru: 'Rekla: Telegram Autoposting Service',
+      en: 'Rekla: Telegram Autoposting',
+      ru: 'Rekla: Telegram Autoposting',
     },
     position: { en: 'Product Designer', ru: 'Продуктовый дизайнер' },
     period: '2023–24',
