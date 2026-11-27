@@ -4,11 +4,8 @@ import type { Locale } from 'next-intl';
 import { typographDeep } from '@/lib/typograph.mjs';
 
 import askezioCover from '@/assets/images/cases/askezio/cover.webp';
-import askezioCoverMobile from '@/assets/images/cases/askezio/cover-mobile.webp';
 import prokladovkiCover from '@/assets/images/cases/prokladovki/cover.webp';
-import prokladovkiCoverMobile from '@/assets/images/cases/prokladovki/cover-mobile.webp';
 import supplyLeaderCover from '@/assets/images/cases/supply-leader/cover.webp';
-import supplyLeaderCoverMobile from '@/assets/images/cases/supply-leader/cover-mobile.webp';
 
 type Localized<T> = Record<Locale, T>;
 
@@ -20,11 +17,13 @@ export type CaseMeta = {
   ogImage?: string;
   // Отступ между секциями кейса на tablet/desktop: 60 (по умолчанию) или 100 (Prokladovki).
   sectionGap?: 'default' | 'loose';
-  // desktop/tablet — 5:4, mobile — 1:1 (в макете разные кропы).
+  // Обложка 5:4 — на всех экранах (главная и навигация между кейсами).
   cover: StaticImageData;
-  coverMobile: StaticImageData;
   coverAlt: Localized<string>;
   badges: Localized<string[]>;
+  // Короткий набор бейджей для блока «Предыдущий / Следующий кейс» (из макета cases navigation).
+  // Первые два должны целиком влезать в самую узкую карточку (desktop 1100: ~247px).
+  navBadges: Localized<string[]>;
   title: Localized<string>;
   description: Localized<string>;
 };
@@ -37,7 +36,6 @@ export const cases: CaseMeta[] = typographDeep([
     ogImage: '/og/prokladovki.jpg',
     sectionGap: 'loose',
     cover: prokladovkiCover,
-    coverMobile: prokladovkiCoverMobile,
     coverAlt: {
       en: 'Host onboarding screens: passport upload and company TIN lookup',
       ru: 'Экраны онбординга хоста: загрузка паспорта и поиск компании по ИНН',
@@ -46,7 +44,7 @@ export const cases: CaseMeta[] = typographDeep([
       // Ключевые слова — те же, что под заголовком кейса (content/cases/prokladovki/*.mdx, CaseHero badges).
       en: [
         'Product Design Deep Dive',
-        'B2B2C',
+        'B2B',
         'Marketplace',
         'Activation',
         'User flows',
@@ -62,7 +60,7 @@ export const cases: CaseMeta[] = typographDeep([
       ],
       ru: [
         'Продуктовый кейс',
-        'B2B2C',
+        'B2B',
         'Маркетплейс',
         'Активация',
         'Пользовательские сценарии',
@@ -76,6 +74,10 @@ export const cases: CaseMeta[] = typographDeep([
         'Автоматизация',
         'Дизайн форм',
       ],
+    },
+    navBadges: {
+      en: ['Deep Dive', 'B2B', 'Marketplace'],
+      ru: ['Deep Dive', 'B2B', 'Маркетплейс'],
     },
     title: {
       en: 'Redesigning Host Onboarding for a Self-Storage Marketplace',
@@ -91,7 +93,6 @@ export const cases: CaseMeta[] = typographDeep([
     published: true,
     ogImage: '/og/askezio.jpg',
     cover: askezioCover,
-    coverMobile: askezioCoverMobile,
     coverAlt: {
       en: 'Askezio quiz and test builder interface',
       ru: 'Интерфейс конструктора квизов и тестов Askezio',
@@ -127,6 +128,10 @@ export const cases: CaseMeta[] = typographDeep([
         'Дизайн взаимодействия',
       ],
     },
+    navBadges: {
+      en: ['EdTech', 'B2B', 'MVP'],
+      ru: ['EdTech', 'B2B', 'MVP'],
+    },
     title: {
       en: 'Quiz and Test-builder from MVP to release',
       ru: 'Конструктор квизов и тестов: от MVP до релиза',
@@ -141,7 +146,6 @@ export const cases: CaseMeta[] = typographDeep([
     published: true,
     ogImage: '/og/supply-leader.jpg',
     cover: supplyLeaderCover,
-    coverMobile: supplyLeaderCoverMobile,
     coverAlt: {
       en: 'Supply Leader product catalog with price history charts',
       ru: 'Каталог товаров Supply Leader с графиками истории цен',
@@ -179,6 +183,10 @@ export const cases: CaseMeta[] = typographDeep([
         'Адаптивный дизайн',
       ],
     },
+    navBadges: {
+      en: ['SAAS', 'B2B', 'E-commerce'],
+      ru: ['SAAS', 'B2B', 'E-commerce'],
+    },
     title: {
       en: 'Marketplace for suppliers from Amazon and Walmart',
       ru: 'Маркетплейс поставщиков Amazon и Walmart',
@@ -194,4 +202,14 @@ export const publishedCases = cases.filter((c) => c.published);
 
 export function getCase(slug: string) {
   return cases.find((c) => c.slug === slug);
+}
+
+// Соседние кейсы для блока внизу страницы кейса, по кругу и в порядке главной.
+export function getAdjacentCases(slug: string) {
+  const i = publishedCases.findIndex((c) => c.slug === slug);
+  const n = publishedCases.length;
+  return {
+    prev: publishedCases[(i - 1 + n) % n],
+    next: publishedCases[(i + 1) % n],
+  };
 }

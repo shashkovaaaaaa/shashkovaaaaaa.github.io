@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { CaseNav } from '@/components/CaseNav';
 import { Cta } from '@/components/Cta';
 import { withBasePath } from '@/config/site';
 import { getCase, publishedCases } from '@/content/cases';
@@ -69,6 +70,7 @@ export default async function CasePage({ params }: PageProps<'/[locale]/work/[sl
       <article className={`${styles.body} ${item.sectionGap === 'loose' ? styles.loose : ''}`}>
         <Content />
       </article>
+      <CaseNav slug={slug} locale={locale} />
       <Cta />
     </main>
   );

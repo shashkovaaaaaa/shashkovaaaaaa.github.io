@@ -1,0 +1,147 @@
+/*
+ * Figma → cases navigation (711:1925 desktop, 711:2071 tablet, 711:1815 mobile)
+ *   кнопки outlined с иконкой 18; кнопка → карточка 10; колонки через 40
+ *   карточка: превью 5:4, radius 4, gap 16; бейджи → текст 12; заголовок → описание 8
+ *   текст 16/22: заголовок Medium (text-primary), описание Regular (text-secondary)
+ */
+/* mobile: кнопки по краям одной строки, под ними карточка следующего кейса. */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  /* Ширина — как у тела кейса (page.module.css → .body). */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nextButton {
+  margin-left: auto;
+}
+
+.icon {
+  flex: none;
+  color: var(--text-secondary);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* После .card: на mobile карточка предыдущего кейса скрыта. */
+.prevCard {
+  display: none;
+}
+
+.thumbnail {
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--radius-s);
+  background-color: var(--surface-images);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale var(--transition-medium);
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-text-m);
+  letter-spacing: var(--ls-text);
+}
+
+.title {
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+.summary {
+  color: var(--text-secondary);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-s);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-s);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover .image {
+    scale: 1.03;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Две колонки: кнопка над своей карточкой. */
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'prev-button next-button'
+      'prev-card next-card';
+    column-gap: 40px;
+  }
+
+  .prevButton {
+    grid-area: prev-button;
+    justify-self: start;
+  }
+
+  .nextButton {
+    grid-area: next-button;
+    justify-self: end;
+  }
+
+  .prevCard {
+    display: flex;
+    grid-area: prev-card;
+  }
+
+  .nextCard {
+    grid-area: next-card;
+  }
+}
+
+/* desktop: превью и текст в ряд, поровну, по центру по вертикали. */
+@media (min-width: 1100px) {
+  .card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .thumbnail,
+  .description {
+    flex: 1 1 0;
+  }
+}

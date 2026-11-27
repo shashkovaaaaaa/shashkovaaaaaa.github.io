@@ -1,6 +1,6 @@
 /*
  * design/pages/main-page-*.md → card-*
- *   превью: desktop 610×488 / tablet 728×582 (5:4), mobile 370×370; radius 4
+ *   превью 5:4 на всех экранах (desktop 610×488, tablet 728×582, mobile 358×286); radius 4
  *   col gap 16; бейджи row gap 4; заголовок + описание col gap 8
  */
 .card {
@@ -12,7 +12,7 @@
 
 .thumbnail {
   overflow: hidden;
-  aspect-ratio: 1;
+  aspect-ratio: 5 / 4;
   border-radius: var(--radius-s);
   background-color: var(--surface-images);
 }
@@ -22,10 +22,6 @@
   height: 100%;
   object-fit: cover;
   transition: scale var(--transition-medium);
-}
-
-.imageDesktop {
-  display: none;
 }
 
 .description {
@@ -81,21 +77,9 @@
 }
 
 @media (min-width: 768px) {
-  .thumbnail {
-    aspect-ratio: 5 / 4;
-  }
-
   /* desktop/tablet: head-4 — Semi Bold 24, ls -2% */
   .title {
     font-weight: var(--fw-semibold);
     letter-spacing: var(--ls-head-4);
-  }
-
-  .imageDesktop {
-    display: block;
-  }
-
-  .imageMobile {
-    display: none;
   }
 }

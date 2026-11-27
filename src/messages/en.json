@@ -50,6 +50,11 @@
     "portfolio": "Portfolio",
     "contacts": "Contacts"
   },
+  "CaseNav": {
+    "label": "Other cases",
+    "prev": "Previous case",
+    "next": "Next case"
+  },
   "Cta": {
     "title": "Let’s discuss your next idea"
   },

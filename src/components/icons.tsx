@@ -154,3 +154,42 @@ export function IconChevronUp(props: IconProps) {
     </Svg>
   );
 }
+
+// Стрелки 18×18 из макета (cases navigation): обводка 1px, скруглённые концы.
+function ArrowSvg({ size = 18, children, ...rest }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 18 18"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      focusable="false"
+      {...rest}
+    >
+      {children}
+    </svg>
+  );
+}
+
+export function IconArrowLeft(props: IconProps) {
+  return (
+    <ArrowSvg {...props}>
+      <path d="M9 14.25L3.75 9L9 3.75" />
+      <path d="M14.25 9H3.75" />
+    </ArrowSvg>
+  );
+}
+
+export function IconArrowRight(props: IconProps) {
+  return (
+    <ArrowSvg {...props}>
+      <path d="M3.75 9H14.25" />
+      <path d="M9 3.75L14.25 9L9 14.25" />
+    </ArrowSvg>
+  );
+}
